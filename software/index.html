@@ -15,7 +15,10 @@
 <meta property="og:site_name" content="Jiawei Zhuang">
 <meta property="og:title" content="Software">
 <meta property="og:url" content="https://jiaweizhuang.github.io/software/">
-<meta property="og:description" content="Here lists my software projects.">
+<meta property="og:description" content="I am actively involved in open-source (scientific) software development. Most projects can be found on my GitHub page.
+
+Software in Production
+Here are software used by at least hundreds of users in t">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2019-02-17T22:40:46-05:00">
 </head>
@@ -48,10 +51,10 @@ navbar-dark bg-dark
 <a href="#" class="nav-link">Software</a>
                 </li>
 <li class="nav-item">
-<a href="../blog/index.html" class="nav-link">Blog</a>
+<a href="../learning/index.html" class="nav-link">Learning</a>
                 </li>
 <li class="nav-item">
-<a href="../archive.html" class="nav-link">Archives</a>
+<a href="../archive.html" class="nav-link">Blog</a>
                 </li>
 <li class="nav-item">
 <a href="../categories/index.html" class="nav-link">Tags</a>
@@ -81,7 +84,60 @@ navbar-dark bg-dark
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p>Here lists my software projects.</p>
+    <div>
+<p>I am actively involved in open-source (scientific) software development. Most projects can be found on <a class="reference external" href="https://github.com/JiaweiZhuang">my GitHub page</a>.</p>
+<div class="section" id="software-in-production">
+<h2>Software in Production</h2>
+<p>Here are software used by at least hundreds of users in their research. They are actively developed and maintained.</p>
+<div class="line-block">
+<div class="line">
+<strong>xESMF: Universal Regridder for Geospatial Data</strong> (<a class="reference external" href="https://github.com/JiaweiZhuang/xESMF">link</a>)</div>
+<div class="line">
+<a class="reference external" href="https://climatedataguide.ucar.edu/climate-data-tools-and-analysis/regridding-overview">Regridding</a> is <a class="reference external" href="http://www.ncl.ucar.edu/Document/Pivot_to_Python/NCL_and_Python_Survey_Report_2018.pdf">one of the most important needs</a> in Atmospheric and Climate Data Analysis. xESMF combines the battle-tested <a class="reference external" href="https://www.earthsystemcog.org/projects/esmf/">ESMF</a> and modern scientific Python stacks like <a class="reference external" href="http://xarray.pydata.org/en/stable/">Xarray</a> and <a class="reference external" href="https://dask.org/">Dask</a> to provide fast and easy-to-use regridding functionalities. I am also interested in how it can be integrated with the <a class="reference external" href="https://pangeo.io/">Pangeo</a> big-data stack.</div>
+<div class="line"><br></div>
+</div>
+<div class="line-block">
+<div class="line">
+<strong>GEOS-Chem: Global Model of Atmospheric Chemistry and Composition</strong> (<a class="reference external" href="https://github.com/geoschem">link</a>)</div>
+<div class="line">GEOS-Chem is a numerical model for atmospheric composition, <a class="reference external" href="https://map.nasa.gov/models/GEOS-Chem.php">supported by NASA</a> and <a class="reference external" href="http://acmg.seas.harvard.edu/geos/">managed at Harvard</a>. It is used by <a class="reference external" href="http://acmg.seas.harvard.edu/geos/geos_people.html">hundreds of groups</a> worldwide and has been developed over 20+ years. My major contributions include: (1) Porting the original OpenMP-only code to MPI for multi-node parallelization. Unlike writing MPI code from scratch, refactoring an existing giant code base (~1 million lines of source code) imposes unique software engineering challenges. The new code uses the <a class="reference external" href="https://www.earthsystemcog.org/projects/esmf/">ESMF</a> software framework on top of the original code, to minimize the changes to the original code base. (2) Bringing the model to the Amazon Web Services (AWS) cloud, including a cloud-HPC environment with ~1000 CPU cores.</div>
+<div class="line"><br></div>
+</div>
+</div>
+<div class="section" id="software-in-prototype">
+<h2>Software in Prototype</h2>
+<p>They are typically for class projects or just for fun. They can be useful prototypes for building more serious software applications.</p>
+<div class="line-block">
+<div class="line">
+<strong>Cubed-Sphere Grid Visualization</strong> (<a class="reference external" href="http://acmg.seas.harvard.edu/geos/cubed_sphere.html">web</a>, <a class="reference external" href="https://github.com/JiaweiZhuang/Plotly_CubedSphere">code</a>)</div>
+<div class="line">The <a class="reference external" href="https://www.weather.gov/media/sti/nggps/Putman_Lin_Finite_Volume_Cubed_Sphere_Grid_JCompPhys_2007.pdf">Cubed-Sphere grid</a> is getting increasingly popular in atmospheric modeling, in part due to its excellent scalability on massively parallel architecture. For example, it is used by <a class="reference external" href="https://www.weather.gov/news/fv3">NOAA's next generation global weather prediction system</a>. Interestingly, such grid is also used for <a class="reference external" href="https://papers.nips.cc/paper/6935-spherical-convolutions-and-their-application-in-molecular-modelling">extending convolutional neural networks to spherical geometries</a>. Unlike the well-known latitude-longitude grid, Cubed-Sphere can be a bit unintuitive at first glance (although it is actually super intuitive!). A good visualization can let people understand the grid geometry quickly without dividing into the math. The code uses <a class="reference external" href="https://plot.ly/python/">Plotly Python API</a> to generate JavaScript that runs in user's browser.</div>
+<div class="line"><br></div>
+</div>
+<div class="line-block">
+<div class="line">
+<strong>Cubed-Sphere Data Processing</strong> (<a class="reference external" href="https://github.com/JiaweiZhuang/cubedsphere">link</a>)</div>
+<div class="line">A tiny package to facilitate the processing of cubed-sphere data with Xarray. It implements <a class="reference external" href="https://gist.github.com/JiaweiZhuang/798a05b7c0bdc6ea81017a53cb76ac18">a fast weighted-binning algorithm</a> for taking zonal mean over curvilinear grids, 10x faster than the reference implementation. It is used in <a class="reference external" href="http://acmg.seas.harvard.edu/publications/2019/zhuang2019.pdf">one of my papers</a>.</div>
+<div class="line"><br></div>
+</div>
+<div class="line-block">
+<div class="line">
+<strong>2D High-order Advection Solver in TensorFlow</strong> (<a class="reference external" href="https://github.com/JiaweiZhuang/advection_solver/tree/vectorization">link</a>)</div>
+<div class="line">No one prevents you from using neural network libraries like TensorFlow &amp; PyTorch for general-purpose scientific computing :) This can be a quick way to make code running on GPU/TPU. The code implements <a class="reference external" href="https://journals.ametsoc.org/doi/abs/10.1175/1520-0493%281994%29122%3C1575%3AACOTVL%3E2.0.CO%3B2">a second-order flux-limited scheme</a> using <a class="reference external" href="https://www.tensorflow.org/guide/eager">TensorFlow Eager Execution</a>.</div>
+<div class="line"><br></div>
+</div>
+<div class="line-block">
+<div class="line">
+<strong>Neural Network ODE Solver</strong> (<a class="reference external" href="https://github.com/JiaweiZhuang/AM205_final">link</a>)</div>
+<div class="line">The code implements a very old and simple idea that the solution to an Ordinary Differential Equation (ODE) can be parameterized by a neural network and "solved" by minimization a loss function. It uses <a class="reference external" href="https://github.com/HIPS/autograd">HIPS-autograd</a> to perform automatic differentiation on NumPy functions. (It is NOT about the fancy new paper on <a class="reference external" href="https://arxiv.org/abs/1806.07366">Neural ODEs</a>!)</div>
+<div class="line"><br></div>
+</div>
+<div class="line-block">
+<div class="line">
+<strong>Parallel K-means</strong> (<a class="reference external" href="https://github.com/JiaweiZhuang/CS205_final_project">link</a>)</div>
+<div class="line">K-means is a simple and highly-parallelizable unsupervised clustering algorithm. The code parallelizes K-means by OpenMP, MPI, hybrid OpenMP-MPI, and CUDA C.</div>
+<div class="line"><br></div>
+</div>
+</div>
+</div>
     </div>
     
 

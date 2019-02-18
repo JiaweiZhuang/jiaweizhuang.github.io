@@ -42,10 +42,10 @@ navbar-dark bg-dark
 <a href="../software/index.html" class="nav-link">Software</a>
                 </li>
 <li class="nav-item">
-<a href="#" class="nav-link">Blog</a>
+<a href="../learning/index.html" class="nav-link">Learning</a>
                 </li>
 <li class="nav-item">
-<a href="../archive.html" class="nav-link">Archives</a>
+<a href="../archive.html" class="nav-link">Blog</a>
                 </li>
 <li class="nav-item">
 <a href="../categories/index.html" class="nav-link">Tags</a>
@@ -69,6 +69,104 @@ navbar-dark bg-dark
 
     
 <div class="postindex">
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="personal-website-with-jupyter-support-using-nikola-and-github-page/" class="u-url">Personal website with Jupyter support using Nikola and GitHub page</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Jiawei Zhuang
+            </span></p>
+            <p class="dateline">
+            <a href="personal-website-with-jupyter-support-using-nikola-and-github-page/" rel="bookmark">
+            <time class="published dt-published" datetime="2019-02-18T02:23:21-05:00" itemprop="datePublished" title="2019-02-18">2019-02-18</time></a>
+            </p>
+                <p class="commentline">
+        
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#related-posts" id="id1">1   Related posts</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#choosing-the-software" id="id2">2   Choosing the software</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#installation-and-initialization" id="id3">3   Installation and initialization</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#github-deployment-and-version-control" id="id4">4   Github deployment and version control</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#change-theme" id="id5">5   Change theme</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#set-non-blog-layout" id="id6">6   Set non-blog layout</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#add-social-link-button" id="id7">7   Add social link button</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#enable-jupyter-notebook-format" id="id8">8   Enable Jupyter notebook format</a></li>
+<li>
+<a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#various-tweaks" id="id9">9   Various tweaks</a><ul class="auto-toc">
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#add-table-of-content" id="id10">9.1   Add table of content</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#enable-comment-system" id="id11">9.2   Enable comment system</a></li>
+<li><a class="reference internal" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#archive-list-format" id="id12">9.3   Archive list format</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="related-posts">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id1">1   Related posts</a></h2>
+<p>Uses nikola v8 as of Feb 2019:</p>
+<pre class="literal-block">
+$ nikola --version
+Nikola v8.0.1
+</pre>
+</div>
+<div class="section" id="choosing-the-software">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id2">2   Choosing the software</a></h2>
+<p>Compare with dynamic site: WordPress</p>
+<p>Compare with Other languages: Ruby.</p>
+<p>Compare with other python tools: Pelican, tinker</p>
+<p>I find Nikola very east to learn, has user-friendly documentation, has native Jupyter support.</p>
+</div>
+<div class="section" id="installation-and-initialization">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id3">3   Installation and initialization</a></h2>
+<p><tt class="docutils literal">nikola init</tt></p>
+<p><tt class="docutils literal">nikola auto</tt></p>
+<p><tt class="docutils literal">nikola clean</tt></p>
+</div>
+<div class="section" id="github-deployment-and-version-control">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id4">4   Github deployment and version control</a></h2>
+<p>Most posts mention deployment at the last but I feel it necessary to mention it at the very beginning.</p>
+<ul class="simple">
+<li>A well version-controlled <tt class="docutils literal">src</tt> branch, with only core files and meaningful commit messages.</li>
+<li>A automatically generated <tt class="docutils literal">master</tt> branch for deployment. With messy html files but you never need to care. With only <cite>auto commit</cite> messages and comprehensible commit history.</li>
+</ul>
+</div>
+<div class="section" id="change-theme">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id5">5   Change theme</a></h2>
+<p>Use Twitter's well-known boostrap4. Can tweak theme with bootwathc but I find the default theme perfect for me.</p>
+</div>
+<div class="section" id="set-non-blog-layout">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id6">6   Set non-blog layout</a></h2>
+<p>Well-documented in official tutorial.</p>
+<p>Emphasize the difference between <cite>post</cite> and <cite>page</cite>: Unlike <cite>new_post</cite>, <cite>nikola new_page</cite> will not be indexed unless you add it]
+Move to blog posts to <cite>blog</cite> folder</p>
+</div>
+<div class="section" id="add-social-link-button">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id7">7   Add social link button</a></h2>
+<p>Steal from</p>
+</div>
+<div class="section" id="enable-jupyter-notebook-format">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id8">8   Enable Jupyter notebook format</a></h2>
+</div>
+<div class="section" id="various-tweaks">
+<h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id9">9   Various tweaks</a></h2>
+<div class="section" id="add-table-of-content">
+<h3><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id10">9.1   Add table of content</a></h3>
+</div>
+<div class="section" id="enable-comment-system">
+<h3><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id11">9.2   Enable comment system</a></h3>
+</div>
+<div class="section" id="archive-list-format">
+<h3><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id12">9.3   Archive list format</a></h3>
+</div>
+</div>
+</div>
+    </div>
+    </article>
 </div>
 
 
