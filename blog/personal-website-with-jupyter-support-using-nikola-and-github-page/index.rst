@@ -1,6 +1,6 @@
 .. title: Personal website with Jupyter support using Nikola and GitHub page
 .. slug: personal-website-with-jupyter-support-using-nikola-and-github-page
-.. date: 2019-02-18 02:23:21 UTC-05:00
+.. date: 2019-02-17 18:23:21 UTC-05:00
 .. tags: Nikola, Jupyter, GitHub
 .. category: 
 .. link: 
@@ -26,7 +26,7 @@ Compare with dynamic site: WordPress
 
 Compare with Other languages: Ruby. 
 
-Compare with other python tools: Pelican, tinker
+Compare with other python tools: Pelican, [Tinkerer](http://tinkerer.me/index.html)
 
 I find Nikola very east to learn, has user-friendly documentation, has native Jupyter support.
 
