@@ -46,12 +46,10 @@ Github deployment and version control
 
 Most posts mention deployment at the last but I feel it necessary to mention it at the very beginning.
 
-
-
 - A well version-controlled ``src`` branch, with only core files and meaningful commit messages.
 - A automatically generated ``master`` branch for deployment. With messy html files but you never need to care. With only `auto commit` messages and comprehensible commit history.
 
-
+Caveat: The deployment branch will use all the files on the current directory, not the most recent commit in the ``src`` branch!
 
 Change theme
 ============
