@@ -12,7 +12,7 @@ I am actively involved in open-source (scientific) software development. Most pr
 Software in Production
 ----------------------
 
-Here are software used by at least hundreds of users in their research. They are actively developed and maintained.
+Here are software applications used by at least hundreds of users for their research.
 
 | **xESMF: Universal Regridder for Geospatial Data** (`link <https://github.com/JiaweiZhuang/xESMF>`__)
 | `Regridding <https://climatedataguide.ucar.edu/climate-data-tools-and-analysis/regridding-overview>`_ is `one of the most important needs <http://www.ncl.ucar.edu/Document/Pivot_to_Python/NCL_and_Python_Survey_Report_2018.pdf>`_ in Atmospheric and Climate Data Analysis. xESMF combines the battle-tested `ESMF <https://www.earthsystemcog.org/projects/esmf/>`_ and modern scientific Python stacks like `Xarray <http://xarray.pydata.org/en/stable/>`_ and `Dask <https://dask.org/>`_ to provide fast and easy-to-use regridding functionalities. I am also interested in how it can be integrated with the `Pangeo <https://pangeo.io/>`_ big-data stack.
