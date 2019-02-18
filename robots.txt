@@ -1,0 +1,4 @@
+Sitemap: https://jiaweizhuang.github.io/sitemapindex.xml
+
+User-Agent: *
+Host: jiaweizhuang.github.io
