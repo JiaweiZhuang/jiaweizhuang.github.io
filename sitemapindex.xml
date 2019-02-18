@@ -6,10 +6,6 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/blog.xml</loc>
-  <lastmod>2019-02-18T07:58:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/github.xml</loc>
   <lastmod>2019-02-18T15:16:00Z</lastmod>
  </sitemap>
@@ -31,6 +27,6 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2019-02-18T15:16:00Z</lastmod>
+  <lastmod>2019-02-18T17:55:00Z</lastmod>
  </sitemap>
 </sitemapindex>

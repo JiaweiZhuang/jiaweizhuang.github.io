@@ -32,7 +32,7 @@ They are typically for class projects or just for fun. They can be useful protot
 |
 
 | **Cubed-Sphere Data Processing** (`link <https://github.com/JiaweiZhuang/cubedsphere>`__)
-| A tiny package to facilitate the processing of cubed-sphere data with Xarray. It implements `a fast weighted-binning algorithm <https://gist.github.com/JiaweiZhuang/798a05b7c0bdc6ea81017a53cb76ac18>`_ for taking zonal mean over curvilinear grids, 10x faster than the reference implementation. It is used in `one of my papers <http://acmg.seas.harvard.edu/publications/2019/zhuang2019.pdf>`_.
+| A tiny package to facilitate the processing of cubed-sphere data with Xarray. It implements `a fast weighted-binning algorithm <https://gist.github.com/JiaweiZhuang/798a05b7c0bdc6ea81017a53cb76ac18>`_ for taking zonal mean over curvilinear grids, 10x faster than the reference implementation. It is used in `one of my papers <https://www.atmos-chem-phys.net/18/6039/2018/acp-18-6039-2018.pdf>`_.
 |
 
 | **2D High-order Advection Solver in TensorFlow** (`link <https://github.com/JiaweiZhuang/advection_solver/tree/vectorization>`__)
