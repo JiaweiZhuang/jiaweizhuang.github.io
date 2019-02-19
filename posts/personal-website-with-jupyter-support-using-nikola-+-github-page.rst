@@ -126,9 +126,9 @@ You end up having:
 - An automatically generated ``master`` branch, with messy html files which you never need to directly look at. It doesn't have meaningful commit messages, and the commit history is kind of a mess (diff between HTML files).
 
 .. note::
-    Remember that ``nikola github_deploy`` will use all the files on the current directory, not the most recent commit in the ``src`` branch! So the ``master`` branch and the ``src`` are not necessarily synchronized.
+    Remember that ``nikola github_deploy`` will use all the files in the current directory, not the most recent commit in the ``src`` branch! ``master`` and the ``src`` are not necessarily synchronized if you set ``GITHUB_COMMIT_SOURCE = False``.
 
-For all the tweaks later, you can incrementally update the GitHub repo and the website by manually push to ``src`` and use ``nikola github_deploy`` to push to ``master``.
+For all the tweaks later, you can incrementally update the GitHub repo and the website, by manually pushing to ``src`` and using ``nikola github_deploy`` to push to ``master``.
 
 Change theme
 ============
@@ -260,9 +260,13 @@ Or optionally with numbering::
 Tweak Archive format
 --------------------
 
-The avoid grouping posts by years::
+To avoid grouping posts by years::
 
     CREATE_SINGLE_ARCHIVE = True
+
+The creation time of each blog post is displayed down to minutes by default. Only showing the date seems enough::
+
+    DATE_FORMAT = 'YYYY-MM-dd'
 
 Enable comment system
 ---------------------
