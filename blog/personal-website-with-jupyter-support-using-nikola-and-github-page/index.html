@@ -18,16 +18,10 @@
 <meta property="og:site_name" content="Jiawei Zhuang">
 <meta property="og:title" content="Personal website with Jupyter support using Nikola and GitHub page">
 <meta property="og:url" content="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/">
-<meta property="og:description" content="Contents
+<meta property="og:description" content="I decide to build my new website and occasionally post blogs on research, software, and computing.
+For the blogging tool, basic requirements are:
 
-1   Related posts
-2   Choosing the software
-3   Installation and initialization
-4   Github deployment and version control
-5   Change theme
-6   Set non-blog layout
-7   Add social link button
-">
+It must be a static site that can be easily version-c">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2019-02-17T18:23:21-05:00">
 <meta property="article:tag" content="GitHub">
@@ -103,83 +97,261 @@ navbar-dark bg-dark
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
+<p>I decide to build my new website and occasionally post blogs on research, software, and computing.</p>
+<p>For the blogging tool, basic requirements are:</p>
+<ul class="simple">
+<li>It must be a <a class="reference external" href="https://en.wikipedia.org/wiki/Static_web_page">static site</a> that can be easily version-controlled on GitHub. So, not WordPress.</li>
+<li>I'd like the framework to be written in Python. So, not Jekyll.</li>
+<li>It should support Jupyter notebook format, so I can easily post computing &amp; data analysis results.</li>
+</ul>
+<p>The options come down to <a class="reference external" href="https://github.com/getpelican/pelican">Pelican</a> (the most popular one), <a class="reference external" href="https://github.com/vladris/tinkerer">Tinkerer</a> (<a class="reference external" href="https://github.com/sphinx-doc/sphinx">Sphinx</a>-extended-for-blog), and <a class="reference external" href="https://github.com/getnikola/nikola">Nikola</a>. I finally settle down on Nikola because it is super intuitive, has a clear and user-friendly documentation, and supports Jupyter natively. It takes me like 10 minutes to set up the desired website layout. Other tools are also very powerful but it takes me longer to get the configuration right.</p>
+<p>This post records my setup steps, to help others and the forgetful future me. Building such a website only requires basic knowledge in:</p>
+<ul class="simple">
+<li>Git and GitHub</li>
+<li>Python</li>
+<li>Markdown (works fine) or reStructuredText (preferred)</li>
+</ul>
+<p>I assume no knowledge in Web front-end stuff (HTML/CSS/JS). This should be typical for many computational &amp; data science students.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="auto-toc simple">
 <li><a class="reference internal" href="#related-posts" id="id1">1   Related posts</a></li>
-<li><a class="reference internal" href="#choosing-the-software" id="id2">2   Choosing the software</a></li>
-<li><a class="reference internal" href="#installation-and-initialization" id="id3">3   Installation and initialization</a></li>
-<li><a class="reference internal" href="#github-deployment-and-version-control" id="id4">4   Github deployment and version control</a></li>
-<li><a class="reference internal" href="#change-theme" id="id5">5   Change theme</a></li>
-<li><a class="reference internal" href="#set-non-blog-layout" id="id6">6   Set non-blog layout</a></li>
-<li><a class="reference internal" href="#add-social-link-button" id="id7">7   Add social link button</a></li>
-<li><a class="reference internal" href="#enable-jupyter-notebook-format" id="id8">8   Enable Jupyter notebook format</a></li>
+<li><a class="reference internal" href="#installation-and-initialization" id="id2">2   Installation and initialization</a></li>
+<li><a class="reference internal" href="#github-deployment-and-version-control" id="id3">3   Github deployment and version control</a></li>
+<li><a class="reference internal" href="#change-theme" id="id4">4   Change theme</a></li>
+<li><a class="reference internal" href="#set-non-blog-layout" id="id5">5   Set non-blog layout</a></li>
+<li><a class="reference internal" href="#enable-jupyter-notebook-format" id="id6">6   Enable Jupyter notebook format</a></li>
+<li><a class="reference internal" href="#add-social-media-button" id="id7">7   Add social media button</a></li>
 <li>
-<a class="reference internal" href="#various-tweaks" id="id9">9   Various tweaks</a><ul class="auto-toc">
-<li><a class="reference internal" href="#add-table-of-content" id="id10">9.1   Add table of content</a></li>
-<li><a class="reference internal" href="#enable-comment-system" id="id11">9.2   Enable comment system</a></li>
-<li><a class="reference internal" href="#archive-list-format" id="id12">9.3   Archive list format</a></li>
+<a class="reference internal" href="#various-tweaks" id="id8">8   Various tweaks</a><ul class="auto-toc">
+<li><a class="reference internal" href="#add-table-of-content" id="id9">8.1   Add table of content</a></li>
+<li><a class="reference internal" href="#tweak-archive-format" id="id10">8.2   Tweak Archive format</a></li>
+<li><a class="reference internal" href="#enable-comment-system" id="id11">8.3   Enable comment system</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="related-posts">
 <h2><a class="toc-backref" href="#id1">1   Related posts</a></h2>
-<p>Uses nikola v8 as of Feb 2019:</p>
-<pre class="literal-block">
-$ nikola --version
-Nikola v8.0.1
-</pre>
-</div>
-<div class="section" id="choosing-the-software">
-<h2><a class="toc-backref" href="#id2">2   Choosing the software</a></h2>
-<p>Compare with dynamic site: WordPress</p>
-<p>Compare with Other languages: Ruby.</p>
-<p>Compare with other python tools: Pelican, [Tinkerer](<a class="reference external" href="http://tinkerer.me/index.html">http://tinkerer.me/index.html</a>)</p>
-<p>I find Nikola very east to learn, has user-friendly documentation, has native Jupyter support.</p>
+<p>Just by Googling you can find tons of tutorials on this. Particularly good ones are:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/">http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/</a></li>
+<li><a class="reference external" href="http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/">http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/</a></li>
+<li><a class="reference external" href="https://post2web.github.io/posts/jupyter-blogging/">https://post2web.github.io/posts/jupyter-blogging/</a></li>
+<li><a class="reference external" href="http://sampathweb.com/posts/blogging-made-easy.html">http://sampathweb.com/posts/blogging-made-easy.html</a></li>
+</ul>
+<p>However this post is still useful because I:</p>
+<ul class="simple">
+<li>use nikola v8.0.1 as of Feb 2019. Many early tweaks are not necessary now.</li>
+<li>focus on personal website (with additional pages like <tt class="docutils literal">Bio</tt>), not only a blog.</li>
+<li>add additional notes on GitHub deployment and version control.</li>
+</ul>
 </div>
 <div class="section" id="installation-and-initialization">
-<h2><a class="toc-backref" href="#id3">3   Installation and initialization</a></h2>
-<p><tt class="docutils literal">nikola init</tt></p>
-<p><tt class="docutils literal">nikola auto</tt></p>
-<p><tt class="docutils literal">nikola clean</tt></p>
+<h2><a class="toc-backref" href="#id2">2   Installation and initialization</a></h2>
+<p>The <a class="reference external" href="https://getnikola.com/getting-started.html">official getting-started guide</a> explains this well. I just summarize the steps here.</p>
+<p>I come from the scientific side of Python, so use Conda to create a new environment:</p>
+<pre class="literal-block">
+conda env create -n blog python=3.6
+source activate blog
+pip install Nikola[extras]
+</pre>
+<p>Making the first demo site is as simple as</p>
+<ul class="simple">
+<li>Run <tt class="docutils literal">nikola init</tt> in a new folder, with default settings.</li>
+<li>Then run <tt class="docutils literal">nikola auto</tt> to build the page and start a local server for testing.</li>
+<li>Visit <tt class="docutils literal">localhost:8000</tt> in the web browser.</li>
+</ul>
+<p>Adding a new blog post is as simple as:</p>
+<ul class="simple">
+<li>Run <tt class="docutils literal">nikola new_post</tt> (defaults to reStructuredText format, add <tt class="docutils literal"><span class="pre">-f</span> markdown</tt> for <tt class="docutils literal">*.md</tt> format)</li>
+<li>Write blog contents in the newly generated file (<tt class="docutils literal">*.rst</tt> or <tt class="docutils literal">*.md</tt>) in the <tt class="docutils literal">posts/</tt> directory.</li>
+<li>Rerun <tt class="docutils literal">nikola auto</tt>. You can also keep this command running so new contents will be automatically updated.</li>
+</ul>
+<p>All configurations are managed by a single <tt class="docutils literal">conf.py</tt> file, which is extremely neat.</p>
+<p>Before adding any real contents, you should first configure GitHub deployment, layout, themes, etc.</p>
 </div>
 <div class="section" id="github-deployment-and-version-control">
-<h2><a class="toc-backref" href="#id4">4   Github deployment and version control</a></h2>
-<p>Most posts mention deployment at the last but I feel it necessary to mention it at the very beginning.</p>
+<h2><a class="toc-backref" href="#id3">3   Github deployment and version control</a></h2>
+<p>There is an <a class="reference external" href="https://getnikola.com/handbook.html#deploying-to-github">official deployment guide</a> but I feel that more explanation is necessary.</p>
+<p>Most posts mention deployment at the final step, but I think it is good to do so at the very beginning.</p>
+<p>We will use <a class="reference external" href="https://pages.github.com/">GitHub pages</a> to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called <a class="reference external" href="https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites">user page</a> that only works for a repo named <tt class="docutils literal"><span class="pre">[username].github.io</span></tt>, where <tt class="docutils literal">[username]</tt> is your GitHub account name (mine is <tt class="docutils literal">jiaweizhuang</tt>). Its contents will be displayed on <tt class="docutils literal"><span class="pre">https://[username].github.io/</span></tt>.</p>
+<p>You will need to:</p>
+<ol class="arabic simple">
+<li>Create a new GitHub repo named <tt class="docutils literal"><span class="pre">[username].github.io</span></tt>.</li>
+<li>Initialize a Git repo (<tt class="docutils literal">git init</tt>) in your Nikola project directory.</li>
+<li>Link to your remote GitHub repo (<tt class="docutils literal">git remote add origin <span class="pre">https://github.com/[username]/[username].github.io.git</span></tt>)</li>
+</ol>
+<p>So far all standard git practices. The non-standard thing is that you shouldn't manually commit anything to the <tt class="docutils literal">master</tt> branch. The <tt class="docutils literal">master</tt> branch is used for storing HTML files to display on the web. It should be handled automatically by the command <tt class="docutils literal">nikola github_deploy</tt>. To version control your source files (<tt class="docutils literal">conf.py</tt>, <tt class="docutils literal">*.rst</tt>, <tt class="docutils literal">*.md</tt>), you should create a new branch called <tt class="docutils literal">src</tt>:</p>
+<pre class="literal-block">
+git checkout -b src
+</pre>
+<p>My <tt class="docutils literal">.gitignore</tt> is:</p>
+<pre class="literal-block">
+cache
+.doit.db*
+__pycache__
+output
+.ipynb_checkpoints
+.DS_Store
+</pre>
+<p>You can manually commit to this <tt class="docutils literal">src</tt> branch and push to GitHub.</p>
+<p>In <tt class="docutils literal">conf.py</tt>, double-check the branch names are correct:</p>
+<pre class="literal-block">
+GITHUB_SOURCE_BRANCH = 'src'
+GITHUB_DEPLOY_BRANCH = 'master'
+GITHUB_REMOTE_NAME = 'origin'
+</pre>
+<p>I also recommend setting:</p>
+<pre class="literal-block">
+GITHUB_COMMIT_SOURCE = False
+</pre>
+<p>So that the <tt class="docutils literal">nikola github_deploy</tt> command below won't touch your <tt class="docutils literal">src</tt> branch.</p>
+<p>To deploy the content on <tt class="docutils literal">master</tt>, run:</p>
+<pre class="literal-block">
+nikola github_deploy
+</pre>
+<p>This builds the HTML files, commits to the <tt class="docutils literal">master</tt> branch, and pushes to GitHub. The actual website <tt class="docutils literal"><span class="pre">https://[username].github.io/</span></tt> will be updated in a few seconds.</p>
+<p>You end up having:</p>
 <ul class="simple">
-<li>A well version-controlled <tt class="docutils literal">src</tt> branch, with only core files and meaningful commit messages.</li>
-<li>A automatically generated <tt class="docutils literal">master</tt> branch for deployment. With messy html files but you never need to care. With only <cite>auto commit</cite> messages and comprehensible commit history.</li>
+<li>A well version-controlled <tt class="docutils literal">src</tt> branch, with only source files. You can add meaningful commit messages like for other code projects.</li>
+<li>An automatically generated <tt class="docutils literal">master</tt> branch, with messy html files which you never need to directly look at. It doesn't have meaningful commit messages, and the commit history is kind of a mess (diff between HTML files).</li>
 </ul>
-<p>Caveat: The deployment branch will use all the files on the current directory, not the most recent commit in the <tt class="docutils literal">src</tt> branch!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember that <tt class="docutils literal">nikola github_deploy</tt> will use all the files on the current directory, not the most recent commit in the <tt class="docutils literal">src</tt> branch! So the <tt class="docutils literal">master</tt> branch and the <tt class="docutils literal">src</tt> are not necessarily synchronized.</p>
+</div>
+<p>For all the tweaks later, you can incrementally update the GitHub repo and the website by manually push to <tt class="docutils literal">src</tt> and use <tt class="docutils literal">nikola github_deploy</tt> to push to <tt class="docutils literal">master</tt>.</p>
 </div>
 <div class="section" id="change-theme">
-<h2><a class="toc-backref" href="#id5">5   Change theme</a></h2>
-<p>Use Twitter's well-known boostrap4. Can tweak theme with bootwathc but I find the default theme perfect for me.</p>
+<h2><a class="toc-backref" href="#id4">4   Change theme</a></h2>
+<p>The default theme looks more like a blog than a personal website. Twitter's <a class="reference external" href="https://getbootstrap.com/">Bootstrap</a> is an excellent theme and is <a class="reference external" href="https://themes.getnikola.com/v8/bootstrap4/">built into Nikola</a>.  In <tt class="docutils literal">conf.py</tt>, set:</p>
+<pre class="literal-block">
+THEME = "bootstrap4"
+</pre>
+<p>The theme can be further tweaked by <a class="reference external" href="https://bootswatch.com/">Bootswatch</a> but I find the default theme perfect for me :)</p>
 </div>
 <div class="section" id="set-non-blog-layout">
-<h2><a class="toc-backref" href="#id6">6   Set non-blog layout</a></h2>
-<p>Well-documented in official tutorial.</p>
-<p>Emphasize the difference between <cite>post</cite> and <cite>page</cite>: Unlike <cite>new_post</cite>, <cite>nikola new_page</cite> will not be indexed unless you add it]
-Move to blog posts to <cite>blog</cite> folder</p>
-</div>
-<div class="section" id="add-social-link-button">
-<h2><a class="toc-backref" href="#id7">7   Add social link button</a></h2>
-<p>Steal from</p>
+<h2><a class="toc-backref" href="#id5">5   Set non-blog layout</a></h2>
+<p><a class="reference external" href="https://getnikola.com/creating-a-site-not-a-blog-with-nikola.html">Official non-blog guide</a> explains this well. I just summarize the steps here.</p>
+<p>Nikola defines two types of contents:</p>
+<ul class="simple">
+<li>"Posts" generated by <tt class="docutils literal">nikola new_post</tt>. It is just the blog post and will be automatically added to the main web page whenever a new post is created.</li>
+<li>"Pages" generated by <tt class="docutils literal">nikola new_page</tt>. It is a standalone page that will not be automatically added to the main site. This is the building block for a non-blog site.</li>
+</ul>
+<p>In <tt class="docutils literal">conf.py</tt>, bring Pages to root level:</p>
+<pre class="literal-block">
+POSTS = (
+    ("posts/*.rst", "blog", "post.tmpl"),
+    ("posts/*.md", "blog", "post.tmpl"),
+    ("posts/*.txt", "blog", "post.tmpl"),
+    ("posts/*.html", "blog", "post.tmpl"),
+)
+PAGES = (
+    ("pages/*.rst", "", "page.tmpl"),  # notice the second argument
+    ("pages/*.md", "", "page.tmpl"),
+    ("pages/*.txt", "", "page.tmpl"),
+    ("pages/*.html", "", "page.tmpl"),
+)
+
+INDEX_PATH = "blog"
+</pre>
+<p>Generate your new index page (the entry of you website):</p>
+<pre class="literal-block">
+$ nikola new_page
+Creating New Page
+-----------------
+
+Title: index
+</pre>
+<p>To add more pages to the top navigation bar:</p>
+<pre class="literal-block">
+$ nikola new_page
+Creating New Page
+-----------------
+
+Title: Bio
+</pre>
+<p>And then add it to <tt class="docutils literal">conf.py</tt>:</p>
+<pre class="literal-block">
+NAVIGATION_LINKS = {
+    DEFAULT_LANG: (
+        ("/index.html", "Home"),
+        ("/bio/index.html", "Bio"),
+        ...
+    ),
+</pre>
 </div>
 <div class="section" id="enable-jupyter-notebook-format">
-<h2><a class="toc-backref" href="#id8">8   Enable Jupyter notebook format</a></h2>
+<h2><a class="toc-backref" href="#id6">6   Enable Jupyter notebook format</a></h2>
+<p>Just add <tt class="docutils literal">*.ipynb</tt> as recognizable formats:</p>
+<pre class="literal-block">
+POSTS = (
+    ("posts/*.rst", "blog", "post.tmpl"),
+    ("posts/*.md", "blog", "post.tmpl"),
+    ("posts/*.txt", "blog", "post.tmpl"),
+    ("posts/*.html", "blog", "post.tmpl"),
+    ("posts/*.ipynb", "blog", "post.tmpl"), # new line
+)
+PAGES = (
+    ("pages/*.rst", "", "page.tmpl"),
+    ("pages/*.md", "", "page.tmpl"),
+    ("pages/*.txt", "", "page.tmpl"),
+    ("pages/*.html", "", "page.tmpl"),
+    ("pages/*.ipynb", "", "page.tmpl"), # new line
+)
+</pre>
+<p>With the current version (v8), that's all you need to do!</p>
+<p>Create a new blog in notebook format:</p>
+<pre class="literal-block">
+$ nikola new_post -f ipynb
+</pre>
+</div>
+<div class="section" id="add-social-media-button">
+<h2><a class="toc-backref" href="#id7">7   Add social media button</a></h2>
+<p>You might want to add buttons for other sites like GitHub and Twitter, or any icons from <a class="reference external" href="https://fontawesome.com/">Font Awesome</a>.</p>
+<p>Taken from <a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/">this post by Jaakko Luttinen</a>, the minimal example is (only one GitHub button):</p>
+<pre class="literal-block">
+EXTRA_HEAD_DATA = '&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&gt;'
+
+CONTENT_FOOTER = '''
+&lt;div class="text-center"&gt;
+&lt;p&gt;
+&lt;span class="fa-stack fa-2x"&gt;
+&lt;a href="https://github.com/[username]"&gt;
+    &lt;i class="fa fa-circle fa-stack-2x"&gt;&lt;/i&gt;
+    &lt;i class="fa fa-github fa-inverse fa-stack-1x"&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;/span&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+'''
+</pre>
 </div>
 <div class="section" id="various-tweaks">
-<h2><a class="toc-backref" href="#id9">9   Various tweaks</a></h2>
+<h2><a class="toc-backref" href="#id8">8   Various tweaks</a></h2>
 <div class="section" id="add-table-of-content">
-<h3><a class="toc-backref" href="#id10">9.1   Add table of content</a></h3>
+<h3><a class="toc-backref" href="#id9">8.1   Add table of content</a></h3>
+<p>For <tt class="docutils literal">*.rst</tt> posts, simple add:</p>
+<pre class="literal-block">
+.. contents::
+</pre>
+<p>Or optionally with numbering:</p>
+<pre class="literal-block">
+.. contents::
+.. section-numbering::
+</pre>
+</div>
+<div class="section" id="tweak-archive-format">
+<h3><a class="toc-backref" href="#id10">8.2   Tweak Archive format</a></h3>
+<p>The avoid grouping posts by years:</p>
+<pre class="literal-block">
+CREATE_SINGLE_ARCHIVE = True
+</pre>
 </div>
 <div class="section" id="enable-comment-system">
-<h3><a class="toc-backref" href="#id11">9.2   Enable comment system</a></h3>
-</div>
-<div class="section" id="archive-list-format">
-<h3><a class="toc-backref" href="#id12">9.3   Archive list format</a></h3>
+<h3><a class="toc-backref" href="#id11">8.3   Enable comment system</a></h3>
+<p>TBD</p>
 </div>
 </div>
 </div>
