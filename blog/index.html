@@ -4279,9 +4279,9 @@ nikola github_deploy
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Remember that <tt class="docutils literal">nikola github_deploy</tt> will use all the files on the current directory, not the most recent commit in the <tt class="docutils literal">src</tt> branch! So the <tt class="docutils literal">master</tt> branch and the <tt class="docutils literal">src</tt> are not necessarily synchronized.</p>
+<p class="last">Remember that <tt class="docutils literal">nikola github_deploy</tt> will use all the files in the current directory, not the most recent commit in the <tt class="docutils literal">src</tt> branch! <tt class="docutils literal">master</tt> and the <tt class="docutils literal">src</tt> are not necessarily synchronized if you set <tt class="docutils literal">GITHUB_COMMIT_SOURCE = False</tt>.</p>
 </div>
-<p>For all the tweaks later, you can incrementally update the GitHub repo and the website by manually push to <tt class="docutils literal">src</tt> and use <tt class="docutils literal">nikola github_deploy</tt> to push to <tt class="docutils literal">master</tt>.</p>
+<p>For all the tweaks later, you can incrementally update the GitHub repo and the website, by manually pushing to <tt class="docutils literal">src</tt> and using <tt class="docutils literal">nikola github_deploy</tt> to push to <tt class="docutils literal">master</tt>.</p>
 </div>
 <div class="section" id="change-theme">
 <h2><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id4">4   Change theme</a></h2>
@@ -4404,9 +4404,13 @@ CONTENT_FOOTER = '''
 </div>
 <div class="section" id="tweak-archive-format">
 <h3><a class="toc-backref" href="personal-website-with-jupyter-support-using-nikola-and-github-page/#id10">8.2   Tweak Archive format</a></h3>
-<p>The avoid grouping posts by years:</p>
+<p>To avoid grouping posts by years:</p>
 <pre class="literal-block">
 CREATE_SINGLE_ARCHIVE = True
+</pre>
+<p>The creation time of each blog post is displayed down to minutes by default. Only showing the date seems enough:</p>
+<pre class="literal-block">
+DATE_FORMAT = 'YYYY-MM-dd'
 </pre>
 </div>
 <div class="section" id="enable-comment-system">
