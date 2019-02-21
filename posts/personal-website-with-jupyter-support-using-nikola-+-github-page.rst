@@ -289,4 +289,23 @@ The creation time of each blog post is displayed down to minutes by default. Onl
 Enable comment system
 ---------------------
 
-TBD
+Because static sites do not have databases, you need to use a thiry-party comment system as documented on the `official doc <https://getnikola.com/handbook.html#comments>`_. The steps are:
+
+1. Sign up for an account on https://disqus.com/.
+
+2. On Disqus, select "Create a new site" (or visit https://disqus.com/admin/create/). 
+
+3. During configuration, take note on the "Shortname" you use. Other configs are not very important.
+
+4. At "Select a plan", choosing the basic free plan is enough.
+
+5. At "Select Platform", just skip the instructions. No need to insert the "Universal Code" manually, as it is built into Nikola. Keep all default and finish the configuration.
+
+In ``conf.py``, add your Disqus shortname:
+
+.. code:: python
+
+    COMMENT_SYSTEM = "disqus"
+    COMMENT_SYSTEM_ID = "[disqus-shortname]"
+
+Deploy to GitHub and the comment system should be enabled.
