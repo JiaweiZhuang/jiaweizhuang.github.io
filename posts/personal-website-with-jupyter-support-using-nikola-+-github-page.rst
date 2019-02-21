@@ -78,7 +78,7 @@ There is an `official deployment guide <https://getnikola.com/handbook.html#depl
 
 Most posts mention deployment at the final step, but I think it is good to do so at the very beginning.
 
-We will use `GitHub pages <https://pages.github.com/>`_ to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called `user page <https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites>`_ that only works for a repo named ``[username].github.io``, where ``[username]`` is your GitHub account name (mine is ``jiaweizhuang``). Its contents will be displayed on ``https://[username].github.io/``.
+We will use `GitHub pages <https://pages.github.com/>`_ to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called `user page <https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites>`_ that only works for a repo named ``[username].github.io``, where ``[username]`` is your GitHub account name (mine is ``jiaweizhuang``). The website URL will be ``https://[username].github.io/``.
 
 You will need to:
 
