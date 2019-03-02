@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Bokeh)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/bokeh.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Tue, 19 Feb 2019 06:01:36 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Interactive plot on Nikola sites with Bokeh in Jupyter notebooks</title><link>https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Bokeh)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/bokeh.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Sat, 02 Mar 2019 20:08:56 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use &lt;a href="https://bokeh.pydata.org/"&gt;Bokeh&lt;/a&gt; as an example but similar approaches should work with other JavaScript-based tools like Plotly. For the impatient, drag to the end of this page to see the results.&lt;/p&gt;
-&lt;p&gt;For configuring a website with Nikola, see my previous post.&lt;/p&gt;
+&lt;p&gt;For deploying website with Nikola, see my &lt;a href="https://jiaweizhuang.github.io/blog/nikola-guide/"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -57,7 +57,7 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Some-boring-stuff-to-test-basic-notebook-display..."&gt;Some boring stuff to test basic notebook display...&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Some-boring-stuff-to-test-basic-notebook-display..."&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Non-executing code snippet:&lt;/p&gt;
+&lt;h2 id="Some-boring-stuff-to-test-basic-notebook-display..."&gt;Some boring stuff to test basic notebook display...&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Some-boring-stuff-to-test-basic-notebook-display..."&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Non-executing code snippet:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Other languages:&lt;/p&gt;
@@ -130,7 +130,7 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Interactive-visualization-with-HvPlot-and-Bokeh"&gt;Interactive visualization with HvPlot and Bokeh&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Interactive-visualization-with-HvPlot-and-Bokeh"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://hvplot.pyviz.org"&gt;HvPlot&lt;/a&gt; provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to &lt;code&gt;pandas.DataFrame.plot()&lt;/code&gt;, so you don't need to learn too many holoview-specific syntaxes.&lt;/p&gt;
+&lt;h2 id="Interactive-visualization-with-HvPlot-and-Bokeh"&gt;Interactive visualization with HvPlot and Bokeh&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Interactive-visualization-with-HvPlot-and-Bokeh"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://hvplot.pyviz.org"&gt;HvPlot&lt;/a&gt; provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to &lt;code&gt;pandas.DataFrame.plot()&lt;/code&gt;, so you don't need to learn too many Bokeh/Holoview-specific syntaxes.&lt;/p&gt;
 &lt;p&gt;It can be installed easily by &lt;code&gt;pip install hvplot&lt;/code&gt;, with all major depedencies.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -170,10 +170,10 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 
 
 
-&lt;div id="559e96e8-ad43-48f7-9986-e840bd878a4d"&gt;&lt;/div&gt;
+&lt;div id="464750cc-ecec-443d-871c-982f1808abdf"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#559e96e8-ad43-48f7-9986-e840bd878a4d');
+var element = $('#464750cc-ecec-443d-871c-982f1808abdf');
 
 (function(root) {
   function now() {
@@ -838,10 +838,10 @@ div.hologroup {
 
 
 
-&lt;div id="409731f5-5ef8-4a08-a8a7-203fd2e3e44f"&gt;&lt;/div&gt;
+&lt;div id="8eac349b-9331-4bb1-83f1-c889f26a1d71"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#409731f5-5ef8-4a08-a8a7-203fd2e3e44f');
+var element = $('#8eac349b-9331-4bb1-83f1-c889f26a1d71');
 function HoloViewsWidget() {
 }
 
@@ -1659,7 +1659,7 @@ if (window.Jupyter !== undefined) {
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Creating-a-demo-plot"&gt;Creating a demo plot&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Creating-a-demo-plot"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Taken from &lt;a href="https://hvplot.pyviz.org/user_guide/Introduction.html"&gt;HvPlot tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="Creating-a-demo-plot"&gt;Creating a demo plot&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Creating-a-demo-plot"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Taken from &lt;a href="https://hvplot.pyviz.org/user_guide/Introduction.html"&gt;HvPlot tutorial&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1787,10 +1787,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="e3c076cb-5d51-4ea2-b728-c5c6fecd9d54"&gt;&lt;/div&gt;
+&lt;div id="05741b89-ddf8-4ca8-870a-d2df9259a28f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e3c076cb-5d51-4ea2-b728-c5c6fecd9d54');
+var element = $('#05741b89-ddf8-4ca8-870a-d2df9259a28f');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -1857,7 +1857,7 @@ if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_an
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Convert-to-HTML-and-display"&gt;Convert to HTML and display&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Convert-to-HTML-and-display"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We just need to convert the figure to raw HTML texts and use &lt;code&gt;IPython.display.HTML()&lt;/code&gt; to show it:&lt;/p&gt;
+&lt;h3 id="Convert-to-HTML-and-display"&gt;Convert to HTML and display&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Convert-to-HTML-and-display"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We just need to convert the figure to raw HTML texts and use &lt;code&gt;IPython.display.HTML()&lt;/code&gt; to show it:&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2147,7 +2147,7 @@ if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_an
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Plot-on-Maps!"&gt;Plot on Maps!&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Plot-on-Maps!"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="http://geo.holoviews.org"&gt;GeoViews&lt;/a&gt; is an excellent library for (interactive) geospatial visualizations. It depends on &lt;a href="https://scitools.org.uk/cartopy"&gt;Cartopy&lt;/a&gt;, which has better be installed by Conda:&lt;/p&gt;
+&lt;h3 id="Plot-on-Maps!"&gt;Plot on Maps!&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Plot-on-Maps!"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="http://geo.holoviews.org"&gt;GeoViews&lt;/a&gt; is an excellent library for (interactive) geospatial visualizations. It depends on &lt;a href="https://scitools.org.uk/cartopy"&gt;Cartopy&lt;/a&gt;, which has better be installed by Conda:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;conda install -c conda-forge cartopy  # caution: comes with heavy dependencies!
 pip install geoviews&lt;/code&gt;&lt;/pre&gt;
@@ -2181,10 +2181,10 @@ pip install geoviews&lt;/code&gt;&lt;/pre&gt;
 
 
 
-&lt;div id="1ed708f2-3d47-4b3e-bfd8-1e1f75f02459"&gt;&lt;/div&gt;
+&lt;div id="55d243a4-bf45-4aed-bbf2-1887dd9293ce"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#1ed708f2-3d47-4b3e-bfd8-1e1f75f02459');
+var element = $('#55d243a4-bf45-4aed-bbf2-1887dd9293ce');
 
 (function(root) {
   function now() {
@@ -2861,10 +2861,10 @@ div.hologroup {
 
 
 
-&lt;div id="da8c8614-a1e8-4df9-87ed-4fc1f74453b7"&gt;&lt;/div&gt;
+&lt;div id="358f81c7-83d2-4a0c-8d04-66ad75a80764"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#da8c8614-a1e8-4df9-87ed-4fc1f74453b7');
+var element = $('#358f81c7-83d2-4a0c-8d04-66ad75a80764');
 function HoloViewsWidget() {
 }
 
@@ -3704,10 +3704,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="ebef21eb-31b9-4a5f-b058-e1330b0a887d"&gt;&lt;/div&gt;
+&lt;div id="d05827ac-ddb8-4e98-8df0-7f70b0712f36"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#ebef21eb-31b9-4a5f-b058-e1330b0a887d');
+var element = $('#d05827ac-ddb8-4e98-8df0-7f70b0712f36');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -4121,4 +4121,4 @@ if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_an
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;/div&gt;&lt;/div&gt;</description><category>Bokeh</category><category>Jupyter</category><category>Nikola</category><category>Visualization</category><guid>https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/</guid><pubDate>Mon, 18 Feb 2019 20:04:25 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;/div&gt;</description><category>Bokeh</category><category>Jupyter</category><category>Nikola</category><category>Visualization</category><guid>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</guid><pubDate>Mon, 18 Feb 2019 20:04:25 GMT</pubDate></item></channel></rss>

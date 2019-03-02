@@ -4,20 +4,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interactive plot on Nikola sites with Bokeh in Jupyter notebooks | Jiawei Zhuang</title>
+<title>[Notebook] Testing Bokeh interactive plot on Nikola sites | Jiawei Zhuang</title>
 <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/ipython.min.css" rel="stylesheet" type="text/css">
 <link href="../../assets/css/nikola_ipython.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
-<link rel="canonical" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/">
+<link rel="canonical" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <meta name="author" content="Jiawei Zhuang">
-<link rel="prev" href="../personal-website-with-jupyter-support-using-nikola-and-github-page/" title="Personal website with Jupyter support using Nikola and GitHub page" type="text/html">
+<link rel="prev" href="../nikola-guide/" title="Personal website with Jupyter support using Nikola and GitHub page" type="text/html">
 <meta property="og:site_name" content="Jiawei Zhuang">
-<meta property="og:title" content="Interactive plot on Nikola sites with Bokeh in Jupyter notebooks">
-<meta property="og:url" content="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/">
+<meta property="og:title" content="[Notebook] Testing Bokeh interactive plot on Nikola sites">
+<meta property="og:url" content="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/">
 <meta property="og:description" content="This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use Bokeh as an example but similar approaches should work with o">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2019-02-18T15:04:25-05:00">
@@ -73,7 +73,7 @@ navbar-dark bg-dark
         <!--Body content-->
         
         
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Interactive plot on Nikola sites with Bokeh in Jupyter notebooks</a></h1>
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">[Notebook] Testing Bokeh interactive plot on Nikola sites</a></h1>
 
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
@@ -85,7 +85,7 @@ navbar-dark bg-dark
             </p>
                 <p class="commentline">
         
-    <a href="#disqus_thread" data-disqus-identifier="cache/posts/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks.html">Comments</a>
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/bokeh-in-nikola.html">Comments</a>
 
 
             
@@ -102,7 +102,7 @@ navbar-dark bg-dark
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use <a href="https://bokeh.pydata.org/">Bokeh</a> as an example but similar approaches should work with other JavaScript-based tools like Plotly. For the impatient, drag to the end of this page to see the results.</p>
-<p>For configuring a website with Nikola, see my previous post.</p>
+<p>For deploying website with Nikola, see my <a href="../nikola-guide/">previous post</a>.</p>
 
 </div>
 </div>
@@ -235,7 +235,7 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Interactive-visualization-with-HvPlot-and-Bokeh">Interactive visualization with HvPlot and Bokeh<a class="anchor-link" href="#Interactive-visualization-with-HvPlot-and-Bokeh">¶</a>
 </h2>
-<p><a href="https://hvplot.pyviz.org">HvPlot</a> provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to <code>pandas.DataFrame.plot()</code>, so you don't need to learn too many holoview-specific syntaxes.</p>
+<p><a href="https://hvplot.pyviz.org">HvPlot</a> provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to <code>pandas.DataFrame.plot()</code>, so you don't need to learn too many Bokeh/Holoview-specific syntaxes.</p>
 <p>It can be installed easily by <code>pip install hvplot</code>, with all major depedencies.</p>
 
 </div>
@@ -275,10 +275,10 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$</p>
 
 
 
-<div id="559e96e8-ad43-48f7-9986-e840bd878a4d"></div>
+<div id="464750cc-ecec-443d-871c-982f1808abdf"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#559e96e8-ad43-48f7-9986-e840bd878a4d');
+var element = $('#464750cc-ecec-443d-871c-982f1808abdf');
 
 (function(root) {
   function now() {
@@ -941,10 +941,10 @@ div.hologroup {
 
 
 
-<div id="409731f5-5ef8-4a08-a8a7-203fd2e3e44f"></div>
+<div id="8eac349b-9331-4bb1-83f1-c889f26a1d71"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#409731f5-5ef8-4a08-a8a7-203fd2e3e44f');
+var element = $('#8eac349b-9331-4bb1-83f1-c889f26a1d71');
 function HoloViewsWidget() {
 }
 
@@ -1892,10 +1892,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-<div id="e3c076cb-5d51-4ea2-b728-c5c6fecd9d54"></div>
+<div id="05741b89-ddf8-4ca8-870a-d2df9259a28f"></div>
 <div class="output_subarea output_javascript output_execute_result">
 <script type="text/javascript">
-var element = $('#e3c076cb-5d51-4ea2-b728-c5c6fecd9d54');
+var element = $('#05741b89-ddf8-4ca8-870a-d2df9259a28f');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('1008')) && !(document.getElementById('_anim_imgNone'))) {
@@ -2276,10 +2276,10 @@ pip install geoviews</code></pre>
 
 
 
-<div id="1ed708f2-3d47-4b3e-bfd8-1e1f75f02459"></div>
+<div id="55d243a4-bf45-4aed-bbf2-1887dd9293ce"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#1ed708f2-3d47-4b3e-bfd8-1e1f75f02459');
+var element = $('#55d243a4-bf45-4aed-bbf2-1887dd9293ce');
 
 (function(root) {
   function now() {
@@ -2946,10 +2946,10 @@ div.hologroup {
 
 
 
-<div id="da8c8614-a1e8-4df9-87ed-4fc1f74453b7"></div>
+<div id="358f81c7-83d2-4a0c-8d04-66ad75a80764"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#da8c8614-a1e8-4df9-87ed-4fc1f74453b7');
+var element = $('#358f81c7-83d2-4a0c-8d04-66ad75a80764');
 function HoloViewsWidget() {
 }
 
@@ -3789,10 +3789,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-<div id="ebef21eb-31b9-4a5f-b058-e1330b0a887d"></div>
+<div id="d05827ac-ddb8-4e98-8df0-7f70b0712f36"></div>
 <div class="output_subarea output_javascript output_execute_result">
 <script type="text/javascript">
-var element = $('#ebef21eb-31b9-4a5f-b058-e1330b0a887d');
+var element = $('#d05827ac-ddb8-4e98-8df0-7f70b0712f36');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('4056')) && !(document.getElementById('_anim_imgNone'))) {
@@ -4159,7 +4159,7 @@ if (!(document.getElementById('4056')) && !(document.getElementById('_anim_imgNo
         </ul>
 <ul class="pager hidden-print">
 <li class="previous">
-                <a href="../personal-website-with-jupyter-support-using-nikola-and-github-page/" rel="prev" title="Personal website with Jupyter support using Nikola and GitHub page">Previous post</a>
+                <a href="../nikola-guide/" rel="prev" title="Personal website with Jupyter support using Nikola and GitHub page">Previous post</a>
             </li>
         </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
@@ -4167,9 +4167,9 @@ if (!(document.getElementById('4056')) && !(document.getElementById('_anim_imgNo
         <div id="disqus_thread"></div>
         <script>
         var disqus_shortname ="jiaweizhuang",
-            disqus_url="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/",
-        disqus_title="Interactive plot on Nikola sites with Bokeh in Jupyter notebooks",
-        disqus_identifier="cache/posts/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks.html",
+            disqus_url="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/",
+        disqus_title="[Notebook] Testing Bokeh interactive plot on Nikola sites",
+        disqus_identifier="cache/posts/bokeh-in-nikola.html",
         disqus_config = function () {
             this.language = "en";
         };

@@ -6,35 +6,75 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/aws.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/bokeh.xml</loc>
-  <lastmod>2019-02-19T06:01:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/cloud.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/earth-data.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/github.xml</loc>
-  <lastmod>2019-02-21T23:53:00Z</lastmod>
+  <lastmod>2019-03-02T20:07:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/hpc.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/io.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/jupyter.xml</loc>
-  <lastmod>2019-02-21T23:53:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/nikola.xml</loc>
-  <lastmod>2019-02-21T23:53:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/spack.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/visualization.xml</loc>
-  <lastmod>2019-02-19T06:01:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/wrf.xml</loc>
+  <lastmod>2019-03-02T20:00:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/xarray.xml</loc>
+  <lastmod>2019-03-02T20:04:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/galleries/rss.xml</loc>
-  <lastmod>2019-02-21T23:19:00Z</lastmod>
+  <lastmod>2019-03-02T20:07:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/rss.xml</loc>
-  <lastmod>2019-02-21T23:53:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2019-02-21T23:53:00Z</lastmod>
+  <lastmod>2019-03-02T20:08:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang</title><link>https://jiaweizhuang.github.io/</link><description>This is Jiawei Zhuang's personal website</description><atom:link href="https://jiaweizhuang.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Thu, 21 Feb 2019 23:53:55 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Interactive plot on Nikola sites with Bokeh in Jupyter notebooks</title><link>https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang</title><link>https://jiaweizhuang.github.io/</link><description>This is Jiawei Zhuang's personal website</description><atom:link href="https://jiaweizhuang.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Sat, 02 Mar 2019 20:08:57 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use &lt;a href="https://bokeh.pydata.org/"&gt;Bokeh&lt;/a&gt; as an example but similar approaches should work with other JavaScript-based tools like Plotly. For the impatient, drag to the end of this page to see the results.&lt;/p&gt;
-&lt;p&gt;For configuring a website with Nikola, see my previous post.&lt;/p&gt;
+&lt;p&gt;For deploying website with Nikola, see my &lt;a href="https://jiaweizhuang.github.io/blog/nikola-guide/"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -57,7 +57,7 @@
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Some-boring-stuff-to-test-basic-notebook-display..."&gt;Some boring stuff to test basic notebook display...&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Some-boring-stuff-to-test-basic-notebook-display..."&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Non-executing code snippet:&lt;/p&gt;
+&lt;h2 id="Some-boring-stuff-to-test-basic-notebook-display..."&gt;Some boring stuff to test basic notebook display...&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Some-boring-stuff-to-test-basic-notebook-display..."&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Non-executing code snippet:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hello'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Other languages:&lt;/p&gt;
@@ -130,7 +130,7 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Interactive-visualization-with-HvPlot-and-Bokeh"&gt;Interactive visualization with HvPlot and Bokeh&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Interactive-visualization-with-HvPlot-and-Bokeh"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://hvplot.pyviz.org"&gt;HvPlot&lt;/a&gt; provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to &lt;code&gt;pandas.DataFrame.plot()&lt;/code&gt;, so you don't need to learn too many holoview-specific syntaxes.&lt;/p&gt;
+&lt;h2 id="Interactive-visualization-with-HvPlot-and-Bokeh"&gt;Interactive visualization with HvPlot and Bokeh&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Interactive-visualization-with-HvPlot-and-Bokeh"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;a href="https://hvplot.pyviz.org"&gt;HvPlot&lt;/a&gt; provides high-level plotting API built on top of the well-known Bokeh library. Its API is very similar to &lt;code&gt;pandas.DataFrame.plot()&lt;/code&gt;, so you don't need to learn too many Bokeh/Holoview-specific syntaxes.&lt;/p&gt;
 &lt;p&gt;It can be installed easily by &lt;code&gt;pip install hvplot&lt;/code&gt;, with all major depedencies.&lt;/p&gt;
 
 &lt;/div&gt;
@@ -170,10 +170,10 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 
 
 
-&lt;div id="559e96e8-ad43-48f7-9986-e840bd878a4d"&gt;&lt;/div&gt;
+&lt;div id="464750cc-ecec-443d-871c-982f1808abdf"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#559e96e8-ad43-48f7-9986-e840bd878a4d');
+var element = $('#464750cc-ecec-443d-871c-982f1808abdf');
 
 (function(root) {
   function now() {
@@ -838,10 +838,10 @@ div.hologroup {
 
 
 
-&lt;div id="409731f5-5ef8-4a08-a8a7-203fd2e3e44f"&gt;&lt;/div&gt;
+&lt;div id="8eac349b-9331-4bb1-83f1-c889f26a1d71"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#409731f5-5ef8-4a08-a8a7-203fd2e3e44f');
+var element = $('#8eac349b-9331-4bb1-83f1-c889f26a1d71');
 function HoloViewsWidget() {
 }
 
@@ -1659,7 +1659,7 @@ if (window.Jupyter !== undefined) {
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Creating-a-demo-plot"&gt;Creating a demo plot&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Creating-a-demo-plot"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Taken from &lt;a href="https://hvplot.pyviz.org/user_guide/Introduction.html"&gt;HvPlot tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="Creating-a-demo-plot"&gt;Creating a demo plot&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Creating-a-demo-plot"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Taken from &lt;a href="https://hvplot.pyviz.org/user_guide/Introduction.html"&gt;HvPlot tutorial&lt;/a&gt;.&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1787,10 +1787,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="e3c076cb-5d51-4ea2-b728-c5c6fecd9d54"&gt;&lt;/div&gt;
+&lt;div id="05741b89-ddf8-4ca8-870a-d2df9259a28f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e3c076cb-5d51-4ea2-b728-c5c6fecd9d54');
+var element = $('#05741b89-ddf8-4ca8-870a-d2df9259a28f');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -1857,7 +1857,7 @@ if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_an
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Convert-to-HTML-and-display"&gt;Convert to HTML and display&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Convert-to-HTML-and-display"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We just need to convert the figure to raw HTML texts and use &lt;code&gt;IPython.display.HTML()&lt;/code&gt; to show it:&lt;/p&gt;
+&lt;h3 id="Convert-to-HTML-and-display"&gt;Convert to HTML and display&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Convert-to-HTML-and-display"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;We just need to convert the figure to raw HTML texts and use &lt;code&gt;IPython.display.HTML()&lt;/code&gt; to show it:&lt;/p&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2147,7 +2147,7 @@ if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_an
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h3 id="Plot-on-Maps!"&gt;Plot on Maps!&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/#Plot-on-Maps!"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="http://geo.holoviews.org"&gt;GeoViews&lt;/a&gt; is an excellent library for (interactive) geospatial visualizations. It depends on &lt;a href="https://scitools.org.uk/cartopy"&gt;Cartopy&lt;/a&gt;, which has better be installed by Conda:&lt;/p&gt;
+&lt;h3 id="Plot-on-Maps!"&gt;Plot on Maps!&lt;a class="anchor-link" href="https://jiaweizhuang.github.io/blog/bokeh-in-nikola/#Plot-on-Maps!"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href="http://geo.holoviews.org"&gt;GeoViews&lt;/a&gt; is an excellent library for (interactive) geospatial visualizations. It depends on &lt;a href="https://scitools.org.uk/cartopy"&gt;Cartopy&lt;/a&gt;, which has better be installed by Conda:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;conda install -c conda-forge cartopy  # caution: comes with heavy dependencies!
 pip install geoviews&lt;/code&gt;&lt;/pre&gt;
@@ -2181,10 +2181,10 @@ pip install geoviews&lt;/code&gt;&lt;/pre&gt;
 
 
 
-&lt;div id="1ed708f2-3d47-4b3e-bfd8-1e1f75f02459"&gt;&lt;/div&gt;
+&lt;div id="55d243a4-bf45-4aed-bbf2-1887dd9293ce"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#1ed708f2-3d47-4b3e-bfd8-1e1f75f02459');
+var element = $('#55d243a4-bf45-4aed-bbf2-1887dd9293ce');
 
 (function(root) {
   function now() {
@@ -2861,10 +2861,10 @@ div.hologroup {
 
 
 
-&lt;div id="da8c8614-a1e8-4df9-87ed-4fc1f74453b7"&gt;&lt;/div&gt;
+&lt;div id="358f81c7-83d2-4a0c-8d04-66ad75a80764"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#da8c8614-a1e8-4df9-87ed-4fc1f74453b7');
+var element = $('#358f81c7-83d2-4a0c-8d04-66ad75a80764');
 function HoloViewsWidget() {
 }
 
@@ -3704,10 +3704,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="ebef21eb-31b9-4a5f-b058-e1330b0a887d"&gt;&lt;/div&gt;
+&lt;div id="d05827ac-ddb8-4e98-8df0-7f70b0712f36"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#ebef21eb-31b9-4a5f-b058-e1330b0a887d');
+var element = $('#d05827ac-ddb8-4e98-8df0-7f70b0712f36');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -4121,7 +4121,7 @@ if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_an
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;/div&gt;&lt;/div&gt;</description><category>Bokeh</category><category>Jupyter</category><category>Nikola</category><category>Visualization</category><guid>https://jiaweizhuang.github.io/blog/interactive-plot-on-nikola-sites-with-bokeh-in-jupyter-notebooks/</guid><pubDate>Mon, 18 Feb 2019 20:04:25 GMT</pubDate></item><item><title>Personal website with Jupyter support using Nikola and GitHub page</title><link>https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;p&gt;I decide to build my new website and occasionally post blogs on research, software, and computing.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>Bokeh</category><category>Jupyter</category><category>Nikola</category><category>Visualization</category><guid>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</guid><pubDate>Mon, 18 Feb 2019 20:04:25 GMT</pubDate></item><item><title>Personal website with Jupyter support using Nikola and GitHub page</title><link>https://jiaweizhuang.github.io/blog/nikola-guide/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;p&gt;I decide to build my new website and occasionally post blogs on research, software, and computing.&lt;/p&gt;
 &lt;p&gt;For the blogging tool, basic requirements are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;It must be a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Static_web_page"&gt;static site&lt;/a&gt; that can be easily version-controlled on GitHub. So, not WordPress.&lt;/li&gt;
@@ -4139,23 +4139,23 @@ if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_an
 &lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
 &lt;ul class="auto-toc simple"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#related-posts" id="id1"&gt;1   Related posts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#installation-and-initialization" id="id2"&gt;2   Installation and initialization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#github-deployment-and-version-control" id="id3"&gt;3   Github deployment and version control&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#change-theme" id="id4"&gt;4   Change theme&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#set-non-blog-layout" id="id5"&gt;5   Set non-blog layout&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#enable-jupyter-notebook-format" id="id6"&gt;6   Enable Jupyter notebook format&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#add-social-media-button" id="id7"&gt;7   Add social media button&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#various-tweaks" id="id8"&gt;8   Various tweaks&lt;/a&gt;&lt;ul class="auto-toc"&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#add-table-of-content" id="id9"&gt;8.1   Add table of content&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#tweak-archive-format" id="id10"&gt;8.2   Tweak Archive format&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#enable-comment-system" id="id11"&gt;8.3   Enable comment system&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#related-posts" id="id1"&gt;1   Related posts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#installation-and-initialization" id="id2"&gt;2   Installation and initialization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#github-deployment-and-version-control" id="id3"&gt;3   Github deployment and version control&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#change-theme" id="id4"&gt;4   Change theme&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#set-non-blog-layout" id="id5"&gt;5   Set non-blog layout&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#enable-jupyter-notebook-format" id="id6"&gt;6   Enable Jupyter notebook format&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#add-social-media-button" id="id7"&gt;7   Add social media button&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#various-tweaks" id="id8"&gt;8   Various tweaks&lt;/a&gt;&lt;ul class="auto-toc"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#add-table-of-content" id="id9"&gt;8.1   Add table of content&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#tweak-archive-format" id="id10"&gt;8.2   Tweak Archive format&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/nikola-guide/#enable-comment-system" id="id11"&gt;8.3   Enable comment system&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="related-posts"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id1"&gt;1   Related posts&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id1"&gt;1   Related posts&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Just by Googling you can find tons of tutorials on this. Particularly good ones are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/"&gt;http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/&lt;/a&gt;&lt;/li&gt;
@@ -4171,7 +4171,7 @@ if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_an
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="installation-and-initialization"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id2"&gt;2   Installation and initialization&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id2"&gt;2   Installation and initialization&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The &lt;a class="reference external" href="https://getnikola.com/getting-started.html"&gt;official getting-started guide&lt;/a&gt; explains this well. I just summarize the steps here.&lt;/p&gt;
 &lt;p&gt;I come from the scientific side of Python, so use Conda to create a new environment:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -4195,7 +4195,7 @@ pip install Nikola[extras]
 &lt;p&gt;Before adding any real contents, you should first configure GitHub deployment, layout, themes, etc.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="github-deployment-and-version-control"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id3"&gt;3   Github deployment and version control&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id3"&gt;3   Github deployment and version control&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;There is an &lt;a class="reference external" href="https://getnikola.com/handbook.html#deploying-to-github"&gt;official deployment guide&lt;/a&gt; but I feel that more explanation is necessary.&lt;/p&gt;
 &lt;p&gt;Most posts mention deployment at the final step, but I think it is good to do so at the very beginning.&lt;/p&gt;
 &lt;p&gt;We will use &lt;a class="reference external" href="https://pages.github.com/"&gt;GitHub pages&lt;/a&gt; to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called &lt;a class="reference external" href="https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites"&gt;user page&lt;/a&gt; that only works for a repo named &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;[username].github.io&lt;/span&gt;&lt;/tt&gt;, where &lt;tt class="docutils literal"&gt;[username]&lt;/tt&gt; is your GitHub account name (mine is &lt;tt class="docutils literal"&gt;jiaweizhuang&lt;/tt&gt;). The website URL will be &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;https://[username].github.io/&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
@@ -4220,11 +4220,11 @@ output
 &lt;/pre&gt;
 &lt;p&gt;You can manually commit to this &lt;tt class="docutils literal"&gt;src&lt;/tt&gt; branch and push to GitHub.&lt;/p&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, double-check that branch names are correct:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_71696d506bad4d918b87a034dc1c6e2b-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_SOURCE_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'src'&lt;/span&gt;
-&lt;a name="rest_code_71696d506bad4d918b87a034dc1c6e2b-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_DEPLOY_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'master'&lt;/span&gt;
-&lt;a name="rest_code_71696d506bad4d918b87a034dc1c6e2b-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_REMOTE_NAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'origin'&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_0ce6b079903a425c9a2aeb3484be7bac-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_SOURCE_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'src'&lt;/span&gt;
+&lt;a name="rest_code_0ce6b079903a425c9a2aeb3484be7bac-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_DEPLOY_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'master'&lt;/span&gt;
+&lt;a name="rest_code_0ce6b079903a425c9a2aeb3484be7bac-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_REMOTE_NAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'origin'&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;I also recommend setting:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_896dec8b2926463ba7a1791e5d624a7d-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_COMMIT_SOURCE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_a162f8bf4453457bbe0f49729110b817-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_COMMIT_SOURCE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;So that the &lt;tt class="docutils literal"&gt;nikola github_deploy&lt;/tt&gt; command below won't touch your &lt;tt class="docutils literal"&gt;src&lt;/tt&gt; branch.&lt;/p&gt;
 &lt;p&gt;To deploy the content on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt;, run:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -4243,13 +4243,13 @@ nikola github_deploy
 &lt;p&gt;For all the tweaks later, you can incrementally update the GitHub repo and the website, by manually pushing to &lt;tt class="docutils literal"&gt;src&lt;/tt&gt; and using &lt;tt class="docutils literal"&gt;nikola github_deploy&lt;/tt&gt; to push to &lt;tt class="docutils literal"&gt;master&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="change-theme"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id4"&gt;4   Change theme&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id4"&gt;4   Change theme&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The default theme looks more like a blog than a personal website. Twitter's &lt;a class="reference external" href="https://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt; is an excellent theme and is &lt;a class="reference external" href="https://themes.getnikola.com/v8/bootstrap4/"&gt;built into Nikola&lt;/a&gt;.  In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, set:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_8038bdec32864af489ac9537696023c0-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bootstrap4"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_19cc712a43aa4752a41dd6ce25180542-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bootstrap4"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The theme can be further tweaked by &lt;a class="reference external" href="https://bootswatch.com/"&gt;Bootswatch&lt;/a&gt; but I find the default theme perfect for me :)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="set-non-blog-layout"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id5"&gt;5   Set non-blog layout&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id5"&gt;5   Set non-blog layout&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://getnikola.com/creating-a-site-not-a-blog-with-nikola.html"&gt;Official non-blog guide&lt;/a&gt; explains this well. I just summarize the steps here.&lt;/p&gt;
 &lt;p&gt;Nikola defines two types of contents:&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -4257,20 +4257,20 @@ nikola github_deploy
 &lt;li&gt;"Pages" generated by &lt;tt class="docutils literal"&gt;nikola new_page&lt;/tt&gt;. It is a standalone page that will not be automatically added to the main site. This is the building block for a non-blog site.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, bring Pages to root level:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-7"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-8"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# notice the second argument&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-12"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-13"&gt;&lt;/a&gt;
-&lt;a name="rest_code_ce404178b1f3457898a92508519b6bde-14"&gt;&lt;/a&gt;&lt;span class="n"&gt;INDEX_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-7"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-8"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# notice the second argument&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-12"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_730ca5fcedbb4b42ad76c995e99243ce-14"&gt;&lt;/a&gt;&lt;span class="n"&gt;INDEX_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Generate your new index page (the entry of you website):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 $ nikola new_page
@@ -4288,30 +4288,30 @@ Creating New Page
 Title: Bio
 &lt;/pre&gt;
 &lt;p&gt;And then add it to &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Home"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/bio/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Bio"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-5"&gt;&lt;/a&gt;        &lt;span class="o"&gt;...&lt;/span&gt;
-&lt;a name="rest_code_380e8fe691ce4b0a97106a04776d9906-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;),&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Home"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/bio/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Bio"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-5"&gt;&lt;/a&gt;        &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;a name="rest_code_8949aaed3b274ecb9f5c4fea2f22600a-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;),&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="enable-jupyter-notebook-format"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id6"&gt;6   Enable Jupyter notebook format&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id6"&gt;6   Enable Jupyter notebook format&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Just add &lt;tt class="docutils literal"&gt;*.ipynb&lt;/tt&gt; as recognizable formats:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-12"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
-&lt;a name="rest_code_0862747a37c140808b1ea7de967e643c-14"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-12"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
+&lt;a name="rest_code_3555620c1f2a4e6282a5fb2010d3eb26-14"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;With the current version (v8), that's all you need to do!&lt;/p&gt;
 &lt;p&gt;Create a new blog in notebook format:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -4319,28 +4319,28 @@ $ nikola new_post -f ipynb
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="add-social-media-button"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id7"&gt;7   Add social media button&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id7"&gt;7   Add social media button&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You might want to add buttons for other sites like GitHub and Twitter, or any icons from &lt;a class="reference external" href="https://fontawesome.com/"&gt;Font Awesome&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Taken from &lt;a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/"&gt;this post by Jaakko Luttinen&lt;/a&gt;, the minimal example is (only one GitHub button):&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;EXTRA_HEAD_DATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'&amp;lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&amp;gt;'&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;CONTENT_FOOTER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'''&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;div class="text-center"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-6"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;span class="fa-stack fa-2x"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-7"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;a href="https://github.com/[username]"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-8"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-circle fa-stack-2x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-9"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-github fa-inverse fa-stack-1x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-10"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-11"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-12"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-13"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_840391954cdd4aaa91508cd69211c6cb-14"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'''&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;EXTRA_HEAD_DATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'&amp;lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&amp;gt;'&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;CONTENT_FOOTER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'''&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;div class="text-center"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-6"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;span class="fa-stack fa-2x"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-7"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;a href="https://github.com/[username]"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-8"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-circle fa-stack-2x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-9"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-github fa-inverse fa-stack-1x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-10"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-11"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-12"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-13"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90bd95c6fe2a4abda6a81b931cf6b341-14"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'''&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="various-tweaks"&gt;
-&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id8"&gt;8   Various tweaks&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id8"&gt;8   Various tweaks&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="section" id="add-table-of-content"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id9"&gt;8.1   Add table of content&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id9"&gt;8.1   Add table of content&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;For &lt;tt class="docutils literal"&gt;*.rst&lt;/tt&gt; posts, simple add:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 .. contents::
@@ -4352,14 +4352,14 @@ $ nikola new_post -f ipynb
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="section" id="tweak-archive-format"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id10"&gt;8.2   Tweak Archive format&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id10"&gt;8.2   Tweak Archive format&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;To avoid grouping posts by years:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_c0e1b28008624276928387f2e2042c3a-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;CREATE_SINGLE_ARCHIVE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_c0de06744aa94aa7b526ed0395e06102-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;CREATE_SINGLE_ARCHIVE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The creation time of each blog post is displayed down to minutes by default. Only showing the date seems enough:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_29f93918023645b4882d062406f96426-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;DATE_FORMAT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'YYYY-MM-dd'&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_77327e94dfa8469c90072c6ebbae59b9-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;DATE_FORMAT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'YYYY-MM-dd'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="enable-comment-system"&gt;
-&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/#id11"&gt;8.3   Enable comment system&lt;/a&gt;&lt;/h3&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id11"&gt;8.3   Enable comment system&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Because static sites do not have databases, you need to use a thiry-party comment system as documented on the &lt;a class="reference external" href="https://getnikola.com/handbook.html#comments"&gt;official doc&lt;/a&gt;. The steps are:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
 &lt;li&gt;Sign up for an account on &lt;a class="reference external" href="https://disqus.com/"&gt;https://disqus.com/&lt;/a&gt;.&lt;/li&gt;
@@ -4369,8 +4369,8 @@ $ nikola new_post -f ipynb
 &lt;li&gt;At "Select Platform", just skip the instructions. No need to insert the "Universal Code" manually, as it is built into Nikola. Keep all default and finish the configuration.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, add your Disqus shortname:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_39b4f517b40f4053ba37d7f552484475-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"disqus"&lt;/span&gt;
-&lt;a name="rest_code_39b4f517b40f4053ba37d7f552484475-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"[disqus-shortname]"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_4cca4aab07f24bfea55c3b72b3b087a3-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"disqus"&lt;/span&gt;
+&lt;a name="rest_code_4cca4aab07f24bfea55c3b72b3b087a3-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"[disqus-shortname]"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Deploy to GitHub and the comment system should be enabled.&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>GitHub</category><category>Jupyter</category><category>Nikola</category><guid>https://jiaweizhuang.github.io/blog/personal-website-with-jupyter-support-using-nikola-and-github-page/</guid><pubDate>Sun, 17 Feb 2019 23:23:21 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;/div&gt;</description><category>GitHub</category><category>Jupyter</category><category>Nikola</category><guid>https://jiaweizhuang.github.io/blog/nikola-guide/</guid><pubDate>Sun, 17 Feb 2019 23:23:21 GMT</pubDate></item></channel></rss>
