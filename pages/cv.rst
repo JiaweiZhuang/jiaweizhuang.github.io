@@ -1,5 +1,5 @@
-.. title: Bio
-.. slug: bio
+.. title: CV
+.. slug: cv
 .. date: 2019-02-17 22:42:10 UTC-05:00
 .. tags: 
 .. category: 
