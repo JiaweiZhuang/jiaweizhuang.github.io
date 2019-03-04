@@ -69,3 +69,13 @@ pre.code .vi, .highlight pre .vi { color: #19177C } /* Name.Variable.Instance */
 pre.code .vm, .highlight pre .vm { color: #19177C } /* Name.Variable.Magic */
 pre.code .il, .highlight pre .il { color: #666666 } /* Literal.Number.Integer.Long */
 table.codetable { width: 100%;} td.linenos {text-align: right; width: 4em;}
+
+/* My custom CSS code */
+
+code {
+    background: #f5f5f5;
+    color: rgb(200, 0, 0) !important;
+    white-space: nowrap;
+    padding: 2px 2px;
+    border-radius: 4px;
+}
