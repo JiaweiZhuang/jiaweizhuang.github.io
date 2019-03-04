@@ -162,31 +162,31 @@ The launch event is recored in the "Activity History"; if a node fails to launch
    :align: center
    :height: 150 pt
 
-- **EC2 Launch template.** It specifies the EC2 instance configuration (like instance type and AMI) for the above Auto Scaling Group.
+- **EC2 Launch Template.** It specifies the EC2 instance configuration (like instance type and AMI) for the above Auto Scaling Group.
 
 .. image:: /images/pcluster_components/launch_template.png
    :align: center
    :height: 120 pt
 
-- **EC2 Spot request.** With :code:`cluster_type = spot`, each compute node is associated with a spot request.
+- **EC2 Spot Request.** With :code:`cluster_type = spot`, each compute node is associated with a spot request.
 
 .. image:: /images/pcluster_components/spot_requests.png
    :align: center
    :height: 120 pt
 
-- **EBS volume.** You will see 3 kinds of volumes. A standalone volume specified in the :code:`ebs` section, a volume for master node, and a few volumes for compute nodes.
+- **EBS Volume.** You will see 3 kinds of volumes. A standalone volume specified in the :code:`ebs` section, a volume for master node, and a few volumes for compute nodes.
 
 .. image:: /images/pcluster_components/ebs_volume.png
    :align: center
    :height: 120 pt
 
-- **Auxiliary services.** They are not directly related to the computation, but help gluing the major computing services together. For example, the cluster uses DynamoDB (Amazon's noSQL database) for storing some metadata. The cluster also relies on Amazon SNS and SQS for interaction between the Slurm scheduler and the AutoScaling group. We will see this in action later.
+- **Auxiliary Services.** They are not directly related to the computation, but help gluing the major computing services together. For example, the cluster uses DynamoDB (Amazon's noSQL database) for storing some metadata. The cluster also relies on Amazon SNS and SQS for interaction between the Slurm scheduler and the AutoScaling group. We will see this in action later.
 
 .. image:: /images/pcluster_components/dynamo_db.png
    :align: center
    :height: 120 pt
 
-Imagine the workload involved if you launch all the above resources by hand and glue them together. Fortunately, as a user, there is no need to implement those from scratch. But it is good to know a bit of the underlying concepts.
+Imagine the workload involved if you launch all the above resources by hand and glue them together. Fortunately, as a user, there is no need to implement those from scratch. But it is good to know a bit about the underlying components.
 
 In most cases, you should not manually modify those individual resources. For example, if you terminate a compute instance, a new one will be automatically launched to match the current autoscaling requirement. Let the high-level :code:`pcluster` command handle the cluster operation. Some exceptions will be mentioned in the "tricks" section later.
 
@@ -283,7 +283,7 @@ Cluster management tricks
 
 AWS ParallelCluster is able to auto-scale [#pcluster-autoscaling]_, meaning that new compute nodes will be launched automatically when there are pending jobs in Slurm's queue, and idle nodes will be terminated automatically.
 
-While this generally works fine, such automatic update takes a while and feels a bit black-boxy. A more straightforward & transparent way is to modify the autoscaling group directly in the console. Right-click on your AutoScaling Group -- "Edit":
+While this generally works fine, such automatic update takes a while and feels a bit black-boxy. A more straightforward & transparent way is to modify the autoscaling group directly in the console. Right-click on your AutoScaling Group, and select "Edit":
 
 .. image:: /images/pcluster_components/edit_autoscaling.png
    :align: center
@@ -291,7 +291,7 @@ While this generally works fine, such automatic update takes a while and feels a
 
 - Modifying "Desired Capacity" will immediately cause the cluster to adjust to that size. Either to request more nodes or to kill redundant nodes.
 - Increase "Min" to match "Desired Capacity" if you want the compute nodes to keep running even if they are idle. Or keep "Min" as zero, so idle nodes will be killed after some time period (a few minutes, roughly match the "Default Cooldown" section in the Auto Scaling Group).
-- "Max" must be at least the same as "Desired Capacity". This is the hard-cap that the scheduler cannot violate.
+- "Max" must be at least the same as "Desired Capacity". This is the hard-limit that the scheduler cannot violate.
 
 After compute nodes are launched or killed, Slurm should be aware of such change in ~1 minute. Check it with :code:`sinfo`.
 
@@ -434,7 +434,7 @@ A serious HPC user should also check the available Byte Transfer Layer (BTL) in 
       MCA btl: vader (MCA v2.1.0, API v3.0.0, Component v3.1.3)
       ...
 
-- :code:`self` is, as its name suggests, for a process to talk to itself [#ompi-self]_.
+- :code:`self`, as its name suggests, is for a process to talk to itself [#ompi-self]_.
 - :code:`tcp` is the default inter-node communication mechanism on EC2 [#ompi-tcp]_. It is not ideal for HPC, but this should be changed with the coming EFA_.
 - :code:`vader` is a high-performance intra-node communication mechanism [#ompi-vader]_.
 
@@ -473,7 +473,9 @@ Put it into a :code:`hello_mpi.c` file and compile:
     $ mpirun -np 1 ./hello_mpi.x  # runs on master node
     I am 0 of 1, on host ip-172-31-7-214
 
-To run it on compute nodes, the classic MPI way is to specify the node list via :code:`--host` or :code:`--hostfile` (for OpenMPI; other MPI implementations have similar options)::
+To run it on compute nodes, the classic MPI way is to specify the node list via :code:`--host` or :code:`--hostfile` (for OpenMPI; other MPI implementations have similar options):
+
+.. code:: bash
 
     $ mpirun -np 2 --host ip-172-31-5-150,ip-172-31-14-243 ./hello_mpi.x
     I am 0 of 2, on host ip-172-31-5-150
@@ -481,7 +483,9 @@ To run it on compute nodes, the classic MPI way is to specify the node list via 
 
 Following :code:`--host` are compute node IPs shown by :code:`sinfo`.
 
-A more sane approach is to launch it via :code:`srun`, which takes care of the placement of MPI processes::
+A more sane approach is to launch it via :code:`srun`, which takes care of the placement of MPI processes:
+
+.. code:: bash
 
     $ srun -N 2 --ntasks-per-node 2 ./hello_mpi.x
     I am 1 of 4, on host ip-172-31-5-150
@@ -550,7 +554,7 @@ Also remember to save (and later recover) your custom settings in :code:`~/.spac
 
 Then you can safely delete the cluster. For the next time, simply pull the tar-ball from S3 and decompress it. The environment would look exactly the same as the last time. You should use the same :code:`base_os` to minimize binary-compatibility errors.
 
-A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location when the package was installed last time. If it was at :code:`/shared/spack/`, then use the same location.
+A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location where the package was installed last time. If it was at :code:`/shared/spack/`, then use the same location.
 
 The underlying reason is that Spack uses `RPATH <https://en.wikipedia.org/wiki/Rpath>`_ for library dependencies, to avoid messing around :code:`$LD_LIBRARY_PATH` [#spack-rapth]_. Simply put, it hard-codes the dependencies into the binary. You can check the hard-coded paths by, for example:
 
@@ -601,7 +605,7 @@ Here I only provide the minimum steps to build the WRF model, without diving int
 Environment setup
 -----------------
 
-Adapted from the `compile tutorial <http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php>`_, add those to your :code:`~/.bashrc`:
+Add those to your :code:`~/.bashrc` (adapted from the `WRF compile tutorial <http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php>`_):
 
 .. code:: bash
 
