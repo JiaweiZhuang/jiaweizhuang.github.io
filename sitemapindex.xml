@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/aws.xml</loc>
-  <lastmod>2019-03-06T18:17:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/bokeh.xml</loc>
@@ -15,15 +15,15 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/cloud.xml</loc>
-  <lastmod>2019-03-06T18:17:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
-  <lastmod>2019-03-06T15:57:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/earth-data.xml</loc>
-  <lastmod>2019-03-06T15:22:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/github.xml</loc>
@@ -31,15 +31,15 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/hpc.xml</loc>
-  <lastmod>2019-03-06T18:17:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/io.xml</loc>
-  <lastmod>2019-03-06T15:57:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/jupyter.xml</loc>
-  <lastmod>2019-03-06T15:23:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
@@ -55,7 +55,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/visualization.xml</loc>
-  <lastmod>2019-03-06T15:22:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/wrf.xml</loc>
@@ -63,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/xarray.xml</loc>
-  <lastmod>2019-03-06T15:57:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/galleries/rss.xml</loc>
@@ -71,10 +71,10 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/rss.xml</loc>
-  <lastmod>2019-03-06T18:17:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2019-03-06T18:17:00Z</lastmod>
+  <lastmod>2019-03-06T23:46:00Z</lastmod>
  </sitemap>
 </sitemapindex>
