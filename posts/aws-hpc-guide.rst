@@ -545,28 +545,28 @@ Fortunately, Spack installs everything to a single, non-root directory (similar 
 
 .. code:: bash
 
-    spack clean --all  # clean all kinds of caches
-    tar zcvf spack.tar.gz spack  # compression
-    aws s3 mb [your-bucket-name]  # create a new bucket. might need to configure AWS credentials for permission
-    aws s3 cp spack.tar.gz s3://[your-bucket-name]/   # upload to S3 bucket
+    $ spack clean --all  # clean all kinds of caches
+    $ tar zcvf spack.tar.gz spack  # compression
+    $ aws s3 mb [your-bucket-name]  # create a new bucket. might need to configure AWS credentials for permission
+    $ aws s3 cp spack.tar.gz s3://[your-bucket-name]/   # upload to S3 bucket
 
 Also remember to save (and later recover) your custom settings in :code:`~/.spack/packages.yaml`, :code:`~/.spack/linux/compilers.yaml` and :code:`.bashrc`.
 
 Then you can safely delete the cluster. For the next time, simply pull the tar-ball from S3 and decompress it. The environment would look exactly the same as the last time. You should use the same :code:`base_os` to minimize binary-compatibility errors.
 
-A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location where the package was installed last time. For example, if it was at :code:`/shared/spack/`, then use the new location should also be exactly :code:`/shared/spack/`.
+A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location where the package was installed last time. For example, if it was at :code:`/shared/spack/`, then the new location should also be exactly :code:`/shared/spack/`.
 
 The underlying reason is that Spack uses `RPATH <https://en.wikipedia.org/wiki/Rpath>`_ for library dependencies, to avoid messing around :code:`$LD_LIBRARY_PATH` [#spack-rapth]_. Simply put, it hard-codes the dependencies into the binary. You can check the hard-coded paths by, for example:
 
 .. code:: bash
 
-    readelf -d $(spack location -i openmpi)/bin/mpicc | grep RPATH
+    $ readelf -d $(spack location -i openmpi)/bin/mpicc | grep RPATH
 
 If the new shared EBS volume is mounted to a new location like :code:`/shared_new`, a quick-and-dirty fix would be:
 
 .. code:: bash
 
-    sudo ln -s /shared_new /shared/
+    $ sudo ln -s /shared_new /shared/
 
 Special note on Intel compilers
 -------------------------------
@@ -594,8 +594,8 @@ With common libraries like MPI, HDF5, and NetCDF installed, compiling real appli
 
 Get the recently released WRF v4::
 
-    wget https://github.com/wrf-model/WRF/archive/v4.0.3.tar.gz
-    tar zxvf v4.0.3.tar.gz
+    $ wget https://github.com/wrf-model/WRF/archive/v4.0.3.tar.gz
+    $ tar zxvf v4.0.3.tar.gz
 
 Here I only provide the minimum steps to build the WRF model, without diving into the actual model usage. If you plan to use WRF for either research or operation, please carefully study:
 
@@ -633,9 +633,9 @@ WRF also requires NetCDF-C and NetCDF-Fortran to be located in the same director
 
 .. code:: bash
 
-    NETCDF_C=$(spack location -i netcdf)
-    ln -sf $NETCDF_C/include/*  $NETCDF/include/
-    ln -sf $NETCDF_C/lib/*  $NETCDF/lib/
+    $ NETCDF_C=$(spack location -i netcdf)
+    $ ln -sf $NETCDF_C/include/*  $NETCDF/include/
+    $ ln -sf $NETCDF_C/lib/*  $NETCDF/lib/
 
 Compile WRF
 -----------
@@ -679,7 +679,7 @@ Then build the WRF executable for the commonly used :code:`em_real` case:
 
 .. code:: bash
 
-    ./compile em_real 2>&1 | tee wrf_compile.log
+    $ ./compile em_real 2>&1 | tee wrf_compile.log
 
 You might also use a bigger master node (or go to a compute node) and add something like :code:`-j 8` for parallel build.
 
