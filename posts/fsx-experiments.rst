@@ -21,7 +21,7 @@ To answer these questions, I did some initial experiments:
 
 The two experiments are independent so feel free to jump to either one.
 
-**Disclaimer**: This is just a preliminary result and is by no means a rigorous evaluation. In particular, I have made no effort on fine-turning the performance. I have no affiliation with AWS (although I do have their generous funding), so please treat this as a third-party report.
+**Disclaimer**: This is just a preliminary result and is by no means a rigorous evaluation. In particular, I have made no effort on fine-turning the performance. I am not affiliated with AWS (although I do have their generous funding), so please treat this as a third-party report.
 
 .. contents::
 .. section-numbering::
@@ -243,7 +243,7 @@ As an example, I compute the average Sea Surface Temperature (SST) [#sst]_ over 
    :height: 400
    :width: 800
 
-The full code is available in the `next notebook <link://slug/dask-hpc-fsx>`_. At the end of the notebook also shows a sign of climate change (computed from the SST data), so at least we get a bit scientific insight from this toy problem. Hopefully such great computing power can be used to solve some big science.
+The full code is available in the `next notebook <link://slug/dask-hpc-fsx>`_, with some technical comments. At the end of the notebook also shows a sign of climate change (computed from the SST data), so at least we get a bit scientific insight from this toy problem. Hopefully such great computing power can be used to solve some big science.
 
 Final thoughts
 ==============
@@ -255,7 +255,7 @@ Back to my initial questions:
 
 This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:
 
-- No need to worry about the HDF + Cloud problem [#hdf-cloud]_. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF & NetCDF formats, and converting them to more a cloud-friendly format like Zarr can take some effort.
+- No need to worry about the HDF + Cloud problem [#hdf-cloud]_. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF & NetCDF formats, and converting them to more a cloud-friendly format like Zarr might take some effort.
 - It is probably easier for existing cloud-HPC users to adopt. Numerical simulations and post-processing can be done in exactly the same environment.
 - It is likely to cost more (haven't rigorously calculated), due to heavier resource provisioning. Lustre essentially acts as a huge cache for S3. In the long-term, this kind of data analytics workflow should probably be handled in a more cloud-native way, using Lambda-like serverless computing, to maximize resource utilization and minimize computational cost. But it is nice to have something that "just works" right now.
 
@@ -263,7 +263,7 @@ Some possible further steps:
  
 - The performance can be fine-tuned indefinitely. There is an extremely-large parameter space: Lustre stripe size, HDF5 chunk size, Dask chunk size, Dask processes vs threads, client instance counts and types... But unless there are important scientific/business needs, fine-tuning it doesn't seem super interesting.
 - For me personally, this provides a very convenient test environment for scaling-out xESMF [#xesmf-pangeo]_, the regridding package I wrote. Because the entire pipeline is clearly I/O-limited, what I really need is just a fast file system.
-- The most promising use case is probably some deep-learning-like climate analytics [#climate-net]_. DL algorithms are generally data hungry, and the best place to put massive datasets is, with not doubt, the cloud. How does Dask + Xarray + Pangeo fit into DL workflow seems an open question, though [#xarray-dl]_ .
+- The most promising use case is probably some deep-learning-like climate analytics [#climate-net]_. DL algorithms are generally data hungry, and the best place to put massive datasets is, with not doubt, the cloud. How Dask + Xarray + Pangeo fit into DL workflow seems to be in active discussion [#xarray-dl]_ .
 
 References
 ==========

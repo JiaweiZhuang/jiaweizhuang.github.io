@@ -115,7 +115,7 @@ The full list of parameters are available in the official docs [#pcluster-config
 - Increase :code:`master_root_volume_size` and :code:`compute_root_volume_size`, if your code involves heavy local disk I/O.
 - :code:`max_queue_size` and :code:`maintain_initial_size` are less critical as they can be easily changed later.
 
-I have omitted the FSx section, which is left the next post.
+I have omitted the FSx section, which is left to the `next post <link://slug/fsx-experiments>`_.
 
 One last thing: Many HPC code runs faster with hyperthreading disabled [#hyper]_. To achieve this at launch, you can write a custom script and execute it via the ``post_install`` option in pcluster's config file. This is a bit involved though. Hopefully there can be a simple option in future versions of pcluster.
 
@@ -554,7 +554,7 @@ Also remember to save (and later recover) your custom settings in :code:`~/.spac
 
 Then you can safely delete the cluster. For the next time, simply pull the tar-ball from S3 and decompress it. The environment would look exactly the same as the last time. You should use the same :code:`base_os` to minimize binary-compatibility errors.
 
-A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location where the package was installed last time. If it was at :code:`/shared/spack/`, then use the same location.
+A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the :code:`spack/` directory is located at the same location where the package was installed last time. For example, if it was at :code:`/shared/spack/`, then use the new location should also be exactly :code:`/shared/spack/`.
 
 The underlying reason is that Spack uses `RPATH <https://en.wikipedia.org/wiki/Rpath>`_ for library dependencies, to avoid messing around :code:`$LD_LIBRARY_PATH` [#spack-rapth]_. Simply put, it hard-codes the dependencies into the binary. You can check the hard-coded paths by, for example:
 
@@ -585,7 +585,7 @@ Then, you should also add something like
 
 to :code:`~/.spack/linux/compilers.yaml` under the Intel compiler section. Otherwise you will see interesting linking errors when later building libraries with the Intel compiler [#intel-rpath]_.
 
-After those are all set, simple add :code:`%intel` to all :code:`spack install` commands, or set it as the default compiler [#spack-default-compiler]_.
+After those are all set, simple add :code:`%intel` to all :code:`spack install` commands to build new libraries with Intel.
 
 Build real applications -- example with WRF
 ===========================================
@@ -645,7 +645,7 @@ Compile WRF
     $ cd WRF-4.0.3
     $ ./configure
 
-- For the fisrt question, select ``34``, which uses GNU compilers and pure MPI ("dmpar" -- Distributed Memory PARallelization).
+- For the first question, select ``34``, which uses GNU compilers and pure MPI ("dmpar" -- Distributed Memory PARallelization).
 - For the second question, select ``1``, whichs uses basic nesting.
 
 You should get this successful message::
@@ -735,7 +735,6 @@ References
 .. [#intel-aws] See Install Intel® Parallel Studio XE on Amazon Web Services (AWS) https://software.intel.com/en-us/articles/install-intel-parallel-studio-xe-on-amazon-web-services-aws
 .. [#spack-external] See Integrating external compilers in Spack docs: https://spack.readthedocs.io/en/latest/build_systems/intelpackage.html?highlight=intel#integrating-external-compilers
 .. [#intel-rpath] See this comment at: https://github.com/spack/spack/issues/8315#issuecomment-393160339
-.. [#spack-default-compiler] See Setting defaults and using Cray modules in Spack docs: https://spack.readthedocs.io/en/latest/getting_started.html#setting-defaults-and-using-cray-modules
 .. [#wrf-netcdf] Related discussions are at https://github.com/spack/spack/issues/8816 and https://github.com/wrf-model/WRF/issues/794
 .. [#wrf-openmpi] http://forum.wrfforum.com/viewtopic.php?f=5&t=3660
 .. [#wrf-error] Just Google "WRF compile error"
