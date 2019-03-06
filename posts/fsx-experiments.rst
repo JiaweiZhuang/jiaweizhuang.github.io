@@ -243,7 +243,7 @@ As an example, I compute the average Sea Surface Temperature (SST) [#sst]_ over 
    :height: 400
    :width: 800
 
-The full code is available in the `next notebook <link://slug/dask-hpc-fsx>`_. At the end of the notebook also shows a sign of climate change (computed from the SST data), so at least we get a bit scientific insight from this toy problem. Hopefully such powerful computing power can be used to solve some big science.
+The full code is available in the `next notebook <link://slug/dask-hpc-fsx>`_. At the end of the notebook also shows a sign of climate change (computed from the SST data), so at least we get a bit scientific insight from this toy problem. Hopefully such great computing power can be used to solve some big science.
 
 Final thoughts
 ==============
