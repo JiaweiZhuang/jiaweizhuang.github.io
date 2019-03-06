@@ -206,8 +206,8 @@ With two idle :code:`c5n.18xlarge` nodes, use the following code in :code:`ipyth
 .. code:: python
 
     from dask_jobqueue import SLURMCluster
-    cluster = SLURMCluster(cores=72, memory='150GB')  # Slurm thinks there are 72 cores per node due to EC2 hyperthreading
-    cluster.scale(2)
+    cluster = SLURMCluster(cores=72, processes=36, memory='150GB')  # Slurm thinks there are 72 cores per node due to EC2 hyperthreading
+    cluster.scale(2*36)
 
     from distributed import Client
     client = Client(cluster)
