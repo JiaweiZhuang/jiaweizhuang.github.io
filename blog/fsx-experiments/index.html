@@ -145,22 +145,22 @@ navbar-dark bg-dark
 <div class="section" id="aws-parallelcluster-configuration">
 <h3><a class="toc-backref" href="#id19">1.1   AWS ParallelCluster configuration</a></h3>
 <p>The <code>~/.parallelcluster/config</code> file is almost the same as in previous post. The only thing new is the <code>fsx</code> section. At the time of writing, only CentOS 7 is supported <a class="footnote-reference" href="#pcluster-ubuntu" id="id5">[5]</a>.</p>
-<pre class="code bash"><a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-1"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-2"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-3"></a>...
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-4"></a><span class="nv">fsx_settings</span> <span class="o">=</span> fs
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-5"></a>
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-6"></a><span class="o">[</span>fsx fs<span class="o">]</span>
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-7"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
-<a name="rest_code_bf44fd07d0514fc180d6960138cb9c84-8"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
+<pre class="code bash"><a name="rest_code_0ab61dda039e44e29d896d0772bae92b-1"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-2"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-3"></a>...
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-4"></a><span class="nv">fsx_settings</span> <span class="o">=</span> fs
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-5"></a>
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-6"></a><span class="o">[</span>fsx fs<span class="o">]</span>
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-7"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
+<a name="rest_code_0ab61dda039e44e29d896d0772bae92b-8"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
 </pre>
 <p>According to AWS <a class="footnote-reference" href="#fsx-performance" id="id6">[6]</a>, a 14,400 GB file system would deliver 2,880 MB/s throughput. You may use a much bigger size for production, but this size should be good for initial testing.</p>
 <p>The above config will create an empty file system. A more interesting usage is to pre-import S3 buckets:</p>
-<pre class="code bash"><a name="rest_code_50b6b44874594651a8ece579db320814-1"></a><span class="o">[</span>fsx fs<span class="o">]</span>
-<a name="rest_code_50b6b44874594651a8ece579db320814-2"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
-<a name="rest_code_50b6b44874594651a8ece579db320814-3"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
-<a name="rest_code_50b6b44874594651a8ece579db320814-4"></a><span class="nv">imported_file_chunk_size</span> <span class="o">=</span> <span class="m">1024</span>
-<a name="rest_code_50b6b44874594651a8ece579db320814-5"></a><span class="nv">import_path</span> <span class="o">=</span> s3://era5-pds
+<pre class="code bash"><a name="rest_code_46d177098f5f40b29b14dd10bf5edec1-1"></a><span class="o">[</span>fsx fs<span class="o">]</span>
+<a name="rest_code_46d177098f5f40b29b14dd10bf5edec1-2"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
+<a name="rest_code_46d177098f5f40b29b14dd10bf5edec1-3"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
+<a name="rest_code_46d177098f5f40b29b14dd10bf5edec1-4"></a><span class="nv">imported_file_chunk_size</span> <span class="o">=</span> <span class="m">1024</span>
+<a name="rest_code_46d177098f5f40b29b14dd10bf5edec1-5"></a><span class="nv">import_path</span> <span class="o">=</span> s3://era5-pds
 </pre>
 <p>Here I am using the ECMWF ERA5 Reanalysis data <a class="footnote-reference" href="#era5" id="id7">[7]</a>. The data format is NetCDF4. Other datasets would work similarly.</p>
 <p><code>pcluster create</code> can take several minutes longer than without FSx, because provisioning a Lustre server probably involves heavy-lifting on the AWS side. Go to the "Amazon FSx" console to check the creation status.</p>
@@ -169,25 +169,25 @@ navbar-dark bg-dark
 <div class="section" id="testing-integration-with-existing-s3-bucket">
 <h3><a class="toc-backref" href="#id20">1.2   Testing integration with existing S3 bucket</a></h3>
 <p>Objects in the bucket will appear as normal on-disk files.</p>
-<pre class="code bash"><a name="rest_code_50c0209f88f346d8bc7743f416028f63-1"></a>$ <span class="nb">cd</span> /fsx
-<a name="rest_code_50c0209f88f346d8bc7743f416028f63-2"></a>$ ls <span class="c1"># displays objects in the S3 bucket</span>
-<a name="rest_code_50c0209f88f346d8bc7743f416028f63-3"></a>...
+<pre class="code bash"><a name="rest_code_9444f4e15b424df8921ab2d8f27fea56-1"></a>$ <span class="nb">cd</span> /fsx
+<a name="rest_code_9444f4e15b424df8921ab2d8f27fea56-2"></a>$ ls <span class="c1"># displays objects in the S3 bucket</span>
+<a name="rest_code_9444f4e15b424df8921ab2d8f27fea56-3"></a>...
 </pre>
 <p>However, FSx only stores metadata:</p>
-<pre class="code bash"><a name="rest_code_94aa36c93a74405583613ce8da36725a-1"></a>$ <span class="nb">cd</span> /fsx/2008/01/data <span class="c1"># specific to ERA5 data</span>
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-2"></a>$ ls -lh *   <span class="c1"># the data appear to be big (~1 GB)</span>
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-3"></a>-rwxr-xr-x <span class="m">1</span> root root  988M Jul  <span class="m">4</span>  <span class="m">2018</span> air_pressure_at_mean_sea_level.nc
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-4"></a>...
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-5"></a>$ du -sh *  <span class="c1"># but the actual content is super small.</span>
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-6"></a><span class="m">512</span> air_pressure_at_mean_sea_level.nc
-<a name="rest_code_94aa36c93a74405583613ce8da36725a-7"></a>...
+<pre class="code bash"><a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-1"></a>$ <span class="nb">cd</span> /fsx/2008/01/data <span class="c1"># specific to ERA5 data</span>
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-2"></a>$ ls -lh *   <span class="c1"># the data appear to be big (~1 GB)</span>
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-3"></a>-rwxr-xr-x <span class="m">1</span> root root  988M Jul  <span class="m">4</span>  <span class="m">2018</span> air_pressure_at_mean_sea_level.nc
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-4"></a>...
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-5"></a>$ du -sh *  <span class="c1"># but the actual content is super small.</span>
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-6"></a><span class="m">512</span> air_pressure_at_mean_sea_level.nc
+<a name="rest_code_e9640d9f376849bf968fbb6a1c94c363-7"></a>...
 </pre>
 <p>The actual data will be pulled from S3 when accessed. For a NetCDF4 file, either <code>ncdump -h</code> or <code>h5ls</code> will display its basic contents and cause the entire file to be pulled from S3.</p>
-<pre class="code bash"><a name="rest_code_d5be2cbac00f4eefa16ac6b95ca4a47b-1"></a>$ ncdump -h air_pressure_at_mean_sea_level.nc  <span class="c1"># `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda</span>
-<a name="rest_code_d5be2cbac00f4eefa16ac6b95ca4a47b-2"></a>...
-<a name="rest_code_d5be2cbac00f4eefa16ac6b95ca4a47b-3"></a>$ du -sh *  <span class="c1"># now much bigger</span>
-<a name="rest_code_d5be2cbac00f4eefa16ac6b95ca4a47b-4"></a>962M        air_pressure_at_mean_sea_level.nc
-<a name="rest_code_d5be2cbac00f4eefa16ac6b95ca4a47b-5"></a>...
+<pre class="code bash"><a name="rest_code_15fba5e9784343bf9a8a4a7cc59de35d-1"></a>$ ncdump -h air_pressure_at_mean_sea_level.nc  <span class="c1"># `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda</span>
+<a name="rest_code_15fba5e9784343bf9a8a4a7cc59de35d-2"></a>...
+<a name="rest_code_15fba5e9784343bf9a8a4a7cc59de35d-3"></a>$ du -sh *  <span class="c1"># now much bigger</span>
+<a name="rest_code_15fba5e9784343bf9a8a4a7cc59de35d-4"></a>962M        air_pressure_at_mean_sea_level.nc
+<a name="rest_code_15fba5e9784343bf9a8a4a7cc59de35d-5"></a>...
 </pre>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -201,31 +201,31 @@ navbar-dark bg-dark
 <div class="section" id="install-ior-by-spack">
 <h3><a class="toc-backref" href="#id22">2.1   Install IOR by Spack</a></h3>
 <p>Configure Spack as in the previous post. Then, getting IOR is simply:</p>
-<pre class="code bash"><a name="rest_code_201a0f6ec72748a6a2006051f4930538-1"></a>$ spack install ior ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
+<pre class="code bash"><a name="rest_code_6e3ed1f28ec44542827edca4c40eb9c0-1"></a>$ spack install ior ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
 </pre>
 <p>IOR is also quite easy to install from source, outside of Spack.</p>
 <p>Discover the <code>ior</code> executable by:</p>
-<pre class="code bash"><a name="rest_code_89d8011a86c14d0cbc8208c62629970d-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i ior<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<pre class="code bash"><a name="rest_code_72202eb26d04436d85bfbda5149f5c4d-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i ior<span class="k">)</span>/bin:<span class="nv">$PATH</span>
 </pre>
 </div>
 <div class="section" id="i-o-benchmark-result">
 <h3><a class="toc-backref" href="#id23">2.2   I/O benchmark result</a></h3>
 <p>With two <tt class="docutils literal">c5n.18xlarge</tt> compute nodes running, a multi-node, parallel write-read test can be done by:</p>
-<pre class="code bash"><a name="rest_code_22a335966a2a4ceeae7c186cee64183f-1"></a>$ mkdir /fsx/ior_tempdir
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-2"></a>$ <span class="nb">cd</span> /fsx/ior_tempdir
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-3"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-4"></a>...
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-5"></a>Max Write: <span class="m">1632</span>.01 MiB/sec <span class="o">(</span><span class="m">1711</span>.28 MB/sec<span class="o">)</span>
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-6"></a>Max Read:  <span class="m">1654</span>.59 MiB/sec <span class="o">(</span><span class="m">1734</span>.96 MB/sec<span class="o">)</span>
-<a name="rest_code_22a335966a2a4ceeae7c186cee64183f-7"></a>...
+<pre class="code bash"><a name="rest_code_ba696a6139e843a68f3908f24d0202d0-1"></a>$ mkdir /fsx/ior_tempdir
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-2"></a>$ <span class="nb">cd</span> /fsx/ior_tempdir
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-3"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-4"></a>...
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-5"></a>Max Write: <span class="m">1632</span>.01 MiB/sec <span class="o">(</span><span class="m">1711</span>.28 MB/sec<span class="o">)</span>
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-6"></a>Max Read:  <span class="m">1654</span>.59 MiB/sec <span class="o">(</span><span class="m">1734</span>.96 MB/sec<span class="o">)</span>
+<a name="rest_code_ba696a6139e843a68f3908f24d0202d0-7"></a>...
 </pre>
 <p>Conducting a proper I/O benchmark is not straightforward, due to various caching effects. IOR implements several tricks (reflected in command line parameters) to get around those effects <a class="footnote-reference" href="#ior-tutorial" id="id9">[9]</a>.</p>
 <p>I can get maximum throughput with 8 client nodes:</p>
-<pre class="code bash"><a name="rest_code_ab0246129fe647618858bd4b2757321a-1"></a>$ srun -N <span class="m">8</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
-<a name="rest_code_ab0246129fe647618858bd4b2757321a-2"></a>...
-<a name="rest_code_ab0246129fe647618858bd4b2757321a-3"></a>Max Write: <span class="m">2905</span>.59 MiB/sec <span class="o">(</span><span class="m">3046</span>.73 MB/sec<span class="o">)</span>
-<a name="rest_code_ab0246129fe647618858bd4b2757321a-4"></a>Max Read:  <span class="m">2879</span>.96 MiB/sec <span class="o">(</span><span class="m">3019</span>.85 MB/sec<span class="o">)</span>
-<a name="rest_code_ab0246129fe647618858bd4b2757321a-5"></a>...
+<pre class="code bash"><a name="rest_code_d079203c1f464389ac1b8de9f96365f8-1"></a>$ srun -N <span class="m">8</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
+<a name="rest_code_d079203c1f464389ac1b8de9f96365f8-2"></a>...
+<a name="rest_code_d079203c1f464389ac1b8de9f96365f8-3"></a>Max Write: <span class="m">2905</span>.59 MiB/sec <span class="o">(</span><span class="m">3046</span>.73 MB/sec<span class="o">)</span>
+<a name="rest_code_d079203c1f464389ac1b8de9f96365f8-4"></a>Max Read:  <span class="m">2879</span>.96 MiB/sec <span class="o">(</span><span class="m">3019</span>.85 MB/sec<span class="o">)</span>
+<a name="rest_code_d079203c1f464389ac1b8de9f96365f8-5"></a>...
 </pre>
 <p>This matches the 2,880 MB/s claimed by AWS! Using more nodes shows marginal improvement, since the bandwidth should already be saturated.</p>
 <p>The logical next step is to test IO-heavy HPC applications and conduct a detailed I/O-profiling. In this post, however, I decide to try a more interesting use case -- big data analytics.</p>
@@ -250,39 +250,39 @@ navbar-dark bg-dark
 <h3><a class="toc-backref" href="#id25">3.1   Cluster deployment with Dask-jobqueue</a></h3>
 <p>The deployment turns out to be extremely easy. I am still in the learning curve of Kubernetes, and this alternative HPC approach feels much more straightforward for an HPC person like me.</p>
 <p>First, get Miniconda:</p>
-<pre class="code bash"><a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-1"></a>$ <span class="nb">cd</span> /shared
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-2"></a>$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-3"></a>$ bash miniconda.sh -b -p miniconda
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-4"></a>$ <span class="nb">echo</span> <span class="s2">". /shared/miniconda/etc/profile.d/conda.sh"</span> &gt;&gt; ~/.bashrc
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-5"></a>$ <span class="nb">source</span> ~/.bashrc
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-6"></a>$ conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-7"></a>$ conda activate py37  <span class="c1"># replaces `source activate` for conda&gt;=4.4</span>
-<a name="rest_code_43aeb192a8cf41519b8f75a5c9592dcf-8"></a>$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
+<pre class="code bash"><a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-1"></a>$ <span class="nb">cd</span> /shared
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-2"></a>$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-3"></a>$ bash miniconda.sh -b -p miniconda
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-4"></a>$ <span class="nb">echo</span> <span class="s2">". /shared/miniconda/etc/profile.d/conda.sh"</span> &gt;&gt; ~/.bashrc
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-5"></a>$ <span class="nb">source</span> ~/.bashrc
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-6"></a>$ conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-7"></a>$ conda activate py37  <span class="c1"># replaces `source activate` for conda&gt;=4.4</span>
+<a name="rest_code_2fa4d345ebe641d8a893cdcb4b4cd0a6-8"></a>$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
 </pre>
 <p>Optionally, install additional visualization libraries that I will use later:</p>
-<pre class="code bash"><a name="rest_code_47fca47071ca48cd853c5f70d94102a8-1"></a>$ pip install geoviews hvplot datashader
+<pre class="code bash"><a name="rest_code_a7358b14ddc64500b76527988bef4e83-1"></a>$ pip install geoviews hvplot datashader
 </pre>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">It turns out that we don't need to install MPI4Py! Dask-jobqueue only needs a scheduler (here we have Slurm) to launch processes, and uses its own communication mechanism (defaults to TCP) <a class="footnote-reference" href="#dask-hpc" id="id11">[11]</a>.</p>
 </div>
 <p>With two idle <code>c5n.18xlarge</code> nodes, use the following code in <code>ipython</code> to initialize a distributed cluster:</p>
-<pre class="code python"><a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-1"></a><span class="kn">from</span> <span class="nn">dask_jobqueue</span> <span class="kn">import</span> <span class="n">SLURMCluster</span>
-<a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-2"></a><span class="n">cluster</span> <span class="o">=</span> <span class="n">SLURMCluster</span><span class="p">(</span><span class="n">cores</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="s1">'150GB'</span><span class="p">)</span>  <span class="c1"># Slurm thinks there are 72 cores per node due to EC2 hyperthreading</span>
-<a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-3"></a><span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-4"></a>
-<a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-5"></a><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
-<a name="rest_code_7dad8c5d39b940fe93b135a1fed55cf6-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_350cf67ed18740d3aa6c14b626505a87-1"></a><span class="kn">from</span> <span class="nn">dask_jobqueue</span> <span class="kn">import</span> <span class="n">SLURMCluster</span>
+<a name="rest_code_350cf67ed18740d3aa6c14b626505a87-2"></a><span class="n">cluster</span> <span class="o">=</span> <span class="n">SLURMCluster</span><span class="p">(</span><span class="n">cores</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="s1">'150GB'</span><span class="p">)</span>  <span class="c1"># Slurm thinks there are 72 cores per node due to EC2 hyperthreading</span>
+<a name="rest_code_350cf67ed18740d3aa6c14b626505a87-3"></a><span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">36</span><span class="p">)</span>
+<a name="rest_code_350cf67ed18740d3aa6c14b626505a87-4"></a>
+<a name="rest_code_350cf67ed18740d3aa6c14b626505a87-5"></a><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+<a name="rest_code_350cf67ed18740d3aa6c14b626505a87-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
 </pre>
 <p>In a separate shell, use <code>sinfo</code> to check the node status -- they should be fully allocated.</p>
 <p>To enable Dask's dashboard <a class="footnote-reference" href="#dask-dashboard" id="id12">[12]</a>, add an additional SSH connection in a new shell:</p>
-<pre class="code text"><a name="rest_code_ea58ee66c1194b4bb10947e8b1520de2-1"></a>$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
+<pre class="code text"><a name="rest_code_c55d6f8409a0466093539f43af1f4cea-1"></a>$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
 </pre>
 <p>Visit <code>localhost:8787</code> in the web browser (NOT something like <code>http://172.31.5.224:8787</code> shown in Python) .</p>
 <p>Alternatively, everything can be put together, including Jupyter notebook's port-forwarding:</p>
-<pre class="code bash"><a name="rest_code_9b6b9d65be4146ecb45e4f1748db590e-1"></a>$ pcluster ssh your-cluster-name -L <span class="m">8889</span>:localhost:8889 -L <span class="m">8787</span>:localhost:8787
-<a name="rest_code_9b6b9d65be4146ecb45e4f1748db590e-2"></a>$ conda activate py37
-<a name="rest_code_9b6b9d65be4146ecb45e4f1748db590e-3"></a>$ jupyter notebook --NotebookApp.token<span class="o">=</span><span class="s1">''</span> --no-browser --port<span class="o">=</span><span class="m">8889</span>
+<pre class="code bash"><a name="rest_code_6795fdee6b2942c9a8ed6127cd2fa3f0-1"></a>$ pcluster ssh your-cluster-name -L <span class="m">8889</span>:localhost:8889 -L <span class="m">8787</span>:localhost:8787
+<a name="rest_code_6795fdee6b2942c9a8ed6127cd2fa3f0-2"></a>$ conda activate py37
+<a name="rest_code_6795fdee6b2942c9a8ed6127cd2fa3f0-3"></a>$ jupyter notebook --NotebookApp.token<span class="o">=</span><span class="s1">''</span> --no-browser --port<span class="o">=</span><span class="m">8889</span>
 </pre>
 <p>Visit <code>localhost:8889</code> to use the notebook.</p>
 <p>That's all about the deployment! This Dask cluster is able to perform parallel read/write with the Lustre file system.</p>

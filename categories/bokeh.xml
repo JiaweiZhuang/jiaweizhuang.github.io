@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Bokeh)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/bokeh.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Wed, 06 Mar 2019 03:42:51 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Bokeh)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/bokeh.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Wed, 06 Mar 2019 15:23:00 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use &lt;a href="https://bokeh.pydata.org/"&gt;Bokeh&lt;/a&gt; as an example but similar approaches should work with other JavaScript-based tools like Plotly. For the impatient, drag to the end of this page to see the results.&lt;/p&gt;
@@ -170,10 +170,10 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 
 
 
-&lt;div id="acee1d3c-32d4-4b40-8da6-ee4bb2ce9691"&gt;&lt;/div&gt;
+&lt;div id="87b6c10b-fc1c-4b9a-aa87-172a1e0e23a0"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#acee1d3c-32d4-4b40-8da6-ee4bb2ce9691');
+var element = $('#87b6c10b-fc1c-4b9a-aa87-172a1e0e23a0');
 
 (function(root) {
   function now() {
@@ -838,10 +838,10 @@ div.hologroup {
 
 
 
-&lt;div id="80156bbc-88c4-4b44-9266-8fc5e81a584a"&gt;&lt;/div&gt;
+&lt;div id="bce413d6-a5d3-4699-a2da-bf0ae3d57146"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#80156bbc-88c4-4b44-9266-8fc5e81a584a');
+var element = $('#bce413d6-a5d3-4699-a2da-bf0ae3d57146');
 function HoloViewsWidget() {
 }
 
@@ -1787,10 +1787,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="e998d9c5-a8fd-49b2-970d-b5c731dc073a"&gt;&lt;/div&gt;
+&lt;div id="c5414471-a130-491a-b6dd-bf097ef4a940"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e998d9c5-a8fd-49b2-970d-b5c731dc073a');
+var element = $('#c5414471-a130-491a-b6dd-bf097ef4a940');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -2181,10 +2181,10 @@ pip install geoviews&lt;/code&gt;&lt;/pre&gt;
 
 
 
-&lt;div id="3ab21a21-076d-42b8-9fe5-903a402b3392"&gt;&lt;/div&gt;
+&lt;div id="d24e1118-33c3-42d8-89a3-d56e49632134"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#3ab21a21-076d-42b8-9fe5-903a402b3392');
+var element = $('#d24e1118-33c3-42d8-89a3-d56e49632134');
 
 (function(root) {
   function now() {
@@ -2861,10 +2861,10 @@ div.hologroup {
 
 
 
-&lt;div id="98b2876c-ae89-4d4e-b851-0495b97ebb24"&gt;&lt;/div&gt;
+&lt;div id="d71f866d-6eae-40d7-8893-fd5ba07ef3f7"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#98b2876c-ae89-4d4e-b851-0495b97ebb24');
+var element = $('#d71f866d-6eae-40d7-8893-fd5ba07ef3f7');
 function HoloViewsWidget() {
 }
 
@@ -3704,10 +3704,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="2a1e183e-417e-4a4d-9179-f2906933b243"&gt;&lt;/div&gt;
+&lt;div id="35d68ad4-0fb8-4ed3-8b73-262a2a93654c"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#2a1e183e-417e-4a4d-9179-f2906933b243');
+var element = $('#35d68ad4-0fb8-4ed3-8b73-262a2a93654c');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {

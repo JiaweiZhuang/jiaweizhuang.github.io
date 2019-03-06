@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Nikola)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/nikola.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Wed, 06 Mar 2019 03:42:53 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Nikola)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/nikola.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Wed, 06 Mar 2019 15:22:51 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>[Notebook] Testing Bokeh interactive plot on Nikola sites</title><link>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;p&gt;This post shows how to add interactive data visualizations to Nikola-powered websites. Everything will be done in Jupyter notebooks! I use &lt;a href="https://bokeh.pydata.org/"&gt;Bokeh&lt;/a&gt; as an example but similar approaches should work with other JavaScript-based tools like Plotly. For the impatient, drag to the end of this page to see the results.&lt;/p&gt;
@@ -170,10 +170,10 @@ $$e^x=\sum_{i=0}^\infty \frac{1}{i!}x^i$$&lt;/p&gt;
 
 
 
-&lt;div id="acee1d3c-32d4-4b40-8da6-ee4bb2ce9691"&gt;&lt;/div&gt;
+&lt;div id="87b6c10b-fc1c-4b9a-aa87-172a1e0e23a0"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#acee1d3c-32d4-4b40-8da6-ee4bb2ce9691');
+var element = $('#87b6c10b-fc1c-4b9a-aa87-172a1e0e23a0');
 
 (function(root) {
   function now() {
@@ -838,10 +838,10 @@ div.hologroup {
 
 
 
-&lt;div id="80156bbc-88c4-4b44-9266-8fc5e81a584a"&gt;&lt;/div&gt;
+&lt;div id="bce413d6-a5d3-4699-a2da-bf0ae3d57146"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#80156bbc-88c4-4b44-9266-8fc5e81a584a');
+var element = $('#bce413d6-a5d3-4699-a2da-bf0ae3d57146');
 function HoloViewsWidget() {
 }
 
@@ -1787,10 +1787,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="e998d9c5-a8fd-49b2-970d-b5c731dc073a"&gt;&lt;/div&gt;
+&lt;div id="c5414471-a130-491a-b6dd-bf097ef4a940"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e998d9c5-a8fd-49b2-970d-b5c731dc073a');
+var element = $('#c5414471-a130-491a-b6dd-bf097ef4a940');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('1008')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -2181,10 +2181,10 @@ pip install geoviews&lt;/code&gt;&lt;/pre&gt;
 
 
 
-&lt;div id="3ab21a21-076d-42b8-9fe5-903a402b3392"&gt;&lt;/div&gt;
+&lt;div id="d24e1118-33c3-42d8-89a3-d56e49632134"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#3ab21a21-076d-42b8-9fe5-903a402b3392');
+var element = $('#d24e1118-33c3-42d8-89a3-d56e49632134');
 
 (function(root) {
   function now() {
@@ -2861,10 +2861,10 @@ div.hologroup {
 
 
 
-&lt;div id="98b2876c-ae89-4d4e-b851-0495b97ebb24"&gt;&lt;/div&gt;
+&lt;div id="d71f866d-6eae-40d7-8893-fd5ba07ef3f7"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#98b2876c-ae89-4d4e-b851-0495b97ebb24');
+var element = $('#d71f866d-6eae-40d7-8893-fd5ba07ef3f7');
 function HoloViewsWidget() {
 }
 
@@ -3704,10 +3704,10 @@ if (window.Jupyter !== undefined) {
 
 
 
-&lt;div id="2a1e183e-417e-4a4d-9179-f2906933b243"&gt;&lt;/div&gt;
+&lt;div id="35d68ad4-0fb8-4ed3-8b73-262a2a93654c"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript output_execute_result"&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#2a1e183e-417e-4a4d-9179-f2906933b243');
+var element = $('#35d68ad4-0fb8-4ed3-8b73-262a2a93654c');
 
 // Ugly hack - see HoloViews #2574 for more information
 if (!(document.getElementById('4056')) &amp;&amp; !(document.getElementById('_anim_imgNone'))) {
@@ -4220,11 +4220,11 @@ output
 &lt;/pre&gt;
 &lt;p&gt;You can manually commit to this &lt;tt class="docutils literal"&gt;src&lt;/tt&gt; branch and push to GitHub.&lt;/p&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, double-check that branch names are correct:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_fac1858b7ef04a2ab4b8280c784ffd43-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_SOURCE_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'src'&lt;/span&gt;
-&lt;a name="rest_code_fac1858b7ef04a2ab4b8280c784ffd43-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_DEPLOY_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'master'&lt;/span&gt;
-&lt;a name="rest_code_fac1858b7ef04a2ab4b8280c784ffd43-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_REMOTE_NAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'origin'&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_dcfcf3af4387406185f3866b989f59ca-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_SOURCE_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'src'&lt;/span&gt;
+&lt;a name="rest_code_dcfcf3af4387406185f3866b989f59ca-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_DEPLOY_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'master'&lt;/span&gt;
+&lt;a name="rest_code_dcfcf3af4387406185f3866b989f59ca-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_REMOTE_NAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'origin'&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;I also recommend setting:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_2ecfdf1672a84041834eba0ece46612f-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_COMMIT_SOURCE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_d1e4006817aa42c184c1ec8e03ebcd5d-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_COMMIT_SOURCE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;So that the &lt;tt class="docutils literal"&gt;nikola github_deploy&lt;/tt&gt; command below won't touch your &lt;tt class="docutils literal"&gt;src&lt;/tt&gt; branch.&lt;/p&gt;
 &lt;p&gt;To deploy the content on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt;, run:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -4245,7 +4245,7 @@ nikola github_deploy
 &lt;div class="section" id="change-theme"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id4"&gt;4   Change theme&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The default theme looks more like a blog than a personal website. Twitter's &lt;a class="reference external" href="https://getbootstrap.com/"&gt;Bootstrap&lt;/a&gt; is an excellent theme and is &lt;a class="reference external" href="https://themes.getnikola.com/v8/bootstrap4/"&gt;built into Nikola&lt;/a&gt;.  In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, set:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_39533c635c214f18a897944ae58f1160-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bootstrap4"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_c6da81dafdcf4778867b2df576189da5-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bootstrap4"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The theme can be further tweaked by &lt;a class="reference external" href="https://bootswatch.com/"&gt;Bootswatch&lt;/a&gt; but I find the default theme perfect for me :)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="set-non-blog-layout"&gt;
@@ -4257,20 +4257,20 @@ nikola github_deploy
 &lt;li&gt;"Pages" generated by &lt;tt class="docutils literal"&gt;nikola new_page&lt;/tt&gt;. It is a standalone page that will not be automatically added to the main site. This is the building block for a non-blog site.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, bring Pages to root level:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-7"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-8"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# notice the second argument&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-12"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-13"&gt;&lt;/a&gt;
-&lt;a name="rest_code_6275b0456d014fd38e3085dd3684311a-14"&gt;&lt;/a&gt;&lt;span class="n"&gt;INDEX_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-7"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-8"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;  &lt;span class="c1"&gt;# notice the second argument&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-12"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_8d9e0c1b9bff468280e6bee90bf8570b-14"&gt;&lt;/a&gt;&lt;span class="n"&gt;INDEX_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Generate your new index page (the entry of you website):&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 $ nikola new_page
@@ -4288,30 +4288,30 @@ Creating New Page
 Title: Bio
 &lt;/pre&gt;
 &lt;p&gt;And then add it to &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Home"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/bio/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Bio"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-5"&gt;&lt;/a&gt;        &lt;span class="o"&gt;...&lt;/span&gt;
-&lt;a name="rest_code_0b6af569e67a4917b9082c2bd18c46ad-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;),&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Home"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/bio/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Bio"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-5"&gt;&lt;/a&gt;        &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;a name="rest_code_6c04a93dd29c4807be5f323fe2bc1a18-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;),&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="enable-jupyter-notebook-format"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id6"&gt;6   Enable Jupyter notebook format&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Just add &lt;tt class="docutils literal"&gt;*.ipynb&lt;/tt&gt; as recognizable formats:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-12"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
-&lt;a name="rest_code_dc764b5ab9374297b673c0558d90f690-14"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;POSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-2"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"posts/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"blog"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"post.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-8"&gt;&lt;/a&gt;&lt;span class="n"&gt;PAGES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.rst"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.md"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.txt"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-12"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-13"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"pages/*.ipynb"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"page.tmpl"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c1"&gt;# new line&lt;/span&gt;
+&lt;a name="rest_code_b518e5e31afd4e92b7b08bf70e74d68e-14"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;With the current version (v8), that's all you need to do!&lt;/p&gt;
 &lt;p&gt;Create a new blog in notebook format:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -4322,20 +4322,20 @@ $ nikola new_post -f ipynb
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id7"&gt;7   Add social media button&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You might want to add buttons for other sites like GitHub and Twitter, or any icons from &lt;a class="reference external" href="https://fontawesome.com/"&gt;Font Awesome&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Taken from &lt;a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/"&gt;this post by Jaakko Luttinen&lt;/a&gt;, the minimal example is (only one GitHub button):&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;EXTRA_HEAD_DATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'&amp;lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&amp;gt;'&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;CONTENT_FOOTER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'''&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;div class="text-center"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-6"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;span class="fa-stack fa-2x"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-7"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;a href="https://github.com/[username]"&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-8"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-circle fa-stack-2x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-9"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-github fa-inverse fa-stack-1x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-10"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-11"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-12"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-13"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_3875a1f9436247deb52b2eeddc624ac1-14"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'''&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;EXTRA_HEAD_DATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'&amp;lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&amp;gt;'&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;CONTENT_FOOTER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'''&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-4"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;div class="text-center"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-5"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-6"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;span class="fa-stack fa-2x"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-7"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;a href="https://github.com/[username]"&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-8"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-circle fa-stack-2x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-9"&gt;&lt;/a&gt;&lt;span class="s1"&gt;    &amp;lt;i class="fa fa-github fa-inverse fa-stack-1x"&amp;gt;&amp;lt;/i&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-10"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-11"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-12"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-13"&gt;&lt;/a&gt;&lt;span class="s1"&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_91affe52fe494216a7c23bc0d573a838-14"&gt;&lt;/a&gt;&lt;span class="s1"&gt;'''&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="various-tweaks"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id8"&gt;8   Various tweaks&lt;/a&gt;&lt;/h2&gt;
@@ -4354,9 +4354,9 @@ $ nikola new_post -f ipynb
 &lt;div class="section" id="tweak-archive-format"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id10"&gt;8.2   Tweak Archive format&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;To avoid grouping posts by years:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_607599c82b3f491dbb110b75d45e3c65-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;CREATE_SINGLE_ARCHIVE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_293646f44fc54d80a20b4eb1607430e8-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;CREATE_SINGLE_ARCHIVE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;The creation time of each blog post is displayed down to minutes by default. Only showing the date seems enough:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_1d6e13e03d5c42a2b7d6b6ca118f2896-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;DATE_FORMAT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'YYYY-MM-dd'&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_0cc1671b48814d629f682a46a85066c5-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;DATE_FORMAT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'YYYY-MM-dd'&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="enable-comment-system"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/nikola-guide/#id11"&gt;8.3   Enable comment system&lt;/a&gt;&lt;/h3&gt;
@@ -4369,8 +4369,8 @@ $ nikola new_post -f ipynb
 &lt;li&gt;At "Select Platform", just skip the instructions. No need to insert the "Universal Code" manually, as it is built into Nikola. Keep all default and finish the configuration.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In &lt;tt class="docutils literal"&gt;conf.py&lt;/tt&gt;, add your Disqus shortname:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_0734f676cae1448ab014a94e820440d3-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"disqus"&lt;/span&gt;
-&lt;a name="rest_code_0734f676cae1448ab014a94e820440d3-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"[disqus-shortname]"&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_726fad222eef414695f8cd8675c46092-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"disqus"&lt;/span&gt;
+&lt;a name="rest_code_726fad222eef414695f8cd8675c46092-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;COMMENT_SYSTEM_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"[disqus-shortname]"&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Deploy to GitHub and the comment system should be enabled.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;</description><category>GitHub</category><category>Jupyter</category><category>Nikola</category><guid>https://jiaweizhuang.github.io/blog/nikola-guide/</guid><pubDate>Sun, 17 Feb 2019 23:23:21 GMT</pubDate></item></channel></rss>
