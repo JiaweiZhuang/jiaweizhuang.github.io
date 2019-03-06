@@ -1,5 +1,308 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Spack)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/spack.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Mon, 04 Mar 2019 21:56:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A scientist's guide to cloud-HPC: example with AWS ParallelCluster, Slurm, Spack, and WRF</title><link>https://jiaweizhuang.github.io/blog/aws-hpc-guide/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="contents topic" id="contents"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about Spack)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/spack.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Wed, 06 Mar 2019 05:01:36 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Experiments with AWS FSx for Lustre: I/O benchmark and Dask cluster deployment</title><link>https://jiaweizhuang.github.io/blog/fsx-experiments/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;p&gt;AWS has recently launched an extremely interesting new service called &lt;a class="reference external" href="https://aws.amazon.com/fsx/lustre/"&gt;FSx for Lustre&lt;/a&gt;. Since last week, FSx has also been integrated with the &lt;a class="reference external" href="https://aws-parallelcluster.readthedocs.io"&gt;AWS ParallelCluster&lt;/a&gt; framework &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pclus-fsx" id="id1"&gt;[1]&lt;/a&gt;, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, &lt;a class="reference external" href="http://lustre.org/"&gt;Lustre&lt;/a&gt; is a well-known high-performance parallel file system, deployed on many world-class supercomputers &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#nas-lustre" id="id2"&gt;[2]&lt;/a&gt;. Previously, ParallelCluster (and its predecessor &lt;a class="reference external" href="https://cfncluster.readthedocs.io"&gt;CfnCluster&lt;/a&gt;) only provided a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System"&gt;Network File System (NFS)&lt;/a&gt;, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"&lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#fsx-s3" id="id3"&gt;[3]&lt;/a&gt;. Considering the incredible amount of public datasets living in S3 &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#s3-opendata" id="id4"&gt;[4]&lt;/a&gt;, such integration can lead to endless interesting use cases.&lt;/p&gt;
+&lt;p&gt;As a new user of FSx, my natural questions are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Does it deliver the claimed performance?&lt;/li&gt;
+&lt;li&gt;How easy can it be used for real-world applications?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To answer these questions, I did some initial experiments:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Performed I/O benchmark with &lt;a class="reference external" href="https://github.com/hpc/ior"&gt;IOR&lt;/a&gt;, the de-facto HPC I/O benchmark framework.&lt;/li&gt;
+&lt;li&gt;Deployed a &lt;a class="reference external" href="https://github.com/dask/dask"&gt;Dask&lt;/a&gt; cluster on top of AWS HPC environment, and used it to process public Earth science data in S3 buckets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The two experiments are independent so feel free to jump to either one.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: This is just a preliminary result and is by no means a rigorous evaluation. In particular, I have made no effort on fine-turning the performance. I have no affiliation with AWS (although I do have their generous funding), so please treat this as a third-party report.&lt;/p&gt;
+&lt;div class="contents topic" id="contents"&gt;
+&lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
+&lt;ul class="auto-toc simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#cluster-infrastructure" id="id18"&gt;1   Cluster infrastructure&lt;/a&gt;&lt;ul class="auto-toc"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#aws-parallelcluster-configuration" id="id19"&gt;1.1   AWS ParallelCluster configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#testing-integration-with-existing-s3-bucket" id="id20"&gt;1.2   Testing integration with existing S3 bucket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#i-o-benchmark-by-ior" id="id21"&gt;2   I/O benchmark by IOR&lt;/a&gt;&lt;ul class="auto-toc"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#install-ior-by-spack" id="id22"&gt;2.1   Install IOR by Spack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#i-o-benchmark-result" id="id23"&gt;2.2   I/O benchmark result&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#dask-cluster-on-top-of-aws-hpc-stack" id="id24"&gt;3   Dask cluster on top of AWS HPC stack&lt;/a&gt;&lt;ul class="auto-toc"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#cluster-deployment-with-dask-jobqueue" id="id25"&gt;3.1   Cluster deployment with Dask-jobqueue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#computation-with-dask-distributed" id="id26"&gt;3.2   Computation with Dask-distributed&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#final-thoughts" id="id27"&gt;4   Final thoughts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#references" id="id28"&gt;5   References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="cluster-infrastructure"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id18"&gt;1   Cluster infrastructure&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The first step is to spin up an AWS ParallelCluster. See my &lt;a class="reference external" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/"&gt;previous post&lt;/a&gt; for a detailed walk-through.&lt;/p&gt;
+&lt;div class="section" id="aws-parallelcluster-configuration"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id19"&gt;1.1   AWS ParallelCluster configuration&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;~/.parallelcluster/config&lt;/code&gt; file is almost the same as in previous post. The only thing new is the &lt;code&gt;fsx&lt;/code&gt; section. At the time of writing, only CentOS 7 is supported &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pcluster-ubuntu" id="id5"&gt;[5]&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;cluster your-cluster-section-name&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;base_os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; centos7
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-3"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;fsx_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; fs
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-6"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-7"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
+&lt;a name="rest_code_8bdc02353cea413588a913c3d120caf7-8"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;According to AWS &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#fsx-performance" id="id6"&gt;[6]&lt;/a&gt;, a 14,400 GB file system would deliver 2,880 MB/s throughput. You may use a much bigger size for production, but this size should be good for initial testing.&lt;/p&gt;
+&lt;p&gt;The above config will create an empty file system. A more interesting usage is to pre-import S3 buckets:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_a6e8b8ebec3043a59fc5bd69bc72ea3b-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_a6e8b8ebec3043a59fc5bd69bc72ea3b-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
+&lt;a name="rest_code_a6e8b8ebec3043a59fc5bd69bc72ea3b-3"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
+&lt;a name="rest_code_a6e8b8ebec3043a59fc5bd69bc72ea3b-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;imported_file_chunk_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt;
+&lt;a name="rest_code_a6e8b8ebec3043a59fc5bd69bc72ea3b-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;import_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; s3://era5-pds
+&lt;/pre&gt;&lt;p&gt;Here I am using the ECMWF ERA5 Reanalysis data &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#era5" id="id7"&gt;[7]&lt;/a&gt;. The data format is NetCDF4. Other datasets would work similarly.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pcluster create&lt;/code&gt; can take several minutes longer than without FSx, because provisioning a Lustre server probably involves heavy-lifting on the AWS side. Go to the "Amazon FSx" console to check the creation status.&lt;/p&gt;
+&lt;p&gt;After a successful launch, log in and run &lt;code&gt;df -h&lt;/code&gt; to make sure that Lustre is properly mounted to &lt;code&gt;/fsx&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testing-integration-with-existing-s3-bucket"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id20"&gt;1.2   Testing integration with existing S3 bucket&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Objects in the bucket will appear as normal on-disk files.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_9c11ac707d9b49c885cad1e2bf16fa16-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx
+&lt;a name="rest_code_9c11ac707d9b49c885cad1e2bf16fa16-2"&gt;&lt;/a&gt;$ ls &lt;span class="c1"&gt;# displays objects in the S3 bucket&lt;/span&gt;
+&lt;a name="rest_code_9c11ac707d9b49c885cad1e2bf16fa16-3"&gt;&lt;/a&gt;...
+&lt;/pre&gt;&lt;p&gt;However, FSx only stores metadata:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/2008/01/data &lt;span class="c1"&gt;# specific to ERA5 data&lt;/span&gt;
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-2"&gt;&lt;/a&gt;$ ls -lh *   &lt;span class="c1"&gt;# the data appear to be big (~1 GB)&lt;/span&gt;
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-3"&gt;&lt;/a&gt;-rwxr-xr-x &lt;span class="m"&gt;1&lt;/span&gt; root root  988M Jul  &lt;span class="m"&gt;4&lt;/span&gt;  &lt;span class="m"&gt;2018&lt;/span&gt; air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-4"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-5"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# but the actual content is super small.&lt;/span&gt;
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-6"&gt;&lt;/a&gt;&lt;span class="m"&gt;512&lt;/span&gt; air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_e4f1a614e96a40998304d7cb9519dcf4-7"&gt;&lt;/a&gt;...
+&lt;/pre&gt;&lt;p&gt;The actual data will be pulled from S3 when accessed. For a NetCDF4 file, either &lt;code&gt;ncdump -h&lt;/code&gt; or &lt;code&gt;h5ls&lt;/code&gt; will display its basic contents and cause the entire file to be pulled from S3.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_45aaed59e42449369211f8b19e9acf77-1"&gt;&lt;/a&gt;$ ncdump -h air_pressure_at_mean_sea_level.nc  &lt;span class="c1"&gt;# `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda&lt;/span&gt;
+&lt;a name="rest_code_45aaed59e42449369211f8b19e9acf77-2"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_45aaed59e42449369211f8b19e9acf77-3"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# now much bigger&lt;/span&gt;
+&lt;a name="rest_code_45aaed59e42449369211f8b19e9acf77-4"&gt;&lt;/a&gt;962M        air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_45aaed59e42449369211f8b19e9acf77-5"&gt;&lt;/a&gt;...
+&lt;/pre&gt;&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;If you get HDF5 error on Lustre, set &lt;code&gt;export HDF5_USE_FILE_LOCKING=FALSE&lt;/code&gt; &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#hdf5-error" id="id8"&gt;[8]&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="i-o-benchmark-by-ior"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id21"&gt;2   I/O benchmark by IOR&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;For general reference, see IOR's documentation: &lt;a class="reference external" href="https://ior.readthedocs.io"&gt;https://ior.readthedocs.io&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="install-ior-by-spack"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id22"&gt;2.1   Install IOR by Spack&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Configure Spack as in the previous post. Then, getting IOR is simply:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_437917fad5064115bcecbbf98159cc0a-1"&gt;&lt;/a&gt;$ spack install ior ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm
+&lt;/pre&gt;&lt;p&gt;IOR is also quite easy to install from source, outside of Spack.&lt;/p&gt;
+&lt;p&gt;Discover the &lt;code&gt;ior&lt;/code&gt; executable by:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_4f9c142e9b7f4c3abd3a2903aa44d601-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i ior&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="i-o-benchmark-result"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id23"&gt;2.2   I/O benchmark result&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;With two &lt;tt class="docutils literal"&gt;c5n.18xlarge&lt;/tt&gt; compute nodes running, a multi-node, parallel write-read test can be done by:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-1"&gt;&lt;/a&gt;$ mkdir /fsx/ior_tempdir
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/ior_tempdir
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-3"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-4"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-5"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;1632&lt;/span&gt;.01 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1711&lt;/span&gt;.28 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-6"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;1654&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1734&lt;/span&gt;.96 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_728116a3d2de4d1b8a99625fe1cb538b-7"&gt;&lt;/a&gt;...
+&lt;/pre&gt;&lt;p&gt;Conducting a proper I/O benchmark is not straightforward, due to various caching effects. IOR implements several tricks (reflected in command line parameters) to get around those effects &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#ior-tutorial" id="id9"&gt;[9]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I can get maximum throughput with 8 client nodes:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_3764199cb5d443b7afab3ec202182ead-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;8&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
+&lt;a name="rest_code_3764199cb5d443b7afab3ec202182ead-2"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_3764199cb5d443b7afab3ec202182ead-3"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;2905&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3046&lt;/span&gt;.73 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_3764199cb5d443b7afab3ec202182ead-4"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;2879&lt;/span&gt;.96 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3019&lt;/span&gt;.85 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_3764199cb5d443b7afab3ec202182ead-5"&gt;&lt;/a&gt;...
+&lt;/pre&gt;&lt;p&gt;This matches the 2,880 MB/s claimed by AWS! Using more nodes shows marginal improvement, since the bandwidth should already be saturated.&lt;/p&gt;
+&lt;p&gt;The logical next step is to test IO-heavy HPC applications and conduct a detailed I/O-profiling. In this post, however, I decide to try a more interesting use case -- big data analytics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dask-cluster-on-top-of-aws-hpc-stack"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id24"&gt;3   Dask cluster on top of AWS HPC stack&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The entire idea comes from the Pangeo project (&lt;a class="reference external" href="http://pangeo.io"&gt;http://pangeo.io&lt;/a&gt;) that aims to develop a big-data geoscience platform on HPC and cloud. At its core, Pangeo relies on two excellent Python libraries:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Xarray (&lt;a class="reference external" href="http://xarray.pydata.org"&gt;http://xarray.pydata.org&lt;/a&gt;), which is probably the best way to handle NetCDF files and many other data formats in geoscience. It is also used as a general-purpose "multi-dimensional Pandas" outside of geoscience.&lt;/li&gt;
+&lt;li&gt;Dask (&lt;a class="reference external" href="https://dask.org"&gt;https://dask.org&lt;/a&gt;), a parallel computing library that can scale NumPy, Pandas, Xarray, and Scikit-Learn to parallel and distributed environments. In particular, &lt;a class="reference external" href="https://distributed.dask.org"&gt;Dask-distributed&lt;/a&gt; handles distributed computing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The normal way to deploy Pangeo on cloud is via &lt;a class="reference external" href="http://kubernetes.dask.org"&gt;Dask-Kubernetes&lt;/a&gt;, leveraging fully-managed Kubernetes services like:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://cloud.google.com/kubernetes-engine/"&gt;Google Kubernetes Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://aws.amazon.com/eks/"&gt;Amazon Elastic Container Service for Kubernetes (EKS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://azure.microsoft.com/en-us/services/kubernetes-service/"&gt;Azure Kubernetes Service&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the other hand, the deployment of Pangeo on local HPC clusters is through &lt;a class="reference external" href="https://jobqueue.dask.org"&gt;Dask-Jobqueue&lt;/a&gt; &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pangeo-hpc" id="id10"&gt;[10]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Since we already have a fully-fledged HPC cluster (contains Slurm + MPI + Lustre), there is no reason not to test the second approach. Is AWS now a cloud platform or an HPC cluster? The boundary seems to be blurred.&lt;/p&gt;
+&lt;div class="section" id="cluster-deployment-with-dask-jobqueue"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id25"&gt;3.1   Cluster deployment with Dask-jobqueue&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The deployment turns out to be extremely easy. I am still in the learning curve of Kubernetes, and this alternative HPC approach feels much more straightforward for an HPC person like me.&lt;/p&gt;
+&lt;p&gt;First, get Miniconda:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /shared
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-2"&gt;&lt;/a&gt;$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-3"&gt;&lt;/a&gt;$ bash miniconda.sh -b -p miniconda
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-4"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;". /shared/miniconda/etc/profile.d/conda.sh"&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-5"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-6"&gt;&lt;/a&gt;$ conda create -n py37 &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.7
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-7"&gt;&lt;/a&gt;$ conda activate py37  &lt;span class="c1"&gt;# replaces `source activate` for conda&amp;gt;=4.4&lt;/span&gt;
+&lt;a name="rest_code_7702cdc4e4db4fb587fa10cd4000aa6f-8"&gt;&lt;/a&gt;$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
+&lt;/pre&gt;&lt;p&gt;Optionally, install additional visualization libraries that I will use later:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_13957038c2ad473b9696080b72833cf8-1"&gt;&lt;/a&gt;$ pip install geoviews hvplot datashader
+&lt;/pre&gt;&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;It turns out that we don't need to install MPI4Py! Dask-jobqueue only needs a scheduler (here we have Slurm) to launch processes, and uses its own communication mechanism (defaults to TCP) &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#dask-hpc" id="id11"&gt;[11]&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;With two idle &lt;code&gt;c5n.18xlarge&lt;/code&gt; nodes, use the following code in &lt;code&gt;ipython&lt;/code&gt; to initialize a distributed cluster:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_23be2999be6b437683331b7926946990-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;dask_jobqueue&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;
+&lt;a name="rest_code_23be2999be6b437683331b7926946990-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cores&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;72&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'150GB'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# Slurm thinks there are 72 cores per node due to EC2 hyperthreading&lt;/span&gt;
+&lt;a name="rest_code_23be2999be6b437683331b7926946990-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scale&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_23be2999be6b437683331b7926946990-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_23be2999be6b437683331b7926946990-5"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;distributed&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
+&lt;a name="rest_code_23be2999be6b437683331b7926946990-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;In a separate shell, use &lt;code&gt;sinfo&lt;/code&gt; to check the node status -- they should be fully allocated.&lt;/p&gt;
+&lt;p&gt;To enable Dask's dashboard &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#dask-dashboard" id="id12"&gt;[12]&lt;/a&gt;, add an additional SSH connection in a new shell:&lt;/p&gt;
+&lt;pre class="code text"&gt;&lt;a name="rest_code_252dcc80dcfb44e7a8d9fda9b953b143-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
+&lt;/pre&gt;&lt;p&gt;Visit &lt;code&gt;localhost:8787&lt;/code&gt; in the web browser (NOT something like &lt;code&gt;http://172.31.5.224:8787&lt;/code&gt; shown in Python) .&lt;/p&gt;
+&lt;p&gt;Alternatively, everything can be put together, including Jupyter notebook's port-forwarding:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_d8e0bd6df34d425896146d54d060b8b7-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -L &lt;span class="m"&gt;8889&lt;/span&gt;:localhost:8889 -L &lt;span class="m"&gt;8787&lt;/span&gt;:localhost:8787
+&lt;a name="rest_code_d8e0bd6df34d425896146d54d060b8b7-2"&gt;&lt;/a&gt;$ conda activate py37
+&lt;a name="rest_code_d8e0bd6df34d425896146d54d060b8b7-3"&gt;&lt;/a&gt;$ jupyter notebook --NotebookApp.token&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt; --no-browser --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;8889&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Visit &lt;code&gt;localhost:8889&lt;/code&gt; to use the notebook.&lt;/p&gt;
+&lt;p&gt;That's all about the deployment! This Dask cluster is able to perform parallel read/write with the Lustre file system.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="computation-with-dask-distributed"&gt;
+&lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id26"&gt;3.2   Computation with Dask-distributed&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;As an example, I compute the average Sea Surface Temperature (SST) &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#sst" id="id13"&gt;[13]&lt;/a&gt; over near 300 GBs of ERA5 data. It gets done in 15 seconds with 8 compute nodes, which would have taken &amp;gt; 20 minutes with a single small node. Here's the screen recording of Dask dashboard during computation.&lt;/p&gt;
+&lt;div class="vimeo-video"&gt;
+&lt;iframe src="https://player.vimeo.com/video/321645143" width="800" height="400" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen"&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;p&gt;The full code is available in the &lt;a class="reference external" href="https://jiaweizhuang.github.io/blog/dask-hpc-fsx/"&gt;next notebook&lt;/a&gt;. At the end of the notebook also shows a sign of climate change (computed from the SST data), so at least we get a bit scientific insight from this toy problem. Hopefully such powerful computing power can be used to solve some big science.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="final-thoughts"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id27"&gt;4   Final thoughts&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Back to my initial questions:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is to TBD though.&lt;/li&gt;
+&lt;li&gt;How easy can it be used for real-world applications? It turns out to be quite easy. All building blocks are already there, and I just need to put them together. It took me one day to get such initial tests done.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;No need to worry about the HDF + Cloud problem &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#hdf-cloud" id="id14"&gt;[14]&lt;/a&gt;. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF &amp;amp; NetCDF formats, and converting them to more a cloud-friendly format like Zarr can take some effort.&lt;/li&gt;
+&lt;li&gt;It is probably easier for existing cloud-HPC users to adopt. Numerical simulations and post-processing can be done in exactly the same environment.&lt;/li&gt;
+&lt;li&gt;It is likely to cost more (haven't rigorously calculated), due to heavier resource provisioning. Lustre essentially acts as a huge cache for S3. In the long-term, this kind of data analytics workflow should probably be handled in a more cloud-native way, using Lambda-like serverless computing, to maximize resource utilization and minimize computational cost. But it is nice to have something that "just works" right now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some possible further steps:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;The performance can be fine-tuned indefinitely. There is an extremely-large parameter space: Lustre stripe size, HDF5 chunk size, Dask chunk size, Dask processes vs threads, client instance counts and types... But unless there are important scientific/business needs, fine-tuning it doesn't seem super interesting.&lt;/li&gt;
+&lt;li&gt;For me personally, this provides a very convenient test environment for scaling-out xESMF &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#xesmf-pangeo" id="id15"&gt;[15]&lt;/a&gt;, the regridding package I wrote. Because the entire pipeline is clearly I/O-limited, what I really need is just a fast file system.&lt;/li&gt;
+&lt;li&gt;The most promising use case is probably some deep-learning-like climate analytics &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#climate-net" id="id16"&gt;[16]&lt;/a&gt;. DL algorithms are generally data hungry, and the best place to put massive datasets is, with not doubt, the cloud. How does Dask + Xarray + Pangeo fit into DL workflow seems an open question, though &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#xarray-dl" id="id17"&gt;[17]&lt;/a&gt; .&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="references"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id28"&gt;5   References&lt;/a&gt;&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="pclus-fsx" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Added in ParallelCluster v2.2.1 &lt;a class="reference external" href="https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1"&gt;https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1&lt;/a&gt;. See FSx section in the docs: &lt;a class="reference external" href="https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx"&gt;https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="nas-lustre" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;For example, NASA's supercomputing facility provides a nice user guide on Lustre: &lt;a class="reference external" href="https://www.nas.nasa.gov/hecc/support/kb/102/"&gt;https://www.nas.nasa.gov/hecc/support/kb/102/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fsx-s3" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See "Using S3 Data Repositories" in FSx guide: &lt;a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html"&gt;https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="s3-opendata" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See the Registry of Open Data on AWS &lt;a class="reference external" href="https://registry.opendata.aws/"&gt;https://registry.opendata.aws/&lt;/a&gt;. A large fraction of them are Earth data: &lt;a class="reference external" href="https://aws.amazon.com/earth/"&gt;https://aws.amazon.com/earth/&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="pcluster-ubuntu" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See this issue: &lt;a class="reference external" href="https://github.com/aws/aws-parallelcluster/issues/896"&gt;https://github.com/aws/aws-parallelcluster/issues/896&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="fsx-performance" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id6"&gt;[6]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See Amazon FSx for Lustre Performance at &lt;a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html"&gt;https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="era5" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id7"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Search for "ECMWF ERA5 Reanalysis" in the Registry of Open Data on AWS: &lt;a class="reference external" href="https://registry.opendata.aws/ecmwf-era5"&gt;https://registry.opendata.aws/ecmwf-era5&lt;/a&gt;. As a reminder for non-atmospheric people, a reanalysis is like the best guess of past atmospheric states, obtained from observations and simulations. For a more detailed but non-technical introduction, Read &lt;em&gt;Reanalyses and Observations: What’s the Difference?&lt;/em&gt; at &lt;a class="reference external" href="https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1"&gt;https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="hdf5-error" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id8"&gt;[8]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file"&gt;https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="ior-tutorial" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id9"&gt;[9]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See "First Steps with IOR" at: &lt;a class="reference external" href="https://ior.readthedocs.io/en/latest/userDoc/tutorial.html"&gt;https://ior.readthedocs.io/en/latest/userDoc/tutorial.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="pangeo-hpc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id10"&gt;[10]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See "Getting Started with Pangeo on HPC": &lt;a class="reference external" href="https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html"&gt;https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="dask-hpc" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id11"&gt;[11]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See the "High Performance Computers" section in Dask docs: &lt;a class="reference external" href="http://docs.dask.org/en/latest/setup/hpc.html"&gt;http://docs.dask.org/en/latest/setup/hpc.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="dask-dashboard" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id12"&gt;[12]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See "Viewing the Dask Dashboard" in Dask-Jobqueue docs: &lt;a class="reference external" href="https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard"&gt;https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="sst" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id13"&gt;[13]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;SST is an important climate change indicator: &lt;a class="reference external" href="https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature"&gt;https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="hdf-cloud" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id14"&gt;[14]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;HDF in the Cloud: challenges and solutions for scientific data: &lt;a class="reference external" href="http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud"&gt;http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="xesmf-pangeo" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id15"&gt;[15]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Initial tests regarding distributed regridding with xESMF on Pangeo: &lt;a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/334"&gt;https://github.com/pangeo-data/pangeo/issues/334&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="climate-net" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id16"&gt;[16]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;For example, see Berkeley Lab's ClimateNet: &lt;a class="reference external" href="https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/"&gt;https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="xarray-dl" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label"&gt;&lt;col&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id17"&gt;[17]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;See the discusson in this issue: &lt;a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/567"&gt;https://github.com/pangeo-data/pangeo/issues/567&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>AWS</category><category>Cloud</category><category>Dask</category><category>HPC</category><category>I/O</category><category>MPI</category><category>Spack</category><category>Xarray</category><guid>https://jiaweizhuang.github.io/blog/fsx-experiments/</guid><pubDate>Tue, 05 Mar 2019 19:53:14 GMT</pubDate></item><item><title>A scientist's guide to cloud-HPC: example with AWS ParallelCluster, Slurm, Spack, and WRF</title><link>https://jiaweizhuang.github.io/blog/aws-hpc-guide/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
 &lt;ul class="auto-toc simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#motivation-and-principle-of-this-guide" id="id35"&gt;1   Motivation and principle of this guide&lt;/a&gt;&lt;/li&gt;
@@ -37,7 +340,7 @@
 &lt;/div&gt;
 &lt;div class="section" id="motivation-and-principle-of-this-guide"&gt;
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id35"&gt;1   Motivation and principle of this guide&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Cloud-HPC is growing rapidly &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#cloud-hpc-growth" id="id1"&gt;[1]&lt;/a&gt;, and the growth can only be faster with AWS's recent HPC-oriented services such as &lt;a class="reference external" href="https://aws.amazon.com/about-aws/whats-new/2018/11/introducing-amazon-ec2-c5n-instances/"&gt;EC2 c5n&lt;/a&gt;, &lt;a class="reference external" href="https://aws.amazon.com/fsx/lustre/"&gt;FSx for Lustre&lt;/a&gt;, and the soon-coming &lt;a class="reference external" href="https://aws.amazon.com/about-aws/whats-new/2018/11/introducing-elastic-fabric-adapter/"&gt;EFA&lt;/a&gt;. However, orchestrating a cloud-HPC cluster is by no means easy, especially considering that many HPC users are from science and engineering and are not trained with IT and system administration skills. There are very few documentations for this niche field, and users could face a pretty steep learning curve. To make people's lives a bit easier (and to provide a reference for the future me), I wrote guide to show an easy-to-follow workflow of building a fully-fledged HPC cluster environment on AWS.&lt;/p&gt;
+&lt;p&gt;Cloud-HPC is growing rapidly &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#cloud-hpc-growth" id="id1"&gt;[1]&lt;/a&gt;, and the growth can only be faster with AWS's recent HPC-oriented services such as &lt;a class="reference external" href="https://aws.amazon.com/about-aws/whats-new/2018/11/introducing-amazon-ec2-c5n-instances/"&gt;EC2 c5n&lt;/a&gt;, &lt;a class="reference external" href="https://aws.amazon.com/fsx/lustre/"&gt;FSx for Lustre&lt;/a&gt;, and the soon-coming &lt;a class="reference external" href="https://aws.amazon.com/about-aws/whats-new/2018/11/introducing-elastic-fabric-adapter/"&gt;EFA&lt;/a&gt;. However, orchestrating a cloud-HPC cluster is by no means easy, especially considering that many HPC users are from science and engineering and are not trained with IT and system administration skills. There are very few documentations for this niche field, and users could face a pretty steep learning curve. To make people's lives a bit easier (and to provide a reference for the future me), I wrote this guide to show an easy-to-follow workflow of building a fully-fledged HPC cluster environment on AWS.&lt;/p&gt;
 &lt;p&gt;My basic principles are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Minimize the learning curve for non-IT/non-CS people. That being said, it can still take a while for new users to learn. But you should be able to use a cloud-HPC cluster with confidence after going through this guide.&lt;/li&gt;
@@ -81,34 +384,34 @@
 &lt;div class="section" id="a-minimum-config-file-for-production-hpc"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id38"&gt;3.1   A minimum config file for production HPC&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The cluster infrastructure is fully specified by &lt;code&gt;~/.parallelcluster/config&lt;/code&gt;. A minimum, recommended config file would look like:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;aws&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;aws_region_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; xxx
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-4"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;cluster your-cluster-section-name&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;key_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; xxx
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-6"&gt;&lt;/a&gt;&lt;span class="nv"&gt;base_os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; centos7
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-7"&gt;&lt;/a&gt;&lt;span class="nv"&gt;master_instance_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; c5n.large
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-8"&gt;&lt;/a&gt;&lt;span class="nv"&gt;compute_instance_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; c5n.18xlarge
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-9"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cluster_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; spot
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-10"&gt;&lt;/a&gt;&lt;span class="nv"&gt;initial_queue_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-11"&gt;&lt;/a&gt;&lt;span class="nv"&gt;scheduler&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; slurm
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-12"&gt;&lt;/a&gt;&lt;span class="nv"&gt;placement_group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; DYNAMIC
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-13"&gt;&lt;/a&gt;&lt;span class="nv"&gt;vpc_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-vpc-section-name
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-14"&gt;&lt;/a&gt;&lt;span class="nv"&gt;ebs_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-ebs-section-name
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-15"&gt;&lt;/a&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-16"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;vpc your-vpc-section-name&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-17"&gt;&lt;/a&gt;&lt;span class="nv"&gt;vpc_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; vpc-xxxxxxxx
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-18"&gt;&lt;/a&gt;&lt;span class="nv"&gt;master_subnet_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; subnet-xxxxxxxx
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-19"&gt;&lt;/a&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-20"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;ebs your-ebs-section-name&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-21"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; shared
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-22"&gt;&lt;/a&gt;&lt;span class="nv"&gt;volume_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; st1
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-23"&gt;&lt;/a&gt;&lt;span class="nv"&gt;volume_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;500&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-24"&gt;&lt;/a&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-25"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;global&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-26"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cluster_template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-cluster-section-name
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-27"&gt;&lt;/a&gt;&lt;span class="nv"&gt;update_check&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
-&lt;a name="rest_code_14a05c1736934a899b8e03ed862a6936-28"&gt;&lt;/a&gt;&lt;span class="nv"&gt;sanity_check&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;aws&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;aws_region_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; xxx
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-4"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;cluster your-cluster-section-name&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;key_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; xxx
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-6"&gt;&lt;/a&gt;&lt;span class="nv"&gt;base_os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; centos7
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-7"&gt;&lt;/a&gt;&lt;span class="nv"&gt;master_instance_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; c5n.large
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-8"&gt;&lt;/a&gt;&lt;span class="nv"&gt;compute_instance_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; c5n.18xlarge
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-9"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cluster_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; spot
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-10"&gt;&lt;/a&gt;&lt;span class="nv"&gt;initial_queue_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-11"&gt;&lt;/a&gt;&lt;span class="nv"&gt;scheduler&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; slurm
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-12"&gt;&lt;/a&gt;&lt;span class="nv"&gt;placement_group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; DYNAMIC
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-13"&gt;&lt;/a&gt;&lt;span class="nv"&gt;vpc_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-vpc-section-name
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-14"&gt;&lt;/a&gt;&lt;span class="nv"&gt;ebs_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-ebs-section-name
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-15"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-16"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;vpc your-vpc-section-name&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-17"&gt;&lt;/a&gt;&lt;span class="nv"&gt;vpc_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; vpc-xxxxxxxx
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-18"&gt;&lt;/a&gt;&lt;span class="nv"&gt;master_subnet_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; subnet-xxxxxxxx
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-19"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-20"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;ebs your-ebs-section-name&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-21"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; shared
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-22"&gt;&lt;/a&gt;&lt;span class="nv"&gt;volume_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; st1
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-23"&gt;&lt;/a&gt;&lt;span class="nv"&gt;volume_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;500&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-24"&gt;&lt;/a&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-25"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;global&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-26"&gt;&lt;/a&gt;&lt;span class="nv"&gt;cluster_template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; your-cluster-section-name
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-27"&gt;&lt;/a&gt;&lt;span class="nv"&gt;update_check&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;a name="rest_code_e9c678e309384cb59507d1538d2667c0-28"&gt;&lt;/a&gt;&lt;span class="nv"&gt;sanity_check&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;A brief comment on what are set:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;code&gt;aws_region_name&lt;/code&gt; should be set at initial &lt;code&gt;pcluster configure&lt;/code&gt;. I use &lt;code&gt;us-east-1&lt;/code&gt;.&lt;/li&gt;
@@ -185,31 +488,31 @@
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id41"&gt;4.1   Using Slurm&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;After login to the master node with &lt;code&gt;pcluster ssh&lt;/code&gt;, you will use Slurm to interact with compute nodes. Here I summarize commonly-used commands. For general reference, see Slurm's documentation: &lt;a class="reference external" href="https://www.schedmd.com/"&gt;https://www.schedmd.com/&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Slurm is pre-installed at &lt;code&gt;/opt/slurm/&lt;/code&gt; :&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_4b447b8174794dfaaf91c2ef0c1c0a68-1"&gt;&lt;/a&gt;$ which sinfo
-&lt;a name="rest_code_4b447b8174794dfaaf91c2ef0c1c0a68-2"&gt;&lt;/a&gt;/opt/slurm/bin/sinfo
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_dcc2997246f14c4fbda83953db3c7cbe-1"&gt;&lt;/a&gt;$ which sinfo
+&lt;a name="rest_code_dcc2997246f14c4fbda83953db3c7cbe-2"&gt;&lt;/a&gt;/opt/slurm/bin/sinfo
 &lt;/pre&gt;&lt;p&gt;Check compute node status:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_51329c17409a43cb9b41a36490c1121d-1"&gt;&lt;/a&gt;$ sinfo
-&lt;a name="rest_code_51329c17409a43cb9b41a36490c1121d-2"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-&lt;a name="rest_code_51329c17409a43cb9b41a36490c1121d-3"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;2&lt;/span&gt;   idle ip-172-31-3-187,ip-172-31-7-245
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c71c914307a441139d6973d3ac44ab3d-1"&gt;&lt;/a&gt;$ sinfo
+&lt;a name="rest_code_c71c914307a441139d6973d3ac44ab3d-2"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+&lt;a name="rest_code_c71c914307a441139d6973d3ac44ab3d-3"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;2&lt;/span&gt;   idle ip-172-31-3-187,ip-172-31-7-245
 &lt;/pre&gt;&lt;p&gt;The &lt;code&gt;172-31-xxx-xxx&lt;/code&gt; is the Private IP &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#private-ip" id="id12"&gt;[12]&lt;/a&gt; of the compute instances. The address range falls in your AWS VPC subnet. On EC2, &lt;code&gt;hostname&lt;/code&gt; prints the private IP:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0fa1e93d317f45fbbfd28c7f851d859a-1"&gt;&lt;/a&gt;$ hostname  &lt;span class="c1"&gt;# private ip of master node&lt;/span&gt;
-&lt;a name="rest_code_0fa1e93d317f45fbbfd28c7f851d859a-2"&gt;&lt;/a&gt;ip-172-31-7-214
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c88ffd4c260e4b43a1c5e18e460cf6b0-1"&gt;&lt;/a&gt;$ hostname  &lt;span class="c1"&gt;# private ip of master node&lt;/span&gt;
+&lt;a name="rest_code_c88ffd4c260e4b43a1c5e18e460cf6b0-2"&gt;&lt;/a&gt;ip-172-31-7-214
 &lt;/pre&gt;&lt;p&gt;To execute commands on compute nodes, use &lt;code&gt;srun&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0749899bf05d424087d6dc189dbfa95a-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; -n &lt;span class="m"&gt;2&lt;/span&gt; hostname  &lt;span class="c1"&gt;# private ip of compute nodes&lt;/span&gt;
-&lt;a name="rest_code_0749899bf05d424087d6dc189dbfa95a-2"&gt;&lt;/a&gt;ip-172-31-3-187
-&lt;a name="rest_code_0749899bf05d424087d6dc189dbfa95a-3"&gt;&lt;/a&gt;ip-172-31-7-245
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_a1328f4783e14e198ba325fedb5a8d64-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; -n &lt;span class="m"&gt;2&lt;/span&gt; hostname  &lt;span class="c1"&gt;# private ip of compute nodes&lt;/span&gt;
+&lt;a name="rest_code_a1328f4783e14e198ba325fedb5a8d64-2"&gt;&lt;/a&gt;ip-172-31-3-187
+&lt;a name="rest_code_a1328f4783e14e198ba325fedb5a8d64-3"&gt;&lt;/a&gt;ip-172-31-7-245
 &lt;/pre&gt;&lt;p&gt;The printed IP should match the output of &lt;code&gt;sinfo&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;You can go to a compute node with the standard Slurm command:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_117b6371bac349cc9cd8d461b99da25d-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;1&lt;/span&gt; -n &lt;span class="m"&gt;72&lt;/span&gt; --pty bash  &lt;span class="c1"&gt;# Slurm thinks a c5n.18xlarge node has 72 cores due to hyperthreading&lt;/span&gt;
-&lt;a name="rest_code_117b6371bac349cc9cd8d461b99da25d-2"&gt;&lt;/a&gt;$ sinfo  &lt;span class="c1"&gt;# one node is fully allocated&lt;/span&gt;
-&lt;a name="rest_code_117b6371bac349cc9cd8d461b99da25d-3"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-&lt;a name="rest_code_117b6371bac349cc9cd8d461b99da25d-4"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;1&lt;/span&gt;  alloc ip-172-31-3-187
-&lt;a name="rest_code_117b6371bac349cc9cd8d461b99da25d-5"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;1&lt;/span&gt;   idle ip-172-31-7-245
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_bbf6c0dd197c4a18a82160a6c486b52f-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;1&lt;/span&gt; -n &lt;span class="m"&gt;72&lt;/span&gt; --pty bash  &lt;span class="c1"&gt;# Slurm thinks a c5n.18xlarge node has 72 cores due to hyperthreading&lt;/span&gt;
+&lt;a name="rest_code_bbf6c0dd197c4a18a82160a6c486b52f-2"&gt;&lt;/a&gt;$ sinfo  &lt;span class="c1"&gt;# one node is fully allocated&lt;/span&gt;
+&lt;a name="rest_code_bbf6c0dd197c4a18a82160a6c486b52f-3"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+&lt;a name="rest_code_bbf6c0dd197c4a18a82160a6c486b52f-4"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;1&lt;/span&gt;  alloc ip-172-31-3-187
+&lt;a name="rest_code_bbf6c0dd197c4a18a82160a6c486b52f-5"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;1&lt;/span&gt;   idle ip-172-31-7-245
 &lt;/pre&gt;&lt;p&gt;Or simply via &lt;code&gt;ssh&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_e65947e58e3c4913a5b4d2e9c80cffda-1"&gt;&lt;/a&gt;$ ssh ip-172-31-3-187
-&lt;a name="rest_code_e65947e58e3c4913a5b4d2e9c80cffda-2"&gt;&lt;/a&gt;$ sinfo  &lt;span class="c1"&gt;# still idle&lt;/span&gt;
-&lt;a name="rest_code_e65947e58e3c4913a5b4d2e9c80cffda-3"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-&lt;a name="rest_code_e65947e58e3c4913a5b4d2e9c80cffda-4"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;2&lt;/span&gt;   idle ip-172-31-3-187,ip-172-31-7-245
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_d9caa59fdc0e4ee0bf807655a2cfcce5-1"&gt;&lt;/a&gt;$ ssh ip-172-31-3-187
+&lt;a name="rest_code_d9caa59fdc0e4ee0bf807655a2cfcce5-2"&gt;&lt;/a&gt;$ sinfo  &lt;span class="c1"&gt;# still idle&lt;/span&gt;
+&lt;a name="rest_code_d9caa59fdc0e4ee0bf807655a2cfcce5-3"&gt;&lt;/a&gt;PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+&lt;a name="rest_code_d9caa59fdc0e4ee0bf807655a2cfcce5-4"&gt;&lt;/a&gt;compute*     up   infinite      &lt;span class="m"&gt;2&lt;/span&gt;   idle ip-172-31-3-187,ip-172-31-7-245
 &lt;/pre&gt;&lt;p&gt;In this case, the scheduler is not aware of such activity.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;$HOME&lt;/code&gt; directory is exported to all nodes via NFS by default, so you can still see the same files from compute nodes. However, system directories like &lt;code&gt;/usr&lt;/code&gt; are specific to each node. Software libraries should generally be installed to a shared disk, otherwise they will not be accessible from compute nodes.&lt;/p&gt;
 &lt;/div&gt;
@@ -217,14 +520,14 @@
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id42"&gt;4.2   Check system &amp;amp; hardware&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;A natural thing is to check CPU info with &lt;code&gt;lscpu&lt;/code&gt; and file system structure with &lt;code&gt;df -h&lt;/code&gt;. Do this on both master and compute nodes to see the differences.&lt;/p&gt;
 &lt;p&gt;A serious HPC user should also check the network interface:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0d554e416faa44319db498ce43d3dcf1-1"&gt;&lt;/a&gt;$ ifconfig  &lt;span class="c1"&gt;# display network interface names and details&lt;/span&gt;
-&lt;a name="rest_code_0d554e416faa44319db498ce43d3dcf1-2"&gt;&lt;/a&gt;ens5: ...
-&lt;a name="rest_code_0d554e416faa44319db498ce43d3dcf1-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_0d554e416faa44319db498ce43d3dcf1-4"&gt;&lt;/a&gt;lo: ...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_24aba51da52340348ec4bf9497daa3af-1"&gt;&lt;/a&gt;$ ifconfig  &lt;span class="c1"&gt;# display network interface names and details&lt;/span&gt;
+&lt;a name="rest_code_24aba51da52340348ec4bf9497daa3af-2"&gt;&lt;/a&gt;ens5: ...
+&lt;a name="rest_code_24aba51da52340348ec4bf9497daa3af-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_24aba51da52340348ec4bf9497daa3af-4"&gt;&lt;/a&gt;lo: ...
 &lt;/pre&gt;&lt;p&gt;Here, the &lt;code&gt;ens5&lt;/code&gt; section is the network interface for inter-node commnunication. Its driver should be &lt;code&gt;ena&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_9bb304e41b5840fd8acfaff1e5b5c210-1"&gt;&lt;/a&gt;$ ethtool -i ens5
-&lt;a name="rest_code_9bb304e41b5840fd8acfaff1e5b5c210-2"&gt;&lt;/a&gt;driver: ena
-&lt;a name="rest_code_9bb304e41b5840fd8acfaff1e5b5c210-3"&gt;&lt;/a&gt;version: &lt;span class="m"&gt;1&lt;/span&gt;.5.0K
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_486fc3a863254cf88bf99b08dff35d99-1"&gt;&lt;/a&gt;$ ethtool -i ens5
+&lt;a name="rest_code_486fc3a863254cf88bf99b08dff35d99-2"&gt;&lt;/a&gt;driver: ena
+&lt;a name="rest_code_486fc3a863254cf88bf99b08dff35d99-3"&gt;&lt;/a&gt;version: &lt;span class="m"&gt;1&lt;/span&gt;.5.0K
 &lt;/pre&gt;&lt;p&gt;This means that "Enhanced Networking" is enabled &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#ena" id="id13"&gt;[13]&lt;/a&gt;. This should be the default on most modern AMIs, so you shouldn't need to change anything.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="cluster-management-tricks"&gt;
@@ -246,29 +549,29 @@
 &lt;p&gt;While you can get pre-built MPI binaries with &lt;code&gt;sudo yum install -y openmpi-devel&lt;/code&gt; on CentOS or &lt;code&gt;sudo apt install -y libopenmpi-dev&lt;/code&gt; on Ubuntu, they are generally not the specific version you want. On the other hand, building custom versions of libraries from source is too laborious and error-prone &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#build-netcdf" id="id16"&gt;[16]&lt;/a&gt;. Spack achieves a great balance between the ease-of-use and customizability. It has an excellent documentation which I strongly recommend reading: &lt;a class="reference external" href="https://spack.readthedocs.io/"&gt;https://spack.readthedocs.io/&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here I provide the minimum required steps to build a production-ready HPC environment.&lt;/p&gt;
 &lt;p&gt;Getting Spack is super easy:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_ed9e1e7f2a04463784f72355a128b552-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /shared  &lt;span class="c1"&gt;# install to shared disk&lt;/span&gt;
-&lt;a name="rest_code_ed9e1e7f2a04463784f72355a128b552-2"&gt;&lt;/a&gt;git clone https://github.com/spack/spack.git
-&lt;a name="rest_code_ed9e1e7f2a04463784f72355a128b552-3"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;'export PATH=/shared/spack/bin:$PATH'&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc  &lt;span class="c1"&gt;# to discover spack executable&lt;/span&gt;
-&lt;a name="rest_code_ed9e1e7f2a04463784f72355a128b552-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c4a1a5cf232a46bd8a8e384afd74279b-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /shared  &lt;span class="c1"&gt;# install to shared disk&lt;/span&gt;
+&lt;a name="rest_code_c4a1a5cf232a46bd8a8e384afd74279b-2"&gt;&lt;/a&gt;git clone https://github.com/spack/spack.git
+&lt;a name="rest_code_c4a1a5cf232a46bd8a8e384afd74279b-3"&gt;&lt;/a&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;'export PATH=/shared/spack/bin:$PATH'&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc  &lt;span class="c1"&gt;# to discover spack executable&lt;/span&gt;
+&lt;a name="rest_code_c4a1a5cf232a46bd8a8e384afd74279b-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
 &lt;/pre&gt;&lt;p&gt;At the time of writing, I am using:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_335a359b382d47c09af5309c3506e5e3-1"&gt;&lt;/a&gt;$ spack --version
-&lt;a name="rest_code_335a359b382d47c09af5309c3506e5e3-2"&gt;&lt;/a&gt;&lt;span class="m"&gt;0&lt;/span&gt;.12.1
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_455c68085833472f94df62861029a195-1"&gt;&lt;/a&gt;$ spack --version
+&lt;a name="rest_code_455c68085833472f94df62861029a195-2"&gt;&lt;/a&gt;&lt;span class="m"&gt;0&lt;/span&gt;.12.1
 &lt;/pre&gt;&lt;p&gt;The first thing is to check what compilers are available. Most OS should already have a GNU compiler installed, and Spack can discover it:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0ba0376f3b9c412982d397f6b5ac2b93-1"&gt;&lt;/a&gt;$ spack &lt;span class="nv"&gt;compilers&lt;/span&gt;
-&lt;a name="rest_code_0ba0376f3b9c412982d397f6b5ac2b93-2"&gt;&lt;/a&gt;&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Available compilers
-&lt;a name="rest_code_0ba0376f3b9c412982d397f6b5ac2b93-3"&gt;&lt;/a&gt;-- gcc centos7-x86_64 -------------------------------------------
-&lt;a name="rest_code_0ba0376f3b9c412982d397f6b5ac2b93-4"&gt;&lt;/a&gt;gcc@4.8.5
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_4cc4f6ba969c485aa26504362beacab3-1"&gt;&lt;/a&gt;$ spack &lt;span class="nv"&gt;compilers&lt;/span&gt;
+&lt;a name="rest_code_4cc4f6ba969c485aa26504362beacab3-2"&gt;&lt;/a&gt;&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Available compilers
+&lt;a name="rest_code_4cc4f6ba969c485aa26504362beacab3-3"&gt;&lt;/a&gt;-- gcc centos7-x86_64 -------------------------------------------
+&lt;a name="rest_code_4cc4f6ba969c485aa26504362beacab3-4"&gt;&lt;/a&gt;gcc@4.8.5
 &lt;/pre&gt;&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;If not installed, just &lt;code&gt;sudo yum install gcc gcc-gfortran gcc-c++&lt;/code&gt; on CentOS or &lt;code&gt;sudo apt install gcc gfortran g++&lt;/code&gt; on Ubuntu.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;You might want to get a newer version of the compiler:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-1"&gt;&lt;/a&gt;$ spack install gcc@8.2.0  &lt;span class="c1"&gt;# can take 30 min!&lt;/span&gt;
-&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-2"&gt;&lt;/a&gt;$ spack compiler add &lt;span class="k"&gt;$(&lt;/span&gt;spack location -i gcc@8.2.0&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-3"&gt;&lt;/a&gt;$ spack &lt;span class="nv"&gt;compilers&lt;/span&gt;
-&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-4"&gt;&lt;/a&gt;&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Available compilers
-&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-5"&gt;&lt;/a&gt;-- gcc centos7-x86_64 -------------------------------------------
-&lt;a name="rest_code_177084ee99de4e4e9d72a5c5ac53c08c-6"&gt;&lt;/a&gt;gcc@8.2.0  gcc@4.8.5
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-1"&gt;&lt;/a&gt;$ spack install gcc@8.2.0  &lt;span class="c1"&gt;# can take 30 min!&lt;/span&gt;
+&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-2"&gt;&lt;/a&gt;$ spack compiler add &lt;span class="k"&gt;$(&lt;/span&gt;spack location -i gcc@8.2.0&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-3"&gt;&lt;/a&gt;$ spack &lt;span class="nv"&gt;compilers&lt;/span&gt;
+&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-4"&gt;&lt;/a&gt;&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Available compilers
+&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-5"&gt;&lt;/a&gt;-- gcc centos7-x86_64 -------------------------------------------
+&lt;a name="rest_code_122a6f70312d4365bb2a9da00677cdc9-6"&gt;&lt;/a&gt;gcc@8.2.0  gcc@4.8.5
 &lt;/pre&gt;&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;Spack builds software from source, which can take a while. To persist the build you can run it inside &lt;code&gt;tmux&lt;/code&gt; sessions. If not installed, simply run &lt;code&gt;sudo yum install tmux&lt;/code&gt; or &lt;code&gt;sudo apt install tmux&lt;/code&gt;.&lt;/p&gt;
@@ -280,45 +583,45 @@
 &lt;div class="section" id="mpi-libraries-openmpi-with-slurm-support"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id45"&gt;5.1   MPI libraries (OpenMPI with Slurm support)&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Spack can install many MPI implementations, for example:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_2decdb8288b644119372bd636c8d5a42-1"&gt;&lt;/a&gt;$ spack info mpich
-&lt;a name="rest_code_2decdb8288b644119372bd636c8d5a42-2"&gt;&lt;/a&gt;$ spack info mvapich2
-&lt;a name="rest_code_2decdb8288b644119372bd636c8d5a42-3"&gt;&lt;/a&gt;$ spack info openmpi
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_626dbd095f1648b8ada053f37e77ef77-1"&gt;&lt;/a&gt;$ spack info mpich
+&lt;a name="rest_code_626dbd095f1648b8ada053f37e77ef77-2"&gt;&lt;/a&gt;$ spack info mvapich2
+&lt;a name="rest_code_626dbd095f1648b8ada053f37e77ef77-3"&gt;&lt;/a&gt;$ spack info openmpi
 &lt;/pre&gt;&lt;p&gt;In this example I will use OpenMPI. It has a super-informative documentation at &lt;a class="reference external" href="https://www.open-mpi.org/faq/"&gt;https://www.open-mpi.org/faq/&lt;/a&gt;&lt;/p&gt;
 &lt;div class="section" id="installing-openmpi"&gt;
 &lt;h4&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id46"&gt;5.1.1   Installing OpenMPI&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;In principle, the installation is as simple as:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_26b5cc68e4be4a03b98b05f1b6bfc632-1"&gt;&lt;/a&gt;$ spack install openmpi  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_f8181f1e3a644410a88d25a4662a28cb-1"&gt;&lt;/a&gt;$ spack install openmpi  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Or a specific version:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_3a6a1ee0a6484fcebd57d37194959ead-1"&gt;&lt;/a&gt;$ spack install openmpi@3.1.3  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_fed04b2c94de4062b27d1fda7be42fb1-1"&gt;&lt;/a&gt;$ spack install openmpi@3.1.3  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;However, we want OpenMPI to be built with Slurm &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#ompi-slurm" id="id17"&gt;[17]&lt;/a&gt;, so the launch of MPI processes can be handled by Slurm's scheduler.&lt;/p&gt;
 &lt;p&gt;Because Slurm is pre-installed, you will add it as an external package to Spack &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#slurm-spack" id="id18"&gt;[18]&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_99f675a26ab1450c8ddf065128b0ff0d-1"&gt;&lt;/a&gt;$ which sinfo  &lt;span class="c1"&gt;# comes with AWS ParallelCluster&lt;/span&gt;
-&lt;a name="rest_code_99f675a26ab1450c8ddf065128b0ff0d-2"&gt;&lt;/a&gt;/opt/slurm/bin/sinfo
-&lt;a name="rest_code_99f675a26ab1450c8ddf065128b0ff0d-3"&gt;&lt;/a&gt;$ sinfo -V
-&lt;a name="rest_code_99f675a26ab1450c8ddf065128b0ff0d-4"&gt;&lt;/a&gt;slurm &lt;span class="m"&gt;16&lt;/span&gt;.05.3
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_8353a5596d6b41a8b8429097658bb68d-1"&gt;&lt;/a&gt;$ which sinfo  &lt;span class="c1"&gt;# comes with AWS ParallelCluster&lt;/span&gt;
+&lt;a name="rest_code_8353a5596d6b41a8b8429097658bb68d-2"&gt;&lt;/a&gt;/opt/slurm/bin/sinfo
+&lt;a name="rest_code_8353a5596d6b41a8b8429097658bb68d-3"&gt;&lt;/a&gt;$ sinfo -V
+&lt;a name="rest_code_8353a5596d6b41a8b8429097658bb68d-4"&gt;&lt;/a&gt;slurm &lt;span class="m"&gt;16&lt;/span&gt;.05.3
 &lt;/pre&gt;&lt;p&gt;Add the following section to &lt;code&gt;~/.spack/packages.yaml&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_3826be1e43bc42efbe8c645b7f53b68f-1"&gt;&lt;/a&gt;packages:
-&lt;a name="rest_code_3826be1e43bc42efbe8c645b7f53b68f-2"&gt;&lt;/a&gt;  slurm:
-&lt;a name="rest_code_3826be1e43bc42efbe8c645b7f53b68f-3"&gt;&lt;/a&gt;    paths:
-&lt;a name="rest_code_3826be1e43bc42efbe8c645b7f53b68f-4"&gt;&lt;/a&gt;      slurm@16.05.3: /opt/slurm/
-&lt;a name="rest_code_3826be1e43bc42efbe8c645b7f53b68f-5"&gt;&lt;/a&gt;    buildable: False
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_3968237b9ecf442e9fa8707fd231c9a4-1"&gt;&lt;/a&gt;packages:
+&lt;a name="rest_code_3968237b9ecf442e9fa8707fd231c9a4-2"&gt;&lt;/a&gt;  slurm:
+&lt;a name="rest_code_3968237b9ecf442e9fa8707fd231c9a4-3"&gt;&lt;/a&gt;    paths:
+&lt;a name="rest_code_3968237b9ecf442e9fa8707fd231c9a4-4"&gt;&lt;/a&gt;      slurm@16.05.3: /opt/slurm/
+&lt;a name="rest_code_3968237b9ecf442e9fa8707fd231c9a4-5"&gt;&lt;/a&gt;    buildable: False
 &lt;/pre&gt;&lt;p&gt;&lt;strong&gt;This step is extremely important. Without modifying packages.yaml, Spack will install Slurm for you, but the newly-installed Slurm is not configured with the AWS cluster.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Then install OpenMPI wih:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_8f094a33a14748a994ee9e766b37864a-1"&gt;&lt;/a&gt;$ spack install openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_0135e5599bc8480fbd81594a3b1d1249-1"&gt;&lt;/a&gt;$ spack install openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;After installation, locate its directory:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_6c6acdf30cdf44328415dc0c79b72519-1"&gt;&lt;/a&gt;$ spack find -p openmpi
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_887219587eb9433caa192572e0ccc93b-1"&gt;&lt;/a&gt;$ spack find -p openmpi
 &lt;/pre&gt;&lt;p&gt;Modify &lt;code&gt;$PATH&lt;/code&gt; to discover executables like &lt;code&gt;mpicc&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_b54c42c51a984a2b865cad4bfb311c60-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_788540f759e14c59befc973560b3bdb4-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
 &lt;/pre&gt;&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;Spack removes the &lt;code&gt;mpirun&lt;/code&gt; executable by default if built with Slurm, to encourage the use of &lt;code&gt;srun&lt;/code&gt; for better process management &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#remove-mpirun" id="id19"&gt;[19]&lt;/a&gt;. I need &lt;code&gt;mpirun&lt;/code&gt; for illustration purpose in this guide, so recover it by &lt;code&gt;ln -s orterun mpirun&lt;/code&gt; in the directory &lt;code&gt;$(spack location -i openmpi)/bin/&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;A serious HPC user should also check the available Byte Transfer Layer (BTL) in OpenMPI:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_e4e690c72376463db8d123a1f8e753ce-1"&gt;&lt;/a&gt;$ ompi_info --param btl all
-&lt;a name="rest_code_e4e690c72376463db8d123a1f8e753ce-2"&gt;&lt;/a&gt;  MCA btl: self &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e4e690c72376463db8d123a1f8e753ce-3"&gt;&lt;/a&gt;  MCA btl: tcp &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e4e690c72376463db8d123a1f8e753ce-4"&gt;&lt;/a&gt;  MCA btl: vader &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_e4e690c72376463db8d123a1f8e753ce-5"&gt;&lt;/a&gt;  ...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1dcfc0b109da432aa37a041e39bb7051-1"&gt;&lt;/a&gt;$ ompi_info --param btl all
+&lt;a name="rest_code_1dcfc0b109da432aa37a041e39bb7051-2"&gt;&lt;/a&gt;  MCA btl: self &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_1dcfc0b109da432aa37a041e39bb7051-3"&gt;&lt;/a&gt;  MCA btl: tcp &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_1dcfc0b109da432aa37a041e39bb7051-4"&gt;&lt;/a&gt;  MCA btl: vader &lt;span class="o"&gt;(&lt;/span&gt;MCA v2.1.0, API v3.0.0, Component v3.1.3&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_1dcfc0b109da432aa37a041e39bb7051-5"&gt;&lt;/a&gt;  ...
 &lt;/pre&gt;&lt;ul class="simple"&gt;
 &lt;li&gt;&lt;code&gt;self&lt;/code&gt;, as its name suggests, is for a process to talk to itself &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#ompi-self" id="id20"&gt;[20]&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;tcp&lt;/code&gt; is the default inter-node communication mechanism on EC2 &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#ompi-tcp" id="id21"&gt;[21]&lt;/a&gt;. It is not ideal for HPC, but this should be changed with the coming &lt;a class="reference external" href="https://aws.amazon.com/about-aws/whats-new/2018/11/introducing-elastic-fabric-adapter/"&gt;EFA&lt;/a&gt;.&lt;/li&gt;
@@ -328,55 +631,55 @@
 &lt;div class="section" id="using-openmpi-with-slurm"&gt;
 &lt;h4&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id47"&gt;5.1.2   Using OpenMPI with Slurm&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Let's use this boring but useful "MPI hello world" example:&lt;/p&gt;
-&lt;pre class="code C"&gt;&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;mpi.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-3"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-4"&gt;&lt;/a&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-5"&gt;&lt;/a&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-7"&gt;&lt;/a&gt;    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-8"&gt;&lt;/a&gt;    &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-10"&gt;&lt;/a&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-11"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Comm_rank&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MPI_COMM_WORLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-12"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Comm_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MPI_COMM_WORLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-13"&gt;&lt;/a&gt;    &lt;span class="n"&gt;gethostname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-15"&gt;&lt;/a&gt;    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"I am %d of %d, on host %s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-16"&gt;&lt;/a&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-17"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Finalize&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-18"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;a name="rest_code_4e52d469ffad4f498a415a8eed2b42ab-19"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;pre class="code C"&gt;&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-1"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;mpi.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-3"&gt;&lt;/a&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-5"&gt;&lt;/a&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-7"&gt;&lt;/a&gt;    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-8"&gt;&lt;/a&gt;    &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-9"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-11"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Comm_rank&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MPI_COMM_WORLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-12"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Comm_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MPI_COMM_WORLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-13"&gt;&lt;/a&gt;    &lt;span class="n"&gt;gethostname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-15"&gt;&lt;/a&gt;    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"I am %d of %d, on host %s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rank&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-17"&gt;&lt;/a&gt;    &lt;span class="n"&gt;MPI_Finalize&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-18"&gt;&lt;/a&gt;    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;a name="rest_code_84503ac8e51b45edb8bb549a52e475b9-19"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Put it into a &lt;code&gt;hello_mpi.c&lt;/code&gt; file and compile:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_c2864f394b2d4e088ca55140526c8eec-1"&gt;&lt;/a&gt;$ mpicc -o hello_mpi.x hello_mpi.c
-&lt;a name="rest_code_c2864f394b2d4e088ca55140526c8eec-2"&gt;&lt;/a&gt;$ mpirun -np &lt;span class="m"&gt;1&lt;/span&gt; ./hello_mpi.x  &lt;span class="c1"&gt;# runs on master node&lt;/span&gt;
-&lt;a name="rest_code_c2864f394b2d4e088ca55140526c8eec-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;1&lt;/span&gt;, on host ip-172-31-7-214
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2bb487310a644b24b2e516bb87fd1ed2-1"&gt;&lt;/a&gt;$ mpicc -o hello_mpi.x hello_mpi.c
+&lt;a name="rest_code_2bb487310a644b24b2e516bb87fd1ed2-2"&gt;&lt;/a&gt;$ mpirun -np &lt;span class="m"&gt;1&lt;/span&gt; ./hello_mpi.x  &lt;span class="c1"&gt;# runs on master node&lt;/span&gt;
+&lt;a name="rest_code_2bb487310a644b24b2e516bb87fd1ed2-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;1&lt;/span&gt;, on host ip-172-31-7-214
 &lt;/pre&gt;&lt;p&gt;To run it on compute nodes, the classic MPI way is to specify the node list via &lt;code&gt;--host&lt;/code&gt; or &lt;code&gt;--hostfile&lt;/code&gt; (for OpenMPI; other MPI implementations have similar options):&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_3f767e932cdf449e9030b4db51d1955f-1"&gt;&lt;/a&gt;$ mpirun -np &lt;span class="m"&gt;2&lt;/span&gt; --host ip-172-31-5-150,ip-172-31-14-243 ./hello_mpi.x
-&lt;a name="rest_code_3f767e932cdf449e9030b4db51d1955f-2"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;2&lt;/span&gt;, on host ip-172-31-5-150
-&lt;a name="rest_code_3f767e932cdf449e9030b4db51d1955f-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;1&lt;/span&gt; of &lt;span class="m"&gt;2&lt;/span&gt;, on host ip-172-31-14-243
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_07e8ddc566134f3fa6440a8702bf3480-1"&gt;&lt;/a&gt;$ mpirun -np &lt;span class="m"&gt;2&lt;/span&gt; --host ip-172-31-5-150,ip-172-31-14-243 ./hello_mpi.x
+&lt;a name="rest_code_07e8ddc566134f3fa6440a8702bf3480-2"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;2&lt;/span&gt;, on host ip-172-31-5-150
+&lt;a name="rest_code_07e8ddc566134f3fa6440a8702bf3480-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;1&lt;/span&gt; of &lt;span class="m"&gt;2&lt;/span&gt;, on host ip-172-31-14-243
 &lt;/pre&gt;&lt;p&gt;Following &lt;code&gt;--host&lt;/code&gt; are compute node IPs shown by &lt;code&gt;sinfo&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;A more sane approach is to launch it via &lt;code&gt;srun&lt;/code&gt;, which takes care of the placement of MPI processes:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_18fc387102334e1d861e886e23b1fd83-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;2&lt;/span&gt; ./hello_mpi.x
-&lt;a name="rest_code_18fc387102334e1d861e886e23b1fd83-2"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;1&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-5-150
-&lt;a name="rest_code_18fc387102334e1d861e886e23b1fd83-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-5-150
-&lt;a name="rest_code_18fc387102334e1d861e886e23b1fd83-4"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;3&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-14-243
-&lt;a name="rest_code_18fc387102334e1d861e886e23b1fd83-5"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;2&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-14-243
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_32e3eba613034964a50b3435d1192df7-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;2&lt;/span&gt; ./hello_mpi.x
+&lt;a name="rest_code_32e3eba613034964a50b3435d1192df7-2"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;1&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-5-150
+&lt;a name="rest_code_32e3eba613034964a50b3435d1192df7-3"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;0&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-5-150
+&lt;a name="rest_code_32e3eba613034964a50b3435d1192df7-4"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;3&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-14-243
+&lt;a name="rest_code_32e3eba613034964a50b3435d1192df7-5"&gt;&lt;/a&gt;I am &lt;span class="m"&gt;2&lt;/span&gt; of &lt;span class="m"&gt;4&lt;/span&gt;, on host ip-172-31-14-243
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="hdf5-and-netcdf-libraries"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id48"&gt;5.2   HDF5 and NetCDF libraries&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;a class="reference external" href="https://www.hdfgroup.org/"&gt;HDF5&lt;/a&gt; and &lt;a class="reference external" href="https://www.unidata.ucar.edu/software/netcdf/"&gt;NetCDF&lt;/a&gt; are very common I/O libraries for HPC, widely used in Earth science and many other fields.&lt;/p&gt;
 &lt;p&gt;In principle, installing HDF5 is simply:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_3db428f2050040d3960ae7492fa20ab5-1"&gt;&lt;/a&gt;$ spack install hdf5  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_0a2c9deed4a74615bc17df0cbbc6cb9d-1"&gt;&lt;/a&gt;$ spack install hdf5  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Many HPC code (like WRF) needs the full HDF5 suite (use &lt;code&gt;spack info&lt;/code&gt; to check all the variants):&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_12f4d2f76368429fa1fde1f9ae891d62-1"&gt;&lt;/a&gt;$ spack install hdf5+fortran+hl  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2678451169974b29a367696acea8e819-1"&gt;&lt;/a&gt;$ spack install hdf5+fortran+hl  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Further specify MPI dependencies:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_02a3b42d48df49f3a33cfa0e4679a25b-1"&gt;&lt;/a&gt;$ spack install hdf5+fortran+hl ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_12b6d9c9610b47799b8c1d67ca16df72-1"&gt;&lt;/a&gt;$ spack install hdf5+fortran+hl ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Similarly, for NetCDF C &amp;amp; Fortran, in principle it is simply:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_be015bb534e84ecab59e0af4deffa237-1"&gt;&lt;/a&gt;$ spack install netcdf-fortran  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_0a5b3e2a72114e34ab8f3d9a091d7283-1"&gt;&lt;/a&gt;$ spack install netcdf-fortran  &lt;span class="c1"&gt;# not what we will use here&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;To specify the full dependency, we end up having:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_5c1c6bb9139c4b6697e8250d9f9da4fa-1"&gt;&lt;/a&gt;$ spack install netcdf-fortran ^hdf5+fortran+hl ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_7656c1e7bef44e78b60fc2d22537561d-1"&gt;&lt;/a&gt;$ spack install netcdf-fortran ^hdf5+fortran+hl ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm  &lt;span class="c1"&gt;# use this&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="further-reading-on-advanced-package-management"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id49"&gt;5.3   Further reading on advanced package management&lt;/a&gt;&lt;/h3&gt;
@@ -390,17 +693,17 @@
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id50"&gt;5.4   Note on reusing software installation&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;For a single EC2 instance, it is easy to save the environment - create an AMI, or just build a Docker image. Things get quite cumbersome with a multi-node cluster environment. From official docs, "Building a custom AMI is not the recommended approach for customizing AWS ParallelCluster." &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#pcluster-ami" id="id23"&gt;[23]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Fortunately, Spack installs everything to a single, non-root directory (similar to Anaconda), so you can simply tar-ball the entire directory and then upload to S3 or other persistent storage:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_5afe2c13912040008f027472765dd29e-1"&gt;&lt;/a&gt;spack clean --all  &lt;span class="c1"&gt;# clean all kinds of caches&lt;/span&gt;
-&lt;a name="rest_code_5afe2c13912040008f027472765dd29e-2"&gt;&lt;/a&gt;tar zcvf spack.tar.gz spack  &lt;span class="c1"&gt;# compression&lt;/span&gt;
-&lt;a name="rest_code_5afe2c13912040008f027472765dd29e-3"&gt;&lt;/a&gt;aws s3 mb &lt;span class="o"&gt;[&lt;/span&gt;your-bucket-name&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="c1"&gt;# create a new bucket. might need to configure AWS credentials for permission&lt;/span&gt;
-&lt;a name="rest_code_5afe2c13912040008f027472765dd29e-4"&gt;&lt;/a&gt;aws s3 cp spack.tar.gz s3://&lt;span class="o"&gt;[&lt;/span&gt;your-bucket-name&lt;span class="o"&gt;]&lt;/span&gt;/   &lt;span class="c1"&gt;# upload to S3 bucket&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_f3bf8f7cacdf4d3c8393d9ffed86baab-1"&gt;&lt;/a&gt;spack clean --all  &lt;span class="c1"&gt;# clean all kinds of caches&lt;/span&gt;
+&lt;a name="rest_code_f3bf8f7cacdf4d3c8393d9ffed86baab-2"&gt;&lt;/a&gt;tar zcvf spack.tar.gz spack  &lt;span class="c1"&gt;# compression&lt;/span&gt;
+&lt;a name="rest_code_f3bf8f7cacdf4d3c8393d9ffed86baab-3"&gt;&lt;/a&gt;aws s3 mb &lt;span class="o"&gt;[&lt;/span&gt;your-bucket-name&lt;span class="o"&gt;]&lt;/span&gt;  &lt;span class="c1"&gt;# create a new bucket. might need to configure AWS credentials for permission&lt;/span&gt;
+&lt;a name="rest_code_f3bf8f7cacdf4d3c8393d9ffed86baab-4"&gt;&lt;/a&gt;aws s3 cp spack.tar.gz s3://&lt;span class="o"&gt;[&lt;/span&gt;your-bucket-name&lt;span class="o"&gt;]&lt;/span&gt;/   &lt;span class="c1"&gt;# upload to S3 bucket&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Also remember to save (and later recover) your custom settings in &lt;code&gt;~/.spack/packages.yaml&lt;/code&gt;, &lt;code&gt;~/.spack/linux/compilers.yaml&lt;/code&gt; and &lt;code&gt;.bashrc&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Then you can safely delete the cluster. For the next time, simply pull the tar-ball from S3 and decompress it. The environment would look exactly the same as the last time. You should use the same &lt;code&gt;base_os&lt;/code&gt; to minimize binary-compatibility errors.&lt;/p&gt;
 &lt;p&gt;A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the &lt;code&gt;spack/&lt;/code&gt; directory is located at the same location where the package was installed last time. If it was at &lt;code&gt;/shared/spack/&lt;/code&gt;, then use the same location.&lt;/p&gt;
 &lt;p&gt;The underlying reason is that Spack uses &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Rpath"&gt;RPATH&lt;/a&gt; for library dependencies, to avoid messing around &lt;code&gt;$LD_LIBRARY_PATH&lt;/code&gt; &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#spack-rapth" id="id24"&gt;[24]&lt;/a&gt;. Simply put, it hard-codes the dependencies into the binary. You can check the hard-coded paths by, for example:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_b27ef9061df94756bcb2bd5aaa967917-1"&gt;&lt;/a&gt;readelf -d &lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin/mpicc &lt;span class="p"&gt;|&lt;/span&gt; grep RPATH
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_849631e4bb7d48fb82a71e120a6fd860-1"&gt;&lt;/a&gt;readelf -d &lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin/mpicc &lt;span class="p"&gt;|&lt;/span&gt; grep RPATH
 &lt;/pre&gt;&lt;p&gt;If the new shared EBS volume is mounted to a new location like &lt;code&gt;/shared_new&lt;/code&gt;, a quick-and-dirty fix would be:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_8366251f6f324cc99e34bd3d2ce8204e-1"&gt;&lt;/a&gt;sudo ln -s /shared_new /shared/
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_49a12bb8a4884faa9d1de96c9420d676-1"&gt;&lt;/a&gt;sudo ln -s /shared_new /shared/
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="special-note-on-intel-compilers"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id51"&gt;5.5   Special note on Intel compilers&lt;/a&gt;&lt;/h3&gt;
@@ -408,7 +711,7 @@
 &lt;p&gt;Although Spack can install Intel compilers by itself, a more robust approach is to install it externally and add as an external package &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#spack-intel" id="id26"&gt;[25]&lt;/a&gt;. Intel has a dedicated guide for installation on EC2 &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#intel-aws" id="id27"&gt;[26]&lt;/a&gt; so I won't repeat the steps here.&lt;/p&gt;
 &lt;p&gt;Once you have a working &lt;code&gt;icc&lt;/code&gt;/&lt;code&gt;ifort&lt;/code&gt; in &lt;code&gt;$PATH&lt;/code&gt;, just running &lt;code&gt;spack compiler add&lt;/code&gt; should discover the new compilers &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#spack-external" id="id28"&gt;[27]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Then, you should also add something like&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_08523856e98c420fae7757f968916413-1"&gt;&lt;/a&gt;extra_rpaths: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'/shared/intel/lib/intel64'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_cf0fd91ad17e40a9a335169f34874d4c-1"&gt;&lt;/a&gt;extra_rpaths: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'/shared/intel/lib/intel64'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;to &lt;code&gt;~/.spack/linux/compilers.yaml&lt;/code&gt; under the Intel compiler section. Otherwise you will see interesting linking errors when later building libraries with the Intel compiler &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#intel-rpath" id="id29"&gt;[28]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;After those are all set, simple add &lt;code&gt;%intel&lt;/code&gt; to all &lt;code&gt;spack install&lt;/code&gt; commands, or set it as the default compiler &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#spack-default-compiler" id="id30"&gt;[29]&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -429,34 +732,34 @@ tar zxvf v4.0.3.tar.gz
 &lt;div class="section" id="environment-setup"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id53"&gt;6.1   Environment setup&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Add those to your &lt;code&gt;~/.bashrc&lt;/code&gt; (adapted from the &lt;a class="reference external" href="http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php"&gt;WRF compile tutorial&lt;/a&gt;):&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Let WRF discover necessary executables&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i gcc&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;  &lt;span class="c1"&gt;# only needed if you installed a new gcc&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-3"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-5"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf-fortran&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Environment variables required by WRF&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-8"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;HDF5&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i hdf5&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-9"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;NETCDF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf-fortran&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-10"&gt;&lt;/a&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# run-time linking&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-12"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HDF5&lt;/span&gt;/lib:&lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/lib:&lt;span class="nv"&gt;$LD_LIBRARY_PATH&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-13"&gt;&lt;/a&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# this prevents segmentation fault when running the model&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-15"&gt;&lt;/a&gt;&lt;span class="nb"&gt;ulimit&lt;/span&gt; -s unlimited
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-16"&gt;&lt;/a&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-17"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# WRF-specific settings&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-18"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WRF_EM_CORE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
-&lt;a name="rest_code_107943f493e64e0daecaa045d0fe704e-19"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WRFIO_NCD_NO_LARGE_FILE_SUPPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Let WRF discover necessary executables&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i gcc&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;  &lt;span class="c1"&gt;# only needed if you installed a new gcc&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-3"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i openmpi&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-5"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf-fortran&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Environment variables required by WRF&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-8"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;HDF5&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i hdf5&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-9"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;NETCDF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf-fortran&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-11"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# run-time linking&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-12"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HDF5&lt;/span&gt;/lib:&lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/lib:&lt;span class="nv"&gt;$LD_LIBRARY_PATH&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-14"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# this prevents segmentation fault when running the model&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-15"&gt;&lt;/a&gt;&lt;span class="nb"&gt;ulimit&lt;/span&gt; -s unlimited
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-17"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# WRF-specific settings&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-18"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WRF_EM_CORE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;a name="rest_code_b3992e95de1848edb6203cfc28da2ecf-19"&gt;&lt;/a&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;WRFIO_NCD_NO_LARGE_FILE_SUPPORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;WRF also requires NetCDF-C and NetCDF-Fortran to be located in the same directory &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#wrf-netcdf" id="id31"&gt;[30]&lt;/a&gt;. A quick-and-dirty fix is to copy NetCDF-C libraries and headers to NetCDF-Fortran's directory:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_830b5a0fda51468dae80bef1462708ec-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;NETCDF_C&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf&lt;span class="k"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_830b5a0fda51468dae80bef1462708ec-2"&gt;&lt;/a&gt;ln -sf &lt;span class="nv"&gt;$NETCDF_C&lt;/span&gt;/include/*  &lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/include/
-&lt;a name="rest_code_830b5a0fda51468dae80bef1462708ec-3"&gt;&lt;/a&gt;ln -sf &lt;span class="nv"&gt;$NETCDF_C&lt;/span&gt;/lib/*  &lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/lib/
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_656d2d1b24f7486593cd09038a397378-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;NETCDF_C&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i netcdf&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_656d2d1b24f7486593cd09038a397378-2"&gt;&lt;/a&gt;ln -sf &lt;span class="nv"&gt;$NETCDF_C&lt;/span&gt;/include/*  &lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/include/
+&lt;a name="rest_code_656d2d1b24f7486593cd09038a397378-3"&gt;&lt;/a&gt;ln -sf &lt;span class="nv"&gt;$NETCDF_C&lt;/span&gt;/lib/*  &lt;span class="nv"&gt;$NETCDF&lt;/span&gt;/lib/
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="compile-wrf"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#id54"&gt;6.2   Compile WRF&lt;/a&gt;&lt;/h3&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0e0a29e7647440deb08e6ed8d3965ef0-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; WRF-4.0.3
-&lt;a name="rest_code_0e0a29e7647440deb08e6ed8d3965ef0-2"&gt;&lt;/a&gt;$ ./configure
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_eaac2fcd507a4281b330780fab0ac598-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; WRF-4.0.3
+&lt;a name="rest_code_eaac2fcd507a4281b330780fab0ac598-2"&gt;&lt;/a&gt;$ ./configure
 &lt;/pre&gt;&lt;ul class="simple"&gt;
 &lt;li&gt;For the fisrt question, select &lt;tt class="docutils literal"&gt;34&lt;/tt&gt;, which uses GNU compilers and pure MPI ("dmpar" -- Distributed Memory PARallelization).&lt;/li&gt;
 &lt;li&gt;For the second question, select &lt;tt class="docutils literal"&gt;1&lt;/tt&gt;, whichs uses basic nesting.&lt;/li&gt;
@@ -483,9 +786,9 @@ This build of WRF will use NETCDF4 with HDF5 compression
 *****************************************************************************
 &lt;/pre&gt;
 &lt;p&gt;To fix a minor issue regarding WRF + GNU + OpenMPI &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/aws-hpc-guide/#wrf-openmpi" id="id32"&gt;[31]&lt;/a&gt;, modify the generated &lt;code&gt;configure.wrf&lt;/code&gt; so that:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_46282ba8de774c46a518987237707a15-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;DM_CC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mpicc -DMPI2_SUPPORT
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_8fd323177d4244d2a3f2ccc9bd011722-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;DM_CC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mpicc -DMPI2_SUPPORT
 &lt;/pre&gt;&lt;p&gt;Then build the WRF executable for the commonly used &lt;code&gt;em_real&lt;/code&gt; case:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_bee82ecb53fe4e50a1853a7a2bd97c92-1"&gt;&lt;/a&gt;./compile em_real &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tee wrf_compile.log
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2e05bffcaf4648afa4014597aecd8072-1"&gt;&lt;/a&gt;./compile em_real &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tee wrf_compile.log
 &lt;/pre&gt;&lt;p&gt;You might also use a bigger master node (or go to a compute node) and add something like &lt;code&gt;-j 8&lt;/code&gt; for parallel build.&lt;/p&gt;
 &lt;p&gt;It should finally succeed:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
