@@ -263,7 +263,7 @@ Some possible further steps:
  
 - The performance can be fine-tuned indefinitely. There is an extremely-large parameter space: Lustre stripe size, HDF5 chunk size, Dask chunk size, Dask processes vs threads, client instance counts and types... But unless there are important scientific/business needs, fine-tuning it doesn't seem super interesting.
 - For me personally, this provides a very convenient test environment for scaling-out xESMF [#xesmf-pangeo]_, the regridding package I wrote. Because the entire pipeline is clearly I/O-limited, what I really need is just a fast file system.
-- The most promising use case is probably some deep-learning-like climate analytics [#climate-net]_. DL algorithms are generally data hungry, and the best place to put massive datasets is, with not doubt, the cloud. How Dask + Xarray + Pangeo fit into DL workflow seems to be in active discussion [#xarray-dl]_ .
+- The most promising use case is probably some deep-learning-like climate analytics [#climate-net]_. DL algorithms are generally data hungry, and the best place to put massive datasets is, with no doubt, the cloud. How Dask + Xarray + Pangeo fit into DL workflow seems to be in active discussion [#xarray-dl]_ .
 
 References
 ==========
