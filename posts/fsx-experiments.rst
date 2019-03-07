@@ -250,7 +250,7 @@ Final thoughts
 
 Back to my initial questions:
 
-- Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is to TBD though.
+- Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is TBD though.
 - How easily can it be used for real-world applications? It turns out to be quite easy. All building blocks are already there, and I just need to put them together. It took me one day to get such initial tests done.
 
 This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:
