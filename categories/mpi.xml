@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about MPI)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/mpi.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Thu, 07 Mar 2019 02:15:23 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Experiments with AWS FSx for Lustre: I/O benchmark and Dask cluster deployment</title><link>https://jiaweizhuang.github.io/blog/fsx-experiments/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;p&gt;AWS has recently launched an extremely interesting new service called &lt;a class="reference external" href="https://aws.amazon.com/fsx/lustre/"&gt;FSx for Lustre&lt;/a&gt;. Since last week, FSx has also been integrated with the &lt;a class="reference external" href="https://aws-parallelcluster.readthedocs.io"&gt;AWS ParallelCluster&lt;/a&gt; framework &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pclus-fsx" id="id1"&gt;[1]&lt;/a&gt;, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, &lt;a class="reference external" href="http://lustre.org/"&gt;Lustre&lt;/a&gt; is a well-known high-performance parallel file system, deployed on many world-class supercomputers &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#nas-lustre" id="id2"&gt;[2]&lt;/a&gt;. Previously, ParallelCluster (and its predecessor &lt;a class="reference external" href="https://cfncluster.readthedocs.io"&gt;CfnCluster&lt;/a&gt;) only provided a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System"&gt;Network File System (NFS)&lt;/a&gt;, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"&lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#fsx-s3" id="id3"&gt;[3]&lt;/a&gt;. Considering the incredible amount of public datasets living in S3 &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#s3-opendata" id="id4"&gt;[4]&lt;/a&gt;, such integration can lead to endless interesting use cases.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jiawei Zhuang (Posts about MPI)</title><link>https://jiaweizhuang.github.io/</link><description></description><atom:link href="https://jiaweizhuang.github.io/categories/mpi.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:jiaweizhuang@g.harvard.edu"&gt;Jiawei Zhuang&lt;/a&gt; </copyright><lastBuildDate>Thu, 07 Mar 2019 03:22:19 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Experiments with AWS FSx for Lustre: I/O benchmark and Dask cluster deployment</title><link>https://jiaweizhuang.github.io/blog/fsx-experiments/</link><dc:creator>Jiawei Zhuang</dc:creator><description>&lt;div&gt;&lt;p&gt;AWS has recently launched an extremely interesting new service called &lt;a class="reference external" href="https://aws.amazon.com/fsx/lustre/"&gt;FSx for Lustre&lt;/a&gt;. Since last week, FSx has also been integrated with the &lt;a class="reference external" href="https://aws-parallelcluster.readthedocs.io"&gt;AWS ParallelCluster&lt;/a&gt; framework &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pclus-fsx" id="id1"&gt;[1]&lt;/a&gt;, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, &lt;a class="reference external" href="http://lustre.org/"&gt;Lustre&lt;/a&gt; is a well-known high-performance parallel file system, deployed on many world-class supercomputers &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#nas-lustre" id="id2"&gt;[2]&lt;/a&gt;. Previously, ParallelCluster (and its predecessor &lt;a class="reference external" href="https://cfncluster.readthedocs.io"&gt;CfnCluster&lt;/a&gt;) only provided a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System"&gt;Network File System (NFS)&lt;/a&gt;, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"&lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#fsx-s3" id="id3"&gt;[3]&lt;/a&gt;. Considering the incredible amount of public datasets living in S3 &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#s3-opendata" id="id4"&gt;[4]&lt;/a&gt;, such integration can lead to endless interesting use cases.&lt;/p&gt;
 &lt;p&gt;As a new user of FSx, my natural questions are:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Does it deliver the claimed performance?&lt;/li&gt;
@@ -40,21 +40,21 @@
 &lt;div class="section" id="aws-parallelcluster-configuration"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id19"&gt;1.1   AWS ParallelCluster configuration&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The &lt;code&gt;~/.parallelcluster/config&lt;/code&gt; file is almost the same as in previous post. The only thing new is the &lt;code&gt;fsx&lt;/code&gt; section. At the time of writing, only CentOS 7 is supported &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#pcluster-ubuntu" id="id5"&gt;[5]&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;cluster your-cluster-section-name&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;base_os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; centos7
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-3"&gt;&lt;/a&gt;...
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;fsx_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; fs
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-5"&gt;&lt;/a&gt;
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-6"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-7"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
-&lt;a name="rest_code_8306401932ea48d29db896a00b4fbb0a-8"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;cluster your-cluster-section-name&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;base_os&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; centos7
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-3"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;fsx_settings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; fs
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-6"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-7"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
+&lt;a name="rest_code_f4f3d732c358445f9ca2f5ae05cb2909-8"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;According to AWS &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#fsx-performance" id="id6"&gt;[6]&lt;/a&gt;, a 14,400 GB file system would deliver 2,880 MB/s throughput. You may use a much bigger size for production, but this size should be good for initial testing.&lt;/p&gt;
 &lt;p&gt;The above config will create an empty file system. A more interesting usage is to pre-import S3 buckets:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_6088eaff2fab4695857856ba37d45c79-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;a name="rest_code_6088eaff2fab4695857856ba37d45c79-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
-&lt;a name="rest_code_6088eaff2fab4695857856ba37d45c79-3"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
-&lt;a name="rest_code_6088eaff2fab4695857856ba37d45c79-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;imported_file_chunk_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt;
-&lt;a name="rest_code_6088eaff2fab4695857856ba37d45c79-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;import_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; s3://era5-pds
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2fbbb2b672004a429f57e148684cb4e2-1"&gt;&lt;/a&gt;&lt;span class="o"&gt;[&lt;/span&gt;fsx fs&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_2fbbb2b672004a429f57e148684cb4e2-2"&gt;&lt;/a&gt;&lt;span class="nv"&gt;shared_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /fsx
+&lt;a name="rest_code_2fbbb2b672004a429f57e148684cb4e2-3"&gt;&lt;/a&gt;&lt;span class="nv"&gt;storage_capacity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;14400&lt;/span&gt;
+&lt;a name="rest_code_2fbbb2b672004a429f57e148684cb4e2-4"&gt;&lt;/a&gt;&lt;span class="nv"&gt;imported_file_chunk_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1024&lt;/span&gt;
+&lt;a name="rest_code_2fbbb2b672004a429f57e148684cb4e2-5"&gt;&lt;/a&gt;&lt;span class="nv"&gt;import_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; s3://era5-pds
 &lt;/pre&gt;&lt;p&gt;Here I am using the ECMWF ERA5 Reanalysis data &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#era5" id="id7"&gt;[7]&lt;/a&gt;. The data format is NetCDF4. Other datasets would work similarly.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;pcluster create&lt;/code&gt; can take several minutes longer than without FSx, because provisioning a Lustre server probably involves heavy-lifting on the AWS side. Go to the "Amazon FSx" console to check the creation status.&lt;/p&gt;
 &lt;p&gt;After a successful launch, log in and run &lt;code&gt;df -h&lt;/code&gt; to make sure that Lustre is properly mounted to &lt;code&gt;/fsx&lt;/code&gt;.&lt;/p&gt;
@@ -62,23 +62,23 @@
 &lt;div class="section" id="testing-integration-with-existing-s3-bucket"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id20"&gt;1.2   Testing integration with existing S3 bucket&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Objects in the bucket will appear as normal on-disk files.&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_ea4ecd7d6289437fb8b0098e775095ae-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx
-&lt;a name="rest_code_ea4ecd7d6289437fb8b0098e775095ae-2"&gt;&lt;/a&gt;$ ls &lt;span class="c1"&gt;# displays objects in the S3 bucket&lt;/span&gt;
-&lt;a name="rest_code_ea4ecd7d6289437fb8b0098e775095ae-3"&gt;&lt;/a&gt;...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2c005e9479314c65ab359061d83e42f5-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx
+&lt;a name="rest_code_2c005e9479314c65ab359061d83e42f5-2"&gt;&lt;/a&gt;$ ls &lt;span class="c1"&gt;# displays objects in the S3 bucket&lt;/span&gt;
+&lt;a name="rest_code_2c005e9479314c65ab359061d83e42f5-3"&gt;&lt;/a&gt;...
 &lt;/pre&gt;&lt;p&gt;However, FSx only stores metadata:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/2008/01/data &lt;span class="c1"&gt;# specific to ERA5 data&lt;/span&gt;
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-2"&gt;&lt;/a&gt;$ ls -lh *   &lt;span class="c1"&gt;# the data appear to be big (~1 GB)&lt;/span&gt;
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-3"&gt;&lt;/a&gt;-rwxr-xr-x &lt;span class="m"&gt;1&lt;/span&gt; root root  988M Jul  &lt;span class="m"&gt;4&lt;/span&gt;  &lt;span class="m"&gt;2018&lt;/span&gt; air_pressure_at_mean_sea_level.nc
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-4"&gt;&lt;/a&gt;...
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-5"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# but the actual content is super small.&lt;/span&gt;
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-6"&gt;&lt;/a&gt;&lt;span class="m"&gt;512&lt;/span&gt; air_pressure_at_mean_sea_level.nc
-&lt;a name="rest_code_da82eadd4f864f2ca8d6c6f583ce9acc-7"&gt;&lt;/a&gt;...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/2008/01/data &lt;span class="c1"&gt;# specific to ERA5 data&lt;/span&gt;
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-2"&gt;&lt;/a&gt;$ ls -lh *   &lt;span class="c1"&gt;# the data appear to be big (~1 GB)&lt;/span&gt;
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-3"&gt;&lt;/a&gt;-rwxr-xr-x &lt;span class="m"&gt;1&lt;/span&gt; root root  988M Jul  &lt;span class="m"&gt;4&lt;/span&gt;  &lt;span class="m"&gt;2018&lt;/span&gt; air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-4"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-5"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# but the actual content is super small.&lt;/span&gt;
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-6"&gt;&lt;/a&gt;&lt;span class="m"&gt;512&lt;/span&gt; air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_24099cf055254535b88fcd69e224a301-7"&gt;&lt;/a&gt;...
 &lt;/pre&gt;&lt;p&gt;The actual data will be pulled from S3 when accessed. For a NetCDF4 file, either &lt;code&gt;ncdump -h&lt;/code&gt; or &lt;code&gt;h5ls&lt;/code&gt; will display its basic contents and cause the entire file to be pulled from S3.&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_98f988fc2a9b48d98ec82b2034dad47a-1"&gt;&lt;/a&gt;$ ncdump -h air_pressure_at_mean_sea_level.nc  &lt;span class="c1"&gt;# `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda&lt;/span&gt;
-&lt;a name="rest_code_98f988fc2a9b48d98ec82b2034dad47a-2"&gt;&lt;/a&gt;...
-&lt;a name="rest_code_98f988fc2a9b48d98ec82b2034dad47a-3"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# now much bigger&lt;/span&gt;
-&lt;a name="rest_code_98f988fc2a9b48d98ec82b2034dad47a-4"&gt;&lt;/a&gt;962M        air_pressure_at_mean_sea_level.nc
-&lt;a name="rest_code_98f988fc2a9b48d98ec82b2034dad47a-5"&gt;&lt;/a&gt;...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_fb7980bfe4db40298bfcb5a0b23dfed8-1"&gt;&lt;/a&gt;$ ncdump -h air_pressure_at_mean_sea_level.nc  &lt;span class="c1"&gt;# `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda&lt;/span&gt;
+&lt;a name="rest_code_fb7980bfe4db40298bfcb5a0b23dfed8-2"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_fb7980bfe4db40298bfcb5a0b23dfed8-3"&gt;&lt;/a&gt;$ du -sh *  &lt;span class="c1"&gt;# now much bigger&lt;/span&gt;
+&lt;a name="rest_code_fb7980bfe4db40298bfcb5a0b23dfed8-4"&gt;&lt;/a&gt;962M        air_pressure_at_mean_sea_level.nc
+&lt;a name="rest_code_fb7980bfe4db40298bfcb5a0b23dfed8-5"&gt;&lt;/a&gt;...
 &lt;/pre&gt;&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;If you get HDF5 error on Lustre, set &lt;code&gt;export HDF5_USE_FILE_LOCKING=FALSE&lt;/code&gt; &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#hdf5-error" id="id8"&gt;[8]&lt;/a&gt;.&lt;/p&gt;
@@ -91,28 +91,28 @@
 &lt;div class="section" id="install-ior-by-spack"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id22"&gt;2.1   Install IOR by Spack&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Configure Spack as in the previous post. Then, getting IOR is simply:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_51ecbc7fdacc433ca92ab82a5d80e10f-1"&gt;&lt;/a&gt;$ spack install ior ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_a263383d54ea4182ae461bc83e05bd70-1"&gt;&lt;/a&gt;$ spack install ior ^openmpi+pmi &lt;span class="nv"&gt;schedulers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;slurm
 &lt;/pre&gt;&lt;p&gt;IOR is also quite easy to install from source, outside of Spack.&lt;/p&gt;
 &lt;p&gt;Discover the &lt;code&gt;ior&lt;/code&gt; executable by:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_539f1e0ddde6455aab7bcf48890619f1-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i ior&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_2d58109f6135485e829b3a16bb17209a-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;spack location -i ior&lt;span class="k"&gt;)&lt;/span&gt;/bin:&lt;span class="nv"&gt;$PATH&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="i-o-benchmark-result"&gt;
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id23"&gt;2.2   I/O benchmark result&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;With two &lt;tt class="docutils literal"&gt;c5n.18xlarge&lt;/tt&gt; compute nodes running, a multi-node, parallel write-read test can be done by:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-1"&gt;&lt;/a&gt;$ mkdir /fsx/ior_tempdir
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/ior_tempdir
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-3"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-4"&gt;&lt;/a&gt;...
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-5"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;1632&lt;/span&gt;.01 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1711&lt;/span&gt;.28 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-6"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;1654&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1734&lt;/span&gt;.96 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_f9797e37b6924ffa9578490071d3d5a1-7"&gt;&lt;/a&gt;...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-1"&gt;&lt;/a&gt;$ mkdir /fsx/ior_tempdir
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-2"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /fsx/ior_tempdir
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-3"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;2&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-4"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-5"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;1632&lt;/span&gt;.01 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1711&lt;/span&gt;.28 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-6"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;1654&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1734&lt;/span&gt;.96 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_cd23233daa9a45e994670f6861041da3-7"&gt;&lt;/a&gt;...
 &lt;/pre&gt;&lt;p&gt;Conducting a proper I/O benchmark is not straightforward, due to various caching effects. IOR implements several tricks (reflected in command line parameters) to get around those effects &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#ior-tutorial" id="id9"&gt;[9]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I can get maximum throughput with 8 client nodes:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_1d85e05bb3e04d62a4a8d4b99733cdf7-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;8&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
-&lt;a name="rest_code_1d85e05bb3e04d62a4a8d4b99733cdf7-2"&gt;&lt;/a&gt;...
-&lt;a name="rest_code_1d85e05bb3e04d62a4a8d4b99733cdf7-3"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;2905&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3046&lt;/span&gt;.73 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_1d85e05bb3e04d62a4a8d4b99733cdf7-4"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;2879&lt;/span&gt;.96 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3019&lt;/span&gt;.85 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_1d85e05bb3e04d62a4a8d4b99733cdf7-5"&gt;&lt;/a&gt;...
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_81a98231c4f6465dbead2737fccca4fd-1"&gt;&lt;/a&gt;$ srun -N &lt;span class="m"&gt;8&lt;/span&gt; --ntasks-per-node &lt;span class="m"&gt;36&lt;/span&gt; ior -t 1m -b 16m -s &lt;span class="m"&gt;4&lt;/span&gt; -F -C -e
+&lt;a name="rest_code_81a98231c4f6465dbead2737fccca4fd-2"&gt;&lt;/a&gt;...
+&lt;a name="rest_code_81a98231c4f6465dbead2737fccca4fd-3"&gt;&lt;/a&gt;Max Write: &lt;span class="m"&gt;2905&lt;/span&gt;.59 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3046&lt;/span&gt;.73 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_81a98231c4f6465dbead2737fccca4fd-4"&gt;&lt;/a&gt;Max Read:  &lt;span class="m"&gt;2879&lt;/span&gt;.96 MiB/sec &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3019&lt;/span&gt;.85 MB/sec&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_81a98231c4f6465dbead2737fccca4fd-5"&gt;&lt;/a&gt;...
 &lt;/pre&gt;&lt;p&gt;This matches the 2,880 MB/s claimed by AWS! Using more nodes shows marginal improvement, since the bandwidth should already be saturated.&lt;/p&gt;
 &lt;p&gt;The logical next step is to test IO-heavy HPC applications and conduct a detailed I/O-profiling. In this post, however, I decide to try a more interesting use case -- big data analytics.&lt;/p&gt;
 &lt;/div&gt;
@@ -136,35 +136,35 @@
 &lt;h3&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id25"&gt;3.1   Cluster deployment with Dask-jobqueue&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The deployment turns out to be extremely easy. I am still in the learning curve of Kubernetes, and this alternative HPC approach feels much more straightforward for an HPC person like me.&lt;/p&gt;
 &lt;p&gt;First, get Miniconda:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /shared
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-2"&gt;&lt;/a&gt;$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-3"&gt;&lt;/a&gt;$ bash miniconda.sh -b -p miniconda
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-4"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;". /shared/miniconda/etc/profile.d/conda.sh"&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-5"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-6"&gt;&lt;/a&gt;$ conda create -n py37 &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.7
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-7"&gt;&lt;/a&gt;$ conda activate py37  &lt;span class="c1"&gt;# replaces `source activate` for conda&amp;gt;=4.4&lt;/span&gt;
-&lt;a name="rest_code_1938642c39644389a5bc032f732445bb-8"&gt;&lt;/a&gt;$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-1"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /shared
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-2"&gt;&lt;/a&gt;$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-3"&gt;&lt;/a&gt;$ bash miniconda.sh -b -p miniconda
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-4"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;". /shared/miniconda/etc/profile.d/conda.sh"&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-5"&gt;&lt;/a&gt;$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-6"&gt;&lt;/a&gt;$ conda create -n py37 &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;.7
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-7"&gt;&lt;/a&gt;$ conda activate py37  &lt;span class="c1"&gt;# replaces `source activate` for conda&amp;gt;=4.4&lt;/span&gt;
+&lt;a name="rest_code_c82e9a92b74a4ca1b240aff7043456bc-8"&gt;&lt;/a&gt;$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
 &lt;/pre&gt;&lt;p&gt;Optionally, install additional visualization libraries that I will use later:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_00917c4f39ee4e81b7160d1d7ffa1eff-1"&gt;&lt;/a&gt;$ pip install geoviews hvplot datashader
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_71d71e3837ad420a9fd60241e87961a0-1"&gt;&lt;/a&gt;$ pip install geoviews hvplot datashader
 &lt;/pre&gt;&lt;div class="admonition note"&gt;
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;It turns out that we don't need to install MPI4Py! Dask-jobqueue only needs a scheduler (here we have Slurm) to launch processes, and uses its own communication mechanism (defaults to TCP) &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#dask-hpc" id="id11"&gt;[11]&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;With two idle &lt;code&gt;c5n.18xlarge&lt;/code&gt; nodes, use the following code in &lt;code&gt;ipython&lt;/code&gt; to initialize a distributed cluster:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;dask_jobqueue&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;
-&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cores&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;72&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;processes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'150GB'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# Slurm thinks there are 72 cores per node due to EC2 hyperthreading&lt;/span&gt;
-&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scale&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-4"&gt;&lt;/a&gt;
-&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-5"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;distributed&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
-&lt;a name="rest_code_fb8be5d1d01b4fb7bd0ac88f2fd87b6f-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;dask_jobqueue&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;
+&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SLURMCluster&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cores&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;72&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;processes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'150GB'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# Slurm thinks there are 72 cores per node due to EC2 hyperthreading&lt;/span&gt;
+&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scale&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-5"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;distributed&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
+&lt;a name="rest_code_f80251cc10d74df59277b1becea49ff0-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cluster&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;In a separate shell, use &lt;code&gt;sinfo&lt;/code&gt; to check the node status -- they should be fully allocated.&lt;/p&gt;
 &lt;p&gt;To enable Dask's dashboard &lt;a class="footnote-reference" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#dask-dashboard" id="id12"&gt;[12]&lt;/a&gt;, add an additional SSH connection in a new shell:&lt;/p&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_95f6469b74db4ac3af42b1389a4714e1-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
+&lt;pre class="code text"&gt;&lt;a name="rest_code_aa547eea09004ce09f8bd8b7f2fa2750-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
 &lt;/pre&gt;&lt;p&gt;Visit &lt;code&gt;localhost:8787&lt;/code&gt; in the web browser (NOT something like &lt;code&gt;http://172.31.5.224:8787&lt;/code&gt; shown in Python) .&lt;/p&gt;
 &lt;p&gt;Alternatively, everything can be put together, including Jupyter notebook's port-forwarding:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_01617b78f3504ff09f4a2beb006ae097-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -L &lt;span class="m"&gt;8889&lt;/span&gt;:localhost:8889 -L &lt;span class="m"&gt;8787&lt;/span&gt;:localhost:8787
-&lt;a name="rest_code_01617b78f3504ff09f4a2beb006ae097-2"&gt;&lt;/a&gt;$ conda activate py37
-&lt;a name="rest_code_01617b78f3504ff09f4a2beb006ae097-3"&gt;&lt;/a&gt;$ jupyter notebook --NotebookApp.token&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt; --no-browser --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;8889&lt;/span&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5aef306310b644a2b84906afddcfae32-1"&gt;&lt;/a&gt;$ pcluster ssh your-cluster-name -L &lt;span class="m"&gt;8889&lt;/span&gt;:localhost:8889 -L &lt;span class="m"&gt;8787&lt;/span&gt;:localhost:8787
+&lt;a name="rest_code_5aef306310b644a2b84906afddcfae32-2"&gt;&lt;/a&gt;$ conda activate py37
+&lt;a name="rest_code_5aef306310b644a2b84906afddcfae32-3"&gt;&lt;/a&gt;$ jupyter notebook --NotebookApp.token&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;''&lt;/span&gt; --no-browser --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;8889&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Visit &lt;code&gt;localhost:8889&lt;/code&gt; to use the notebook.&lt;/p&gt;
 &lt;p&gt;That's all about the deployment! This Dask cluster is able to perform parallel read/write with the Lustre file system.&lt;/p&gt;
 &lt;/div&gt;
@@ -182,7 +182,7 @@
 &lt;h2&gt;&lt;a class="toc-backref" href="https://jiaweizhuang.github.io/blog/fsx-experiments/#id27"&gt;4   Final thoughts&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Back to my initial questions:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is to TBD though.&lt;/li&gt;
+&lt;li&gt;Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is TBD though.&lt;/li&gt;
 &lt;li&gt;How easily can it be used for real-world applications? It turns out to be quite easy. All building blocks are already there, and I just need to put them together. It took me one day to get such initial tests done.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:&lt;/p&gt;
