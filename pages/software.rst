@@ -40,7 +40,7 @@ They are typically for class projects or just for fun. They can be useful protot
 |
 
 | **Neural Network ODE Solver** (`link <https://github.com/JiaweiZhuang/AM205_final>`__)
-| The code implements a very old and simple idea that the solution to an Ordinary Differential Equation (ODE) can be parameterized by a neural network and "solved" by minimization a loss function. It uses `HIPS-autograd <https://github.com/HIPS/autograd>`_ to perform automatic differentiation on NumPy functions. (It is NOT about the fancy new paper on `Neural ODEs <https://arxiv.org/abs/1806.07366>`_!)
+| The code implements a very old and simple idea that the solution to an Ordinary Differential Equation (ODE) can be parameterized by a neural network and "solved" by minimizing a loss function. It uses `HIPS-autograd <https://github.com/HIPS/autograd>`_ to perform automatic differentiation on NumPy functions. (It is NOT about the fancy new paper on `Neural ODEs <https://arxiv.org/abs/1806.07366>`_!)
 |
 
 | **Parallel K-means** (`link <https://github.com/JiaweiZhuang/CS205_final_project>`__)
