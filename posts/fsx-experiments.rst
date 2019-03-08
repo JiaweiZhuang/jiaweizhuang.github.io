@@ -255,7 +255,7 @@ Back to my initial questions:
 
 This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:
 
-- No need to worry about the HDF + Cloud problem [#hdf-cloud]_. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF & NetCDF formats, and converting them to more a cloud-friendly format like Zarr might take some effort.
+- No need to worry about the HDF + Cloud problem [#hdf-cloud]_. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF & NetCDF formats, and converting them to a more cloud-friendly format like Zarr might take some effort.
 - It is probably easier for existing cloud-HPC users to adopt. Numerical simulations and post-processing can be done in exactly the same environment.
 - It is likely to cost more (haven't rigorously calculated), due to heavier resource provisioning. Lustre essentially acts as a huge cache for S3. In the long-term, this kind of data analytics workflow should probably be handled in a more cloud-native way, using Lambda-like serverless computing, to maximize resource utilization and minimize computational cost. But it is nice to have something that "just works" right now.
 
