@@ -1,4 +1,4 @@
-.. title: A scientist's guide to cloud-HPC: example with AWS ParallelCluster, Slurm, Spack, and WRF
+.. title: A Scientist's Guide to Cloud-HPC: Example with AWS ParallelCluster, Slurm, Spack, and WRF
 .. slug: aws-hpc-guide
 .. date: 2019-03-01 14:35:25 UTC-05:00
 .. tags: AWS, Cloud, HPC, MPI, Spack, WRF

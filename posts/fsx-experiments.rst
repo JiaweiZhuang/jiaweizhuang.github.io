@@ -1,4 +1,4 @@
-.. title: Experiments with AWS FSx for Lustre: I/O benchmark and Dask cluster deployment
+.. title: Experiments with AWS FSx for Lustre: I/O Benchmark and Dask Cluster Deployment
 .. slug: fsx-experiments
 .. date: 2019-03-05 14:53:14 UTC-05:00
 .. tags: AWS, Cloud, HPC, MPI, Spack, I/O, Dask, Xarray

@@ -1,4 +1,4 @@
-.. title: Personal website with Jupyter support using Nikola and GitHub page
+.. title: Personal Website with Jupyter Support using Nikola and GitHub Page
 .. slug: nikola-guide
 .. date: 2019-02-17 18:23:21 UTC-05:00
 .. tags: Nikola, Jupyter, GitHub
