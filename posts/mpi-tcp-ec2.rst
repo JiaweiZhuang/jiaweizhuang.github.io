@@ -83,7 +83,7 @@ On client:
     ...
 
     # Multiple TCP stream
-    $ iperf -c ip-172-31-2-150 -P 36 -t 4  # much higher than iPerf2
+    $ iperf -c ip-172-31-2-150 -P 36 -t 4  # much higher than with iPerf3
     ...
     [SUM]  0.0- 4.0 sec  43.4 GBytes  93.0 Gbits/sec
     ...
@@ -93,7 +93,7 @@ Unlike iPerf3, iPerf2 is able to approach the theoretical 100 Gb/s by using all 
 MPI bandwidth test with OSU mirco-benchmarks
 ============================================
 
-Next, do `OSU Micro-Benchmarks <http://mvapich.cse.ohio-state.edu/benchmarks/>`_, a well-known MPI benchmarking framework. Similar tests can be done with the `Intel MPI Benchmarks <https://github.com/intel/mpi-benchmarks>`_.
+Next, do `OSU Micro-Benchmarks <http://mvapich.cse.ohio-state.edu/benchmarks/>`_, a well-known MPI benchmarking framework. Similar tests can be done with `Intel MPI Benchmarks <https://github.com/intel/mpi-benchmarks>`_.
 
 Get OpenMPI v4.0.0, which allows a single pair of MPI processes to use multiple TCP connections [#openmpi-multi-tcp]_.
 
@@ -201,7 +201,7 @@ Multi-stream
     2097152             13011.67           6204.45
     4194304             12910.31           3078.06
 
-This matches the theoretical maximum 100 Gb/s ~ 12500 MB/s bandwidth.
+This matches the theoretical maximum bandwidth (100 Gb/s ~ 12500 MB/s).
 
 On an InfiniBand cluster there is typically little difference between single-stream and multi-stream bandwidth. Something to keep in mind regarding TCP/Ethernet/EC2. 
 
