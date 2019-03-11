@@ -11,11 +11,11 @@
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/archive.html</loc>
-  <lastmod>2019-03-09T19:05:00Z</lastmod>
+  <lastmod>2019-03-11T23:49:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/</loc>
-  <lastmod>2019-03-06T15:22:00Z</lastmod>
+  <lastmod>2019-03-11T21:39:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/aws-hpc-guide/</loc>
@@ -32,6 +32,10 @@
  <url>
   <loc>https://jiaweizhuang.github.io/blog/fsx-experiments/</loc>
   <lastmod>2019-03-06T15:22:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jiaweizhuang.github.io/blog/mpi-tcp-ec2/</loc>
+  <lastmod>2019-03-11T21:39:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/nikola-guide/</loc>
