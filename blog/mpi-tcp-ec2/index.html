@@ -121,100 +121,100 @@ navbar-dark bg-dark
 <div class="section" id="single-thread-results-with-iperf3">
 <h3><a class="toc-backref" href="#id8">1.1   Single-thread results with iPerf3</a></h3>
 <p>Start server:</p>
-<pre class="code bash"><a name="rest_code_1e663f48ccef48618c1dabc6d70b6998-1"></a>$ ssh ip-172-31-2-150  <span class="c1"># go to one compute node</span>
-<a name="rest_code_1e663f48ccef48618c1dabc6d70b6998-2"></a>$ sudo yum install iperf3
-<a name="rest_code_1e663f48ccef48618c1dabc6d70b6998-3"></a>$ iperf3 -s  <span class="c1"># let it keep running</span>
+<pre class="code bash"><a name="rest_code_5bfda9c466404c19ace47ea3564dbb33-1"></a>$ ssh ip-172-31-2-150  <span class="c1"># go to one compute node</span>
+<a name="rest_code_5bfda9c466404c19ace47ea3564dbb33-2"></a>$ sudo yum install iperf3
+<a name="rest_code_5bfda9c466404c19ace47ea3564dbb33-3"></a>$ iperf3 -s  <span class="c1"># let it keep running</span>
 </pre>
 <p>Start client (in a separate shell):</p>
-<pre class="code bash"><a name="rest_code_1adec3621b284ab69653427f782e86be-1"></a>$ ssh ip-172-31-11-54  <span class="c1"># go to another compute node</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-2"></a>$ sudo yum install iperf3
-<a name="rest_code_1adec3621b284ab69653427f782e86be-3"></a>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-4"></a><span class="c1"># Single TCP stream</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-5"></a><span class="c1"># `-c` specifies the server hostname (EC2 private IP).</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-6"></a><span class="c1"># Most parameters are kept as default, which seem to perform well.</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-7"></a>$ iperf3 -c ip-172-31-2-150 -t <span class="m">4</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-8"></a>...
-<a name="rest_code_1adec3621b284ab69653427f782e86be-9"></a><span class="o">[</span> ID<span class="o">]</span> Interval           Transfer     Bandwidth       Retr
-<a name="rest_code_1adec3621b284ab69653427f782e86be-10"></a><span class="o">[</span>  <span class="m">4</span><span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.46 Gbits/sec    <span class="m">0</span>             sender
-<a name="rest_code_1adec3621b284ab69653427f782e86be-11"></a><span class="o">[</span>  <span class="m">4</span><span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.46 Gbits/sec                  receiver
-<a name="rest_code_1adec3621b284ab69653427f782e86be-12"></a>...
-<a name="rest_code_1adec3621b284ab69653427f782e86be-13"></a>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-14"></a><span class="c1"># Multiple TCP stream</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-15"></a>$ iperf3 -c ip-172-31-2-150 -P <span class="m">4</span> -i <span class="m">1</span> -t <span class="m">4</span>
-<a name="rest_code_1adec3621b284ab69653427f782e86be-16"></a>...
-<a name="rest_code_1adec3621b284ab69653427f782e86be-17"></a><span class="o">[</span>SUM<span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">11</span>.8 GBytes  <span class="m">25</span>.4 Gbits/sec    <span class="m">0</span>             sender
-<a name="rest_code_1adec3621b284ab69653427f782e86be-18"></a><span class="o">[</span>SUM<span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">11</span>.8 GBytes  <span class="m">25</span>.3 Gbits/sec                  receiver
-<a name="rest_code_1adec3621b284ab69653427f782e86be-19"></a>...
+<pre class="code bash"><a name="rest_code_412643f3be7746109f10cdfa394d509f-1"></a>$ ssh ip-172-31-11-54  <span class="c1"># go to another compute node</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-2"></a>$ sudo yum install iperf3
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-3"></a>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-4"></a><span class="c1"># Single TCP stream</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-5"></a><span class="c1"># `-c` specifies the server hostname (EC2 private IP).</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-6"></a><span class="c1"># Most parameters are kept as default, which seem to perform well.</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-7"></a>$ iperf3 -c ip-172-31-2-150 -t <span class="m">4</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-8"></a>...
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-9"></a><span class="o">[</span> ID<span class="o">]</span> Interval           Transfer     Bandwidth       Retr
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-10"></a><span class="o">[</span>  <span class="m">4</span><span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.46 Gbits/sec    <span class="m">0</span>             sender
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-11"></a><span class="o">[</span>  <span class="m">4</span><span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.46 Gbits/sec                  receiver
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-12"></a>...
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-13"></a>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-14"></a><span class="c1"># Multiple TCP stream</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-15"></a>$ iperf3 -c ip-172-31-2-150 -P <span class="m">4</span> -i <span class="m">1</span> -t <span class="m">4</span>
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-16"></a>...
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-17"></a><span class="o">[</span>SUM<span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">11</span>.8 GBytes  <span class="m">25</span>.4 Gbits/sec    <span class="m">0</span>             sender
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-18"></a><span class="o">[</span>SUM<span class="o">]</span>   <span class="m">0</span>.00-4.00   sec  <span class="m">11</span>.8 GBytes  <span class="m">25</span>.3 Gbits/sec                  receiver
+<a name="rest_code_412643f3be7746109f10cdfa394d509f-19"></a>...
 </pre>
 <p>A single stream gets ~9.5 Gb/s, while <code>-P 4</code> achieves the maximum bandwidth of ~25.4 Gb/s. Using more streams does not help further, as the workload starts to become CPU-limited.</p>
 </div>
 <div class="section" id="multi-thread-results-with-iperf2">
 <h3><a class="toc-backref" href="#id9">1.2   Multi-thread results with iPerf2</a></h3>
 <p>On server:</p>
-<pre class="code bash"><a name="rest_code_36d869c17c014d889c09df50176f79ef-1"></a>$ sudo yum install iperf
-<a name="rest_code_36d869c17c014d889c09df50176f79ef-2"></a>$ iperf -s
+<pre class="code bash"><a name="rest_code_5b772099c82e45b4868a454c0367387a-1"></a>$ sudo yum install iperf
+<a name="rest_code_5b772099c82e45b4868a454c0367387a-2"></a>$ iperf -s
 </pre>
 <p>On client:</p>
-<pre class="code bash"><a name="rest_code_153be00ec5a64a089a4566bc65fe8643-1"></a>$ sudo yum install iperf
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-2"></a>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-3"></a><span class="c1"># Single TCP stream</span>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-4"></a>$ iperf -c ip-172-31-2-150 -t <span class="m">4</span>  <span class="c1"># consistent with iPerf3 result</span>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-5"></a>...
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-6"></a><span class="o">[</span> ID<span class="o">]</span> Interval       Transfer     Bandwidth
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-7"></a><span class="o">[</span>  <span class="m">3</span><span class="o">]</span>  <span class="m">0</span>.0- <span class="m">4</span>.0 sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.45 Gbits/sec
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-8"></a>...
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-9"></a>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-10"></a><span class="c1"># Multiple TCP stream</span>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-11"></a>$ iperf -c ip-172-31-2-150 -P <span class="m">36</span> -t <span class="m">4</span>  <span class="c1"># much higher than iPerf2</span>
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-12"></a>...
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-13"></a><span class="o">[</span>SUM<span class="o">]</span>  <span class="m">0</span>.0- <span class="m">4</span>.0 sec  <span class="m">43</span>.4 GBytes  <span class="m">93</span>.0 Gbits/sec
-<a name="rest_code_153be00ec5a64a089a4566bc65fe8643-14"></a>...
+<pre class="code bash"><a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-1"></a>$ sudo yum install iperf
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-2"></a>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-3"></a><span class="c1"># Single TCP stream</span>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-4"></a>$ iperf -c ip-172-31-2-150 -t <span class="m">4</span>  <span class="c1"># consistent with iPerf3 result</span>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-5"></a>...
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-6"></a><span class="o">[</span> ID<span class="o">]</span> Interval       Transfer     Bandwidth
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-7"></a><span class="o">[</span>  <span class="m">3</span><span class="o">]</span>  <span class="m">0</span>.0- <span class="m">4</span>.0 sec  <span class="m">4</span>.40 GBytes  <span class="m">9</span>.45 Gbits/sec
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-8"></a>...
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-9"></a>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-10"></a><span class="c1"># Multiple TCP stream</span>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-11"></a>$ iperf -c ip-172-31-2-150 -P <span class="m">36</span> -t <span class="m">4</span>  <span class="c1"># much higher than with iPerf3</span>
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-12"></a>...
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-13"></a><span class="o">[</span>SUM<span class="o">]</span>  <span class="m">0</span>.0- <span class="m">4</span>.0 sec  <span class="m">43</span>.4 GBytes  <span class="m">93</span>.0 Gbits/sec
+<a name="rest_code_c77280e305104adf8ba715d84d8ff9c5-14"></a>...
 </pre>
 <p>Unlike iPerf3, iPerf2 is able to approach the theoretical 100 Gb/s by using all the available cores.</p>
 </div>
 </div>
 <div class="section" id="mpi-bandwidth-test-with-osu-mirco-benchmarks">
 <h2><a class="toc-backref" href="#id10">2   MPI bandwidth test with OSU mirco-benchmarks</a></h2>
-<p>Next, do <a class="reference external" href="http://mvapich.cse.ohio-state.edu/benchmarks/">OSU Micro-Benchmarks</a>, a well-known MPI benchmarking framework. Similar tests can be done with the <a class="reference external" href="https://github.com/intel/mpi-benchmarks">Intel MPI Benchmarks</a>.</p>
+<p>Next, do <a class="reference external" href="http://mvapich.cse.ohio-state.edu/benchmarks/">OSU Micro-Benchmarks</a>, a well-known MPI benchmarking framework. Similar tests can be done with <a class="reference external" href="https://github.com/intel/mpi-benchmarks">Intel MPI Benchmarks</a>.</p>
 <p>Get OpenMPI v4.0.0, which allows a single pair of MPI processes to use multiple TCP connections <a class="footnote-reference" href="#openmpi-multi-tcp" id="id5">[5]</a>.</p>
-<pre class="code bash"><a name="rest_code_669f293ee4f24321b259e6c4f884ebe5-1"></a>$ spack install openmpi@4.0.0+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># Need to fix https://github.com/spack/spack/pull/10853</span>
+<pre class="code bash"><a name="rest_code_8e180e30386d48a7b4fef26d61becb19-1"></a>$ spack install openmpi@4.0.0+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># Need to fix https://github.com/spack/spack/pull/10853</span>
 </pre>
 <p>Get OSU:</p>
-<pre class="code bash"><a name="rest_code_30afcb0281044e9a9edc228888bd8ad8-1"></a>$ spack install osu-micro-benchmarks ^openmpi@4.0.0+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
+<pre class="code bash"><a name="rest_code_485dd71743b44f4fa694fd10d9e1adb0-1"></a>$ spack install osu-micro-benchmarks ^openmpi@4.0.0+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
 </pre>
 <p>Focus on point-to-point communication here:</p>
-<pre class="code bash"><a name="rest_code_5523ad7ed599456dbeac1bab267d21df-1"></a><span class="c1"># all the later commands are executed in this directory</span>
-<a name="rest_code_5523ad7ed599456dbeac1bab267d21df-2"></a>$ <span class="nb">cd</span> <span class="k">$(</span>spack location -i osu-micro-benchmarks<span class="k">)</span>/libexec/osu-micro-benchmarks/mpi/pt2pt/
+<pre class="code bash"><a name="rest_code_c3c88c4ea6ce4da8a8cb9f06cb54e41a-1"></a><span class="c1"># all the later commands are executed in this directory</span>
+<a name="rest_code_c3c88c4ea6ce4da8a8cb9f06cb54e41a-2"></a>$ <span class="nb">cd</span> <span class="k">$(</span>spack location -i osu-micro-benchmarks<span class="k">)</span>/libexec/osu-micro-benchmarks/mpi/pt2pt/
 </pre>
 <div class="section" id="single-stream">
 <h3><a class="toc-backref" href="#id11">2.1   Single-stream</a></h3>
 <p><code>osu_bw</code> tests bandwidth between a single pair of MPI processes.</p>
-<pre class="code bash"><a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-1"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> ./osu_bw
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-2"></a>  OSU MPI Bandwidth Test v5.5
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-3"></a>  Size      Bandwidth <span class="o">(</span>MB/s<span class="o">)</span>
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-4"></a><span class="m">1</span>                       <span class="m">0</span>.47
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-5"></a><span class="m">2</span>                       <span class="m">0</span>.95
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-6"></a><span class="m">4</span>                       <span class="m">1</span>.90
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-7"></a><span class="m">8</span>                       <span class="m">3</span>.78
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-8"></a><span class="m">16</span>                      <span class="m">7</span>.66
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-9"></a><span class="m">32</span>                     <span class="m">15</span>.17
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-10"></a><span class="m">64</span>                     <span class="m">29</span>.94
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-11"></a><span class="m">128</span>                    <span class="m">53</span>.69
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-12"></a><span class="m">256</span>                   <span class="m">105</span>.53
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-13"></a><span class="m">512</span>                   <span class="m">202</span>.98
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-14"></a><span class="m">1024</span>                  <span class="m">376</span>.49
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-15"></a><span class="m">2048</span>                  <span class="m">626</span>.50
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-16"></a><span class="m">4096</span>                  <span class="m">904</span>.27
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-17"></a><span class="m">8192</span>                 <span class="m">1193</span>.19
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-18"></a><span class="m">16384</span>                <span class="m">1178</span>.43
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-19"></a><span class="m">32768</span>                <span class="m">1180</span>.01
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-20"></a><span class="m">65536</span>                <span class="m">1179</span>.70
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-21"></a><span class="m">131072</span>               <span class="m">1180</span>.92
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-22"></a><span class="m">262144</span>               <span class="m">1181</span>.41
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-23"></a><span class="m">524288</span>               <span class="m">1181</span>.67
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-24"></a><span class="m">1048576</span>              <span class="m">1181</span>.62
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-25"></a><span class="m">2097152</span>              <span class="m">1181</span>.72
-<a name="rest_code_3fa2c527698641fdbc0831c00c17bfa3-26"></a><span class="m">4194304</span>              <span class="m">1180</span>.56
+<pre class="code bash"><a name="rest_code_a940442b803c4f16ac80c37877a02673-1"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> ./osu_bw
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-2"></a>  OSU MPI Bandwidth Test v5.5
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-3"></a>  Size      Bandwidth <span class="o">(</span>MB/s<span class="o">)</span>
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-4"></a><span class="m">1</span>                       <span class="m">0</span>.47
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-5"></a><span class="m">2</span>                       <span class="m">0</span>.95
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-6"></a><span class="m">4</span>                       <span class="m">1</span>.90
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-7"></a><span class="m">8</span>                       <span class="m">3</span>.78
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-8"></a><span class="m">16</span>                      <span class="m">7</span>.66
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-9"></a><span class="m">32</span>                     <span class="m">15</span>.17
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-10"></a><span class="m">64</span>                     <span class="m">29</span>.94
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-11"></a><span class="m">128</span>                    <span class="m">53</span>.69
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-12"></a><span class="m">256</span>                   <span class="m">105</span>.53
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-13"></a><span class="m">512</span>                   <span class="m">202</span>.98
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-14"></a><span class="m">1024</span>                  <span class="m">376</span>.49
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-15"></a><span class="m">2048</span>                  <span class="m">626</span>.50
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-16"></a><span class="m">4096</span>                  <span class="m">904</span>.27
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-17"></a><span class="m">8192</span>                 <span class="m">1193</span>.19
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-18"></a><span class="m">16384</span>                <span class="m">1178</span>.43
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-19"></a><span class="m">32768</span>                <span class="m">1180</span>.01
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-20"></a><span class="m">65536</span>                <span class="m">1179</span>.70
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-21"></a><span class="m">131072</span>               <span class="m">1180</span>.92
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-22"></a><span class="m">262144</span>               <span class="m">1181</span>.41
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-23"></a><span class="m">524288</span>               <span class="m">1181</span>.67
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-24"></a><span class="m">1048576</span>              <span class="m">1181</span>.62
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-25"></a><span class="m">2097152</span>              <span class="m">1181</span>.72
+<a name="rest_code_a940442b803c4f16ac80c37877a02673-26"></a><span class="m">4194304</span>              <span class="m">1180</span>.56
 </pre>
 <p>This matches the single-stream result 9.5 Gb/s = 9.5/8 GB/s ~ 1200 MB/s from iPerf.</p>
 <div class="admonition note">
@@ -225,82 +225,82 @@ navbar-dark bg-dark
 <div class="section" id="multi-stream">
 <h3><a class="toc-backref" href="#id12">2.2   Multi-stream</a></h3>
 <p><code>osu_mbw_mr</code> tests bandwidth between multiple pairs of MPI processes.</p>
-<pre class="code bash"><a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-1"></a><span class="c1"># Simply calling `srun` on `osu_mbw_mr` seems to hang forever. Not sure why.</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-2"></a>$ <span class="c1"># srun -N 2 --ntasks-per-node 36 ./osu_mbw_mr  # in principle it should work</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-3"></a>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-4"></a><span class="c1"># Do it in two steps fixes the problem.</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-5"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">72</span> --pty /bin/bash  <span class="c1"># request interactive shell</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-6"></a>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-7"></a><span class="c1"># `osu_mbw_mr` requires the first half of MPI ranks to be on one node.</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-8"></a><span class="c1"># Check it with the verbose output below. Slurm should have the correct placement by default.</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-9"></a>$ <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/orterun --tag-output hostname
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-10"></a>...
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-11"></a>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-12"></a><span class="c1"># Actually running the benchmark</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-13"></a>$ <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/orterun ./osu_mbw_mr
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-14"></a>  OSU MPI Multiple Bandwidth / Message Rate Test v5.5
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-15"></a>  <span class="o">[</span> pairs: <span class="m">72</span> <span class="o">]</span> <span class="o">[</span> window size: <span class="m">64</span> <span class="o">]</span>
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-16"></a>  Size                  MB/s        Messages/s
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-17"></a><span class="m">1</span>                      <span class="m">17</span>.94       <span class="m">17944422</span>.39
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-18"></a><span class="m">2</span>                      <span class="m">35</span>.76       <span class="m">17878198</span>.29
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-19"></a><span class="m">4</span>                      <span class="m">71</span>.85       <span class="m">17963002</span>.53
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-20"></a><span class="m">8</span>                     <span class="m">143</span>.80       <span class="m">17974644</span>.52
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-21"></a><span class="m">16</span>                    <span class="m">283</span>.00       <span class="m">17687790</span>.85
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-22"></a><span class="m">32</span>                    <span class="m">551</span>.03       <span class="m">17219816</span>.70
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-23"></a><span class="m">64</span>                   <span class="m">1067</span>.73       <span class="m">16683260</span>.55
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-24"></a><span class="m">128</span>                  <span class="m">2076</span>.05       <span class="m">16219122</span>.14
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-25"></a><span class="m">256</span>                  <span class="m">3890</span>.82       <span class="m">15198501</span>.12
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-26"></a><span class="m">512</span>                  <span class="m">6790</span>.84       <span class="m">13263356</span>.64
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-27"></a><span class="m">1024</span>                <span class="m">10165</span>.19        <span class="m">9926942</span>.84
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-28"></a><span class="m">2048</span>                <span class="m">11454</span>.89        <span class="m">5593209</span>.95
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-29"></a><span class="m">4096</span>                <span class="m">11967</span>.32        <span class="m">2921708</span>.63
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-30"></a><span class="m">8192</span>                <span class="m">12597</span>.32        <span class="m">1537758</span>.49
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-31"></a><span class="m">16384</span>               <span class="m">12686</span>.13         <span class="m">774299</span>.68
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-32"></a><span class="m">32768</span>               <span class="m">12765</span>.72         <span class="m">389578</span>.83
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-33"></a><span class="m">65536</span>               <span class="m">12857</span>.16         <span class="m">196184</span>.66
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-34"></a><span class="m">131072</span>              <span class="m">12829</span>.56          <span class="m">97881</span>.74
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-35"></a><span class="m">262144</span>              <span class="m">12994</span>.67          <span class="m">49570</span>.75
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-36"></a><span class="m">524288</span>              <span class="m">12988</span>.97          <span class="m">24774</span>.49
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-37"></a><span class="m">1048576</span>             <span class="m">12983</span>.20          <span class="m">12381</span>.74
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-38"></a><span class="m">2097152</span>             <span class="m">13011</span>.67           <span class="m">6204</span>.45
-<a name="rest_code_2a3bd2d8ccee484b843c84bf14132dde-39"></a><span class="m">4194304</span>             <span class="m">12910</span>.31           <span class="m">3078</span>.06
+<pre class="code bash"><a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-1"></a><span class="c1"># Simply calling `srun` on `osu_mbw_mr` seems to hang forever. Not sure why.</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-2"></a>$ <span class="c1"># srun -N 2 --ntasks-per-node 36 ./osu_mbw_mr  # in principle it should work</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-3"></a>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-4"></a><span class="c1"># Do it in two steps fixes the problem.</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-5"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">72</span> --pty /bin/bash  <span class="c1"># request interactive shell</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-6"></a>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-7"></a><span class="c1"># `osu_mbw_mr` requires the first half of MPI ranks to be on one node.</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-8"></a><span class="c1"># Check it with the verbose output below. Slurm should have the correct placement by default.</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-9"></a>$ <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/orterun --tag-output hostname
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-10"></a>...
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-11"></a>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-12"></a><span class="c1"># Actually running the benchmark</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-13"></a>$ <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/orterun ./osu_mbw_mr
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-14"></a>  OSU MPI Multiple Bandwidth / Message Rate Test v5.5
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-15"></a>  <span class="o">[</span> pairs: <span class="m">72</span> <span class="o">]</span> <span class="o">[</span> window size: <span class="m">64</span> <span class="o">]</span>
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-16"></a>  Size                  MB/s        Messages/s
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-17"></a><span class="m">1</span>                      <span class="m">17</span>.94       <span class="m">17944422</span>.39
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-18"></a><span class="m">2</span>                      <span class="m">35</span>.76       <span class="m">17878198</span>.29
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-19"></a><span class="m">4</span>                      <span class="m">71</span>.85       <span class="m">17963002</span>.53
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-20"></a><span class="m">8</span>                     <span class="m">143</span>.80       <span class="m">17974644</span>.52
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-21"></a><span class="m">16</span>                    <span class="m">283</span>.00       <span class="m">17687790</span>.85
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-22"></a><span class="m">32</span>                    <span class="m">551</span>.03       <span class="m">17219816</span>.70
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-23"></a><span class="m">64</span>                   <span class="m">1067</span>.73       <span class="m">16683260</span>.55
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-24"></a><span class="m">128</span>                  <span class="m">2076</span>.05       <span class="m">16219122</span>.14
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-25"></a><span class="m">256</span>                  <span class="m">3890</span>.82       <span class="m">15198501</span>.12
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-26"></a><span class="m">512</span>                  <span class="m">6790</span>.84       <span class="m">13263356</span>.64
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-27"></a><span class="m">1024</span>                <span class="m">10165</span>.19        <span class="m">9926942</span>.84
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-28"></a><span class="m">2048</span>                <span class="m">11454</span>.89        <span class="m">5593209</span>.95
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-29"></a><span class="m">4096</span>                <span class="m">11967</span>.32        <span class="m">2921708</span>.63
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-30"></a><span class="m">8192</span>                <span class="m">12597</span>.32        <span class="m">1537758</span>.49
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-31"></a><span class="m">16384</span>               <span class="m">12686</span>.13         <span class="m">774299</span>.68
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-32"></a><span class="m">32768</span>               <span class="m">12765</span>.72         <span class="m">389578</span>.83
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-33"></a><span class="m">65536</span>               <span class="m">12857</span>.16         <span class="m">196184</span>.66
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-34"></a><span class="m">131072</span>              <span class="m">12829</span>.56          <span class="m">97881</span>.74
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-35"></a><span class="m">262144</span>              <span class="m">12994</span>.67          <span class="m">49570</span>.75
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-36"></a><span class="m">524288</span>              <span class="m">12988</span>.97          <span class="m">24774</span>.49
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-37"></a><span class="m">1048576</span>             <span class="m">12983</span>.20          <span class="m">12381</span>.74
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-38"></a><span class="m">2097152</span>             <span class="m">13011</span>.67           <span class="m">6204</span>.45
+<a name="rest_code_fedfe0fb8c7a42a2a0af623aac6b09c6-39"></a><span class="m">4194304</span>             <span class="m">12910</span>.31           <span class="m">3078</span>.06
 </pre>
-<p>This matches the theoretical maximum 100 Gb/s ~ 12500 MB/s bandwidth.</p>
+<p>This matches the theoretical maximum bandwidth (100 Gb/s ~ 12500 MB/s).</p>
 <p>On an InfiniBand cluster there is typically little difference between single-stream and multi-stream bandwidth. Something to keep in mind regarding TCP/Ethernet/EC2.</p>
 </div>
 </div>
 <div class="section" id="tweaking-tcp-connections-for-openmpi">
 <h2><a class="toc-backref" href="#id13">3   Tweaking TCP connections for OpenMPI</a></h2>
 <p>OpenMPI v4.0.0 allows one pair of MPI processes to use multiple TCP connections via the <code>btl_tcp_links</code> parameter <a class="footnote-reference" href="#openmpi-multi-tcp" id="id6">[5]</a>.</p>
-<pre class="code bash"><a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-1"></a>$ <span class="nb">export</span> <span class="nv">OMPI_MCA_btl_tcp_links</span><span class="o">=</span><span class="m">36</span>  <span class="c1"># https://www.open-mpi.org/faq/?category=tuning#setting-mca-params</span>
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-2"></a>$ ompi_info --param btl tcp --level <span class="m">4</span> <span class="p">|</span> grep btl_tcp_links  <span class="c1"># double check</span>
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-3"></a>MCA btl tcp: parameter <span class="s2">"btl_tcp_links"</span> <span class="o">(</span>current value: <span class="s2">"36"</span>, data source: environment, level: <span class="m">4</span> tuner/basic, type: unsigned_int<span class="o">)</span>
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-4"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> ./osu_bw
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-5"></a>  OSU MPI Bandwidth Test v5.5
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-6"></a>  Size      Bandwidth <span class="o">(</span>MB/s<span class="o">)</span>
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-7"></a><span class="m">1</span>                       <span class="m">0</span>.46
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-8"></a><span class="m">2</span>                       <span class="m">0</span>.92
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-9"></a><span class="m">4</span>                       <span class="m">1</span>.88
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-10"></a><span class="m">8</span>                       <span class="m">3</span>.78
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-11"></a><span class="m">16</span>                      <span class="m">7</span>.60
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-12"></a><span class="m">32</span>                     <span class="m">14</span>.95
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-13"></a><span class="m">64</span>                     <span class="m">30</span>.34
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-14"></a><span class="m">128</span>                    <span class="m">56</span>.95
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-15"></a><span class="m">256</span>                   <span class="m">113</span>.52
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-16"></a><span class="m">512</span>                   <span class="m">213</span>.36
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-17"></a><span class="m">1024</span>                  <span class="m">400</span>.18
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-18"></a><span class="m">2048</span>                  <span class="m">665</span>.80
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-19"></a><span class="m">4096</span>                  <span class="m">963</span>.67
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-20"></a><span class="m">8192</span>                 <span class="m">1187</span>.67
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-21"></a><span class="m">16384</span>                <span class="m">1180</span>.56
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-22"></a><span class="m">32768</span>                <span class="m">1179</span>.53
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-23"></a><span class="m">65536</span>                <span class="m">2349</span>.06
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-24"></a><span class="m">131072</span>               <span class="m">2379</span>.48
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-25"></a><span class="m">262144</span>               <span class="m">2589</span>.47
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-26"></a><span class="m">524288</span>               <span class="m">2805</span>.73
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-27"></a><span class="m">1048576</span>              <span class="m">2853</span>.21
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-28"></a><span class="m">2097152</span>              <span class="m">2882</span>.12
-<a name="rest_code_77b9bdad701c4d65a4866d7f4b1b6455-29"></a><span class="m">4194304</span>              <span class="m">2811</span>.13
+<pre class="code bash"><a name="rest_code_00f010d474294282961be734b64f2fb4-1"></a>$ <span class="nb">export</span> <span class="nv">OMPI_MCA_btl_tcp_links</span><span class="o">=</span><span class="m">36</span>  <span class="c1"># https://www.open-mpi.org/faq/?category=tuning#setting-mca-params</span>
+<a name="rest_code_00f010d474294282961be734b64f2fb4-2"></a>$ ompi_info --param btl tcp --level <span class="m">4</span> <span class="p">|</span> grep btl_tcp_links  <span class="c1"># double check</span>
+<a name="rest_code_00f010d474294282961be734b64f2fb4-3"></a>MCA btl tcp: parameter <span class="s2">"btl_tcp_links"</span> <span class="o">(</span>current value: <span class="s2">"36"</span>, data source: environment, level: <span class="m">4</span> tuner/basic, type: unsigned_int<span class="o">)</span>
+<a name="rest_code_00f010d474294282961be734b64f2fb4-4"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> ./osu_bw
+<a name="rest_code_00f010d474294282961be734b64f2fb4-5"></a>  OSU MPI Bandwidth Test v5.5
+<a name="rest_code_00f010d474294282961be734b64f2fb4-6"></a>  Size      Bandwidth <span class="o">(</span>MB/s<span class="o">)</span>
+<a name="rest_code_00f010d474294282961be734b64f2fb4-7"></a><span class="m">1</span>                       <span class="m">0</span>.46
+<a name="rest_code_00f010d474294282961be734b64f2fb4-8"></a><span class="m">2</span>                       <span class="m">0</span>.92
+<a name="rest_code_00f010d474294282961be734b64f2fb4-9"></a><span class="m">4</span>                       <span class="m">1</span>.88
+<a name="rest_code_00f010d474294282961be734b64f2fb4-10"></a><span class="m">8</span>                       <span class="m">3</span>.78
+<a name="rest_code_00f010d474294282961be734b64f2fb4-11"></a><span class="m">16</span>                      <span class="m">7</span>.60
+<a name="rest_code_00f010d474294282961be734b64f2fb4-12"></a><span class="m">32</span>                     <span class="m">14</span>.95
+<a name="rest_code_00f010d474294282961be734b64f2fb4-13"></a><span class="m">64</span>                     <span class="m">30</span>.34
+<a name="rest_code_00f010d474294282961be734b64f2fb4-14"></a><span class="m">128</span>                    <span class="m">56</span>.95
+<a name="rest_code_00f010d474294282961be734b64f2fb4-15"></a><span class="m">256</span>                   <span class="m">113</span>.52
+<a name="rest_code_00f010d474294282961be734b64f2fb4-16"></a><span class="m">512</span>                   <span class="m">213</span>.36
+<a name="rest_code_00f010d474294282961be734b64f2fb4-17"></a><span class="m">1024</span>                  <span class="m">400</span>.18
+<a name="rest_code_00f010d474294282961be734b64f2fb4-18"></a><span class="m">2048</span>                  <span class="m">665</span>.80
+<a name="rest_code_00f010d474294282961be734b64f2fb4-19"></a><span class="m">4096</span>                  <span class="m">963</span>.67
+<a name="rest_code_00f010d474294282961be734b64f2fb4-20"></a><span class="m">8192</span>                 <span class="m">1187</span>.67
+<a name="rest_code_00f010d474294282961be734b64f2fb4-21"></a><span class="m">16384</span>                <span class="m">1180</span>.56
+<a name="rest_code_00f010d474294282961be734b64f2fb4-22"></a><span class="m">32768</span>                <span class="m">1179</span>.53
+<a name="rest_code_00f010d474294282961be734b64f2fb4-23"></a><span class="m">65536</span>                <span class="m">2349</span>.06
+<a name="rest_code_00f010d474294282961be734b64f2fb4-24"></a><span class="m">131072</span>               <span class="m">2379</span>.48
+<a name="rest_code_00f010d474294282961be734b64f2fb4-25"></a><span class="m">262144</span>               <span class="m">2589</span>.47
+<a name="rest_code_00f010d474294282961be734b64f2fb4-26"></a><span class="m">524288</span>               <span class="m">2805</span>.73
+<a name="rest_code_00f010d474294282961be734b64f2fb4-27"></a><span class="m">1048576</span>              <span class="m">2853</span>.21
+<a name="rest_code_00f010d474294282961be734b64f2fb4-28"></a><span class="m">2097152</span>              <span class="m">2882</span>.12
+<a name="rest_code_00f010d474294282961be734b64f2fb4-29"></a><span class="m">4194304</span>              <span class="m">2811</span>.13
 </pre>
 <p>This matches the previous iPerf3 result (25 Gb/s ~ 3000 MB/s) regarding single-thread, mutli-TCP bandwidth. A single MPI pair is hard to go further, as the communication is now limited by thread/CPU.</p>
 <p>This tweak doesn't actually improve the performance of my real-world HPC code, which should already have multiple MPI connections. The lesson learned is probably -- be careful when conducting micro-benchmarks. The out-of-box <code>osu_bw</code> can be misleading on EC2.</p>
