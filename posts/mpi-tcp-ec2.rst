@@ -1,7 +1,7 @@
 .. title: MPI over Multiple TCP Connections on EC2 C5n Instances
 .. slug: mpi-tcp-ec2
 .. date: 2019-03-11 15:42:46 UTC-04:00
-.. tags: 
+.. tags: AWS, Cloud, HPC, MPI
 .. category: 
 .. link: 
 .. description: 
