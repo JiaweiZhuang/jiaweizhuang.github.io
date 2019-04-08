@@ -948,6 +948,12 @@ CONTENT_FOOTER = '''
   </a>
 </span>
 <span class="fa-stack fa-2x">
+  <a href="http://weibo.com/jiaweizhuang">
+    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-weibo fa-inverse fa-stack-1x"></i>
+  </a>
+</span>
+<span class="fa-stack fa-2x">
   <a href="mailto:{email}">
     <i class="fa fa-circle fa-stack-2x"></i>
     <i class="fa fa-envelope fa-inverse fa-stack-1x"></i>
