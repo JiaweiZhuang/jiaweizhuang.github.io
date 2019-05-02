@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/aws.xml</loc>
-  <lastmod>2019-03-12T03:29:00Z</lastmod>
+  <lastmod>2019-05-02T14:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/bokeh.xml</loc>
@@ -15,7 +15,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/cloud.xml</loc>
-  <lastmod>2019-03-12T03:29:00Z</lastmod>
+  <lastmod>2019-05-02T14:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
@@ -31,7 +31,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/hpc.xml</loc>
-  <lastmod>2019-03-12T03:29:00Z</lastmod>
+  <lastmod>2019-05-02T14:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/io.xml</loc>
@@ -43,7 +43,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
-  <lastmod>2019-03-12T03:29:00Z</lastmod>
+  <lastmod>2019-05-02T14:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/nikola.xml</loc>
@@ -51,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/spack.xml</loc>
-  <lastmod>2019-03-09T19:01:00Z</lastmod>
+  <lastmod>2019-05-02T14:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/visualization.xml</loc>
@@ -59,7 +59,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/wrf.xml</loc>
-  <lastmod>2019-03-09T18:56:00Z</lastmod>
+  <lastmod>2019-05-02T14:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/xarray.xml</loc>
@@ -71,10 +71,10 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/rss.xml</loc>
-  <lastmod>2019-03-12T03:29:00Z</lastmod>
+  <lastmod>2019-05-02T14:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2019-04-08T17:23:00Z</lastmod>
+  <lastmod>2019-05-02T14:27:00Z</lastmod>
  </sitemap>
 </sitemapindex>
