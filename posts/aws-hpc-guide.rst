@@ -646,7 +646,7 @@ Compile WRF
     $ ./configure
 
 - For the first question, select ``34``, which uses GNU compilers and pure MPI ("dmpar" -- Distributed Memory PARallelization).
-- For the second question, select ``1``, whichs uses basic nesting.
+- For the second question, select ``1``, which uses basic nesting.
 
 You should get this successful message::
 
