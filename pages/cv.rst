@@ -22,7 +22,7 @@ Education
 Publications
 ============
 
-**Zhuang, J.**, D.J. Jacob, J. Flo-Gaya, R.M. Yantosca, E.W. Lundgren, M.P. Sulprizio, and S.D. Eastham, *Enabling immediate access to Earth science models through cloud computing: application to the GEOS-Chem model* , submitted to Bull. Amer. Met. Soc., 2019. [`PDF <http://acmg.seas.harvard.edu/publications/2019/zhuang2019.pdf>`__]
+**Zhuang, J.**, D.J. Jacob, J. Flo-Gaya, R.M. Yantosca, E.W. Lundgren, M.P. Sulprizio, and S.D. Eastham, *Enabling immediate access to Earth science models through cloud computing: application to the GEOS-Chem model* , Bull. Amer. Met. Soc., 2019. [`PDF <https://journals.ametsoc.org/doi/pdf/10.1175/BAMS-D-18-0243.1>`__]
 
 Eastham, S.D., M.S. Long, C.A. Keller, E. Lundgren, R.M. Yantosca, **J. Zhuang**, C. Li, C.J. Lee, M. Yannetti, B.M. Auer, T.L. Clune, J. Kouatchou, W.M. Putman, M.A. Thompson, A.L. Trayanov, A.M. Molod, R.V. Martin, and D.J. Jacob, *GEOS-Chem High Performance (GCHP): A next-generation implementation of the GEOS-Chem chemical transport model for massively parallel applications*, Geosci. Mod. Dev., 11, 2941-2953, 2018. [`PDF <https://www.geosci-model-dev.net/11/2941/2018/gmd-11-2941-2018.pdf>`__].
 
