@@ -7,9 +7,9 @@
 .. description: 
 .. type: text
 
-.. image:: /images/jiaweizhuang.jpg
+.. image:: /images/jiaweizhuang2.jpeg
    :align: right
-   :height: 150 pt
+   :height: 200 pt
 
 I am a 3rd-year PhD student in the `School of Engineering and Applied Sciences <https://www.seas.harvard.edu/>`_ at Harvard University. I have a strong interest in `Computational Science and Engineering <https://en.wikipedia.org/wiki/Computational_science>`_ and am acquainted with high-performance computing (HPC), numerical methods, machine learning algorithms and frameworks, software engineering practices, and atmospheric and environmental modeling.
 
