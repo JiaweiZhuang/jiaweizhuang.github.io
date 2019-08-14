@@ -51,7 +51,7 @@ The `official getting-started guide <https://getnikola.com/getting-started.html>
 
 I come from the scientific side of Python, so use Conda to create a new environment::
 
-    conda env create -n blog python=3.6
+    conda create -n blog python=3.6
     source activate blog
     pip install Nikola[extras]
 
