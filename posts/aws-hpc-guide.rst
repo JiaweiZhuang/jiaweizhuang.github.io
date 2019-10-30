@@ -310,6 +310,7 @@ Getting Spack is super easy:
 
     cd /shared  # install to shared disk
     git clone https://github.com/spack/spack.git
+    git checkout 3f1c78128ed8ae96d2b76d0e144c38cbc1c625df  # Spack v0.13.0 release in Oct 26 2019 broke some previous commands. Freeze it to ~Sep 2019.
     echo 'export PATH=/shared/spack/bin:$PATH' >> ~/.bashrc  # to discover spack executable
     source ~/.bashrc
 
