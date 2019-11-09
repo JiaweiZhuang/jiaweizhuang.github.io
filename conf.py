@@ -931,31 +931,34 @@ CONTENT_FOOTER = '''
 <p>
 <span class="fa-stack fa-2x">
   <a href="https://twitter.com/Jiawei_Zhuang_">
-    <i class="fa fa-circle fa-stack-2x"></i>
-    <i class="fa fa-twitter fa-inverse fa-stack-1x"></i>
+    <i class="fa fa-twitter-square fa-stack-2x"></i>
   </a>
 </span>
 <span class="fa-stack fa-2x">
   <a href="https://github.com/JiaweiZhuang">
-    <i class="fa fa-circle fa-stack-2x"></i>
-    <i class="fa fa-github fa-inverse fa-stack-1x"></i>
+    <i class="fa fa-github-square fa-stack-2x"></i>
+  </a>
+</span>
+<span class="fa-stack fa-2x">
+  <a href="https://scholar.google.com/citations?user=JhvZDvAAAAAJ">
+    <i class="ai ai-google-scholar-square ai-2x"></i>
   </a>
 </span>
 <span class="fa-stack fa-2x">
   <a href="https://www.linkedin.com/in/jiaweizhuang">
-    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-square fa-stack-2x"></i>
     <i class="fa fa-linkedin fa-inverse fa-stack-1x"></i>
   </a>
 </span>
 <span class="fa-stack fa-2x">
   <a href="http://weibo.com/jiaweizhuang">
-    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-square fa-stack-2x"></i>
     <i class="fa fa-weibo fa-inverse fa-stack-1x"></i>
   </a>
 </span>
 <span class="fa-stack fa-2x">
   <a href="mailto:{email}">
-    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-square fa-stack-2x"></i>
     <i class="fa fa-envelope fa-inverse fa-stack-1x"></i>
   </a>
 </span>
@@ -1239,7 +1242,10 @@ COPY_SOURCES = False
 # Extra things you want in the pages HEAD tag. This will be added right
 # before </head>
 # (translatable)
-EXTRA_HEAD_DATA = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">'
+EXTRA_HEAD_DATA = (
+  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">'
+  '<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">'
+)
 # Google Analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
 # (translatable)
