@@ -117,7 +117,7 @@ The full list of parameters are available in the official docs [#pcluster-config
 
 I have omitted the FSx section, which is left to the `next post <link://slug/fsx-experiments>`_.
 
-One last thing: Many HPC code runs faster with hyperthreading disabled [#hyper]_. To achieve this at launch, you can write a custom script and execute it via the ``post_install`` option in pcluster's config file. This is a bit involved though. Hopefully there can be a simple option in future versions of pcluster.
+One last thing: Many HPC code runs faster with hyperthreading disabled [#hyper]_. To achieve this at launch, you can write a custom script and execute it via the ``post_install`` option in pcluster's config file. This is a bit involved though. Hopefully there can be a simple option in future versions of pcluster. (**Update in Nov 2019:** AWS ParallelCluster `v2.5.0 release <https://github.com/aws/aws-parallelcluster/releases/tag/v2.5.0>`_ adds a new option :code:`disable_hyperthreading = true` that greatly simplify things!)
 
 With the config file in place, run :code:`pcluster create your-cluster-name` to launch a cluster.
 
