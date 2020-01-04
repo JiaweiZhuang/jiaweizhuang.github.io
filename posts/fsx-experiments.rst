@@ -7,6 +7,8 @@
 .. description: 
 .. type: text
 
+(This post was tweeted `by Jeff Barr <https://twitter.com/jeffbarr/status/1103757720748847104>`_ and `by HPC Guru <https://twitter.com/HPC_Guru/status/1103853244822900736>`_)
+
 AWS has recently launched an extremely interesting new service called `FSx for Lustre <https://aws.amazon.com/fsx/lustre/>`_. Since last week, FSx has also been integrated with the `AWS ParallelCluster <https://aws-parallelcluster.readthedocs.io>`_ framework [#pclus-fsx]_, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, `Lustre <http://lustre.org/>`_ is a well-known high-performance parallel file system, deployed on many world-class supercomputers [#nas-lustre]_. Previously, ParallelCluster (and its predecessor `CfnCluster <https://cfncluster.readthedocs.io>`_) only provided a `Network File System (NFS) <https://en.wikipedia.org/wiki/Network_File_System>`_, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"[#fsx-s3]_. Considering the incredible amount of public datasets living in S3 [#s3-opendata]_, such integration can lead to endless interesting use cases.
 
 As a new user of FSx, my natural questions are:
