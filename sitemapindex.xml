@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/aws.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/bokeh.xml</loc>
@@ -15,11 +15,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/cloud.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/container.xml</loc>
-  <lastmod>2019-12-08T21:12:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
@@ -35,7 +31,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/hpc.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/io.xml</loc>
@@ -46,16 +42,8 @@
   <lastmod>2019-12-08T21:07:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/kubernetes.xml</loc>
-  <lastmod>2019-12-08T21:12:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/machine-learning.xml</loc>
-  <lastmod>2019-12-08T21:12:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/nikola.xml</loc>
@@ -63,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/spack.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/visualization.xml</loc>
@@ -71,7 +59,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/wrf.xml</loc>
-  <lastmod>2019-12-08T21:07:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/xarray.xml</loc>
@@ -83,10 +71,10 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/rss.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2020-01-04T18:25:00Z</lastmod>
+  <lastmod>2020-01-04T18:32:00Z</lastmod>
  </sitemap>
 </sitemapindex>
