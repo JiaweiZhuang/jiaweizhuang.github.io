@@ -76,10 +76,11 @@ navbar-dark bg-dark
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Personal Website with Jupyter Support using Nikola and GitHub Page</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Jiawei Zhuang
             </span></p>
             <p class="dateline">
@@ -102,263 +103,246 @@ navbar-dark bg-dark
 <p>I decide to build my new website and occasionally post blogs on research, software, and computing.</p>
 <p>For the blogging tool, basic requirements are:</p>
 <ul class="simple">
-<li>It must be a <a class="reference external" href="https://en.wikipedia.org/wiki/Static_web_page">static site</a> that can be easily version-controlled on GitHub. So, not WordPress.</li>
-<li>I'd like the framework to be written in Python. So, not Jekyll.</li>
-<li>It should support Jupyter notebook format, so I can easily post computing &amp; data analysis results.</li>
+<li><p>It must be a <a class="reference external" href="https://en.wikipedia.org/wiki/Static_web_page">static site</a> that can be easily version-controlled on GitHub. So, not WordPress.</p></li>
+<li><p>I'd like the framework to be written in Python. So, not Jekyll.</p></li>
+<li><p>It should support Jupyter notebook format, so I can easily post computing &amp; data analysis results.</p></li>
 </ul>
 <p>The options come down to <a class="reference external" href="https://github.com/getpelican/pelican">Pelican</a> (the most popular one), <a class="reference external" href="https://github.com/vladris/tinkerer">Tinkerer</a> (<a class="reference external" href="https://github.com/sphinx-doc/sphinx">Sphinx</a>-extended-for-blog), and <a class="reference external" href="https://github.com/getnikola/nikola">Nikola</a>. I finally settle down on Nikola because it is super intuitive, has a clear and user-friendly documentation, and supports Jupyter natively. It takes me like 10 minutes to set up the desired website layout. Other tools are also very powerful but it takes me longer to get the configuration right.</p>
 <p>This post records my setup steps, to help others and the forgetful future me. Building such a website only requires basic knowledge in:</p>
 <ul class="simple">
-<li>Git and GitHub</li>
-<li>Python</li>
-<li>Markdown (works fine) or reStructuredText (preferred)</li>
+<li><p>Git and GitHub</p></li>
+<li><p>Python</p></li>
+<li><p>Markdown (works fine) or reStructuredText (preferred)</p></li>
 </ul>
 <p>I assume no knowledge in Web front-end stuff (HTML/CSS/JS). This should be typical for many computational &amp; data science students.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="auto-toc simple">
-<li><a class="reference internal" href="#related-posts" id="id1">1   Related posts</a></li>
-<li><a class="reference internal" href="#installation-and-initialization" id="id2">2   Installation and initialization</a></li>
-<li><a class="reference internal" href="#github-deployment-and-version-control" id="id3">3   Github deployment and version control</a></li>
-<li><a class="reference internal" href="#change-theme" id="id4">4   Change theme</a></li>
-<li><a class="reference internal" href="#set-non-blog-layout" id="id5">5   Set non-blog layout</a></li>
-<li><a class="reference internal" href="#enable-jupyter-notebook-format" id="id6">6   Enable Jupyter notebook format</a></li>
-<li><a class="reference internal" href="#add-social-media-button" id="id7">7   Add social media button</a></li>
+<li><p><a class="reference internal" href="#related-posts" id="id1"><span class="sectnum">1</span> Related posts</a></p></li>
+<li><p><a class="reference internal" href="#installation-and-initialization" id="id2"><span class="sectnum">2</span> Installation and initialization</a></p></li>
+<li><p><a class="reference internal" href="#github-deployment-and-version-control" id="id3"><span class="sectnum">3</span> Github deployment and version control</a></p></li>
+<li><p><a class="reference internal" href="#change-theme" id="id4"><span class="sectnum">4</span> Change theme</a></p></li>
+<li><p><a class="reference internal" href="#set-non-blog-layout" id="id5"><span class="sectnum">5</span> Set non-blog layout</a></p></li>
+<li><p><a class="reference internal" href="#enable-jupyter-notebook-format" id="id6"><span class="sectnum">6</span> Enable Jupyter notebook format</a></p></li>
+<li><p><a class="reference internal" href="#add-social-media-button" id="id7"><span class="sectnum">7</span> Add social media button</a></p></li>
 <li>
-<a class="reference internal" href="#various-tweaks" id="id8">8   Various tweaks</a><ul class="auto-toc">
-<li><a class="reference internal" href="#add-table-of-content" id="id9">8.1   Add table of content</a></li>
-<li><a class="reference internal" href="#tweak-archive-format" id="id10">8.2   Tweak Archive format</a></li>
-<li><a class="reference internal" href="#enable-comment-system" id="id11">8.3   Enable comment system</a></li>
+<p><a class="reference internal" href="#various-tweaks" id="id8"><span class="sectnum">8</span> Various tweaks</a></p>
+<ul class="auto-toc">
+<li><p><a class="reference internal" href="#add-table-of-content" id="id9"><span class="sectnum">8.1</span> Add table of content</a></p></li>
+<li><p><a class="reference internal" href="#tweak-archive-format" id="id10"><span class="sectnum">8.2</span> Tweak Archive format</a></p></li>
+<li><p><a class="reference internal" href="#enable-comment-system" id="id11"><span class="sectnum">8.3</span> Enable comment system</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="related-posts">
-<h2><a class="toc-backref" href="#id1">1   Related posts</a></h2>
+<h2><a class="toc-backref" href="#id1"><span class="sectnum">1</span> Related posts</a></h2>
 <p>Just by Googling you can find tons of tutorials on this. Particularly good ones are:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/">http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/</a></li>
-<li><a class="reference external" href="http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/">http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/</a></li>
-<li><a class="reference external" href="https://post2web.github.io/posts/jupyter-blogging/">https://post2web.github.io/posts/jupyter-blogging/</a></li>
-<li><a class="reference external" href="http://sampathweb.com/posts/blogging-made-easy.html">http://sampathweb.com/posts/blogging-made-easy.html</a></li>
+<li><p><a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/">http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/</a></p></li>
+<li><p><a class="reference external" href="http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/">http://louistiao.me/posts/how-i-customized-my-nikola-powered-site/</a></p></li>
+<li><p><a class="reference external" href="https://post2web.github.io/posts/jupyter-blogging/">https://post2web.github.io/posts/jupyter-blogging/</a></p></li>
+<li><p><a class="reference external" href="http://sampathweb.com/posts/blogging-made-easy.html">http://sampathweb.com/posts/blogging-made-easy.html</a></p></li>
 </ul>
 <p>However this post is still useful because I:</p>
 <ul class="simple">
-<li>use nikola v8.0.1 as of Feb 2019. Many early tweaks are not necessary now.</li>
-<li>focus on personal website (with additional pages like <tt class="docutils literal">Bio</tt>), not only a blog.</li>
-<li>add additional notes on GitHub deployment and version control.</li>
+<li><p>use nikola v8.0.1 as of Feb 2019. Many early tweaks are not necessary now.</p></li>
+<li><p>focus on personal website (with additional pages like <code class="docutils literal">Bio</code>), not only a blog.</p></li>
+<li><p>add additional notes on GitHub deployment and version control.</p></li>
 </ul>
 </div>
 <div class="section" id="installation-and-initialization">
-<h2><a class="toc-backref" href="#id2">2   Installation and initialization</a></h2>
+<h2><a class="toc-backref" href="#id2"><span class="sectnum">2</span> Installation and initialization</a></h2>
 <p>The <a class="reference external" href="https://getnikola.com/getting-started.html">official getting-started guide</a> explains this well. I just summarize the steps here.</p>
 <p>I come from the scientific side of Python, so use Conda to create a new environment:</p>
-<pre class="literal-block">
-conda create -n blog python=3.6
+<pre class="literal-block">conda create -n blog python=3.6
 source activate blog
-pip install Nikola[extras]
-</pre>
+pip install Nikola[extras]</pre>
 <p>Making the first demo site is as simple as</p>
 <ul class="simple">
-<li>Run <tt class="docutils literal">nikola init</tt> in a new folder, with default settings.</li>
-<li>Then run <tt class="docutils literal">nikola auto</tt> to build the page and start a local server for testing.</li>
-<li>Visit <tt class="docutils literal">localhost:8000</tt> in the web browser.</li>
+<li><p>Run <code class="docutils literal">nikola init</code> in a new folder, with default settings.</p></li>
+<li><p>Then run <code class="docutils literal">nikola auto</code> to build the page and start a local server for testing.</p></li>
+<li><p>Visit <code class="docutils literal">localhost:8000</code> in the web browser.</p></li>
 </ul>
 <p>Adding a new blog post is as simple as:</p>
 <ul class="simple">
-<li>Run <tt class="docutils literal">nikola new_post</tt> (defaults to reStructuredText format, add <tt class="docutils literal"><span class="pre">-f</span> markdown</tt> for <tt class="docutils literal">*.md</tt> format)</li>
-<li>Write blog contents in the newly generated file (<tt class="docutils literal">*.rst</tt> or <tt class="docutils literal">*.md</tt>) in the <tt class="docutils literal">posts/</tt> directory.</li>
-<li>Rerun <tt class="docutils literal">nikola auto</tt>. You can also keep this command running so new contents will be automatically updated.</li>
+<li><p>Run <code class="docutils literal">nikola new_post</code> (defaults to reStructuredText format, add <code class="docutils literal"><span class="pre">-f</span> markdown</code> for <code class="docutils literal">*.md</code> format)</p></li>
+<li><p>Write blog contents in the newly generated file (<code class="docutils literal">*.rst</code> or <code class="docutils literal">*.md</code>) in the <code class="docutils literal">posts/</code> directory.</p></li>
+<li><p>Rerun <code class="docutils literal">nikola auto</code>. You can also keep this command running so new contents will be automatically updated.</p></li>
 </ul>
-<p>All configurations are managed by a single <tt class="docutils literal">conf.py</tt> file, which is extremely neat.</p>
+<p>All configurations are managed by a single <code class="docutils literal">conf.py</code> file, which is extremely neat.</p>
 <p>Before adding any real contents, you should first configure GitHub deployment, layout, themes, etc.</p>
 </div>
 <div class="section" id="github-deployment-and-version-control">
-<h2><a class="toc-backref" href="#id3">3   Github deployment and version control</a></h2>
+<h2><a class="toc-backref" href="#id3"><span class="sectnum">3</span> Github deployment and version control</a></h2>
 <p>There is an <a class="reference external" href="https://getnikola.com/handbook.html#deploying-to-github">official deployment guide</a> but I feel that more explanation is necessary.</p>
 <p>Most posts mention deployment at the final step, but I think it is good to do so at the very beginning.</p>
-<p>We will use <a class="reference external" href="https://pages.github.com/">GitHub pages</a> to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called <a class="reference external" href="https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites">user page</a> that only works for a repo named <tt class="docutils literal"><span class="pre">[username].github.io</span></tt>, where <tt class="docutils literal">[username]</tt> is your GitHub account name (mine is <tt class="docutils literal">jiaweizhuang</tt>). The website URL will be <tt class="docutils literal"><span class="pre">https://[username].github.io/</span></tt>.</p>
+<p>We will use <a class="reference external" href="https://pages.github.com/">GitHub pages</a> to host the website freely. Any GitHub repo can have its own GitHub page, but we will use the special one called <a class="reference external" href="https://help.github.com/articles/user-organization-and-project-pages/#user-and-organization-pages-sites">user page</a> that only works for a repo named <code class="docutils literal"><span class="pre">[username].github.io</span></code>, where <code class="docutils literal">[username]</code> is your GitHub account name (mine is <code class="docutils literal">jiaweizhuang</code>). The website URL will be <code class="docutils literal"><span class="pre">https://[username].github.io/</span></code>.</p>
 <p>You will need to:</p>
 <ol class="arabic simple">
-<li>Create a new GitHub repo named <tt class="docutils literal"><span class="pre">[username].github.io</span></tt>.</li>
-<li>Initialize a Git repo (<tt class="docutils literal">git init</tt>) in your Nikola project directory.</li>
-<li>Link to your remote GitHub repo (<tt class="docutils literal">git remote add origin <span class="pre">https://github.com/[username]/[username].github.io.git</span></tt>)</li>
+<li><p>Create a new GitHub repo named <code class="docutils literal"><span class="pre">[username].github.io</span></code>.</p></li>
+<li><p>Initialize a Git repo (<code class="docutils literal">git init</code>) in your Nikola project directory.</p></li>
+<li><p>Link to your remote GitHub repo (<code class="docutils literal">git remote add origin <span class="pre">https://github.com/[username]/[username].github.io.git</span></code>)</p></li>
 </ol>
-<p>So far all standard git practices. The non-standard thing is that you shouldn't manually commit anything to the <tt class="docutils literal">master</tt> branch. The <tt class="docutils literal">master</tt> branch is used for storing HTML files to display on the web. It should be handled automatically by the command <tt class="docutils literal">nikola github_deploy</tt>. To version control your source files (<tt class="docutils literal">conf.py</tt>, <tt class="docutils literal">*.rst</tt>, <tt class="docutils literal">*.md</tt>), you should create a new branch called <tt class="docutils literal">src</tt>:</p>
-<pre class="literal-block">
-git checkout -b src
-</pre>
-<p>My <tt class="docutils literal">.gitignore</tt> is:</p>
-<pre class="literal-block">
-cache
+<p>So far all standard git practices. The non-standard thing is that you shouldn't manually commit anything to the <code class="docutils literal">master</code> branch. The <code class="docutils literal">master</code> branch is used for storing HTML files to display on the web. It should be handled automatically by the command <code class="docutils literal">nikola github_deploy</code>. To version control your source files (<code class="docutils literal">conf.py</code>, <code class="docutils literal">*.rst</code>, <code class="docutils literal">*.md</code>), you should create a new branch called <code class="docutils literal">src</code>:</p>
+<pre class="literal-block">git checkout -b src</pre>
+<p>My <code class="docutils literal">.gitignore</code> is:</p>
+<pre class="literal-block">cache
 .doit.db*
 __pycache__
 output
 .ipynb_checkpoints
-.DS_Store
-</pre>
-<p>You can manually commit to this <tt class="docutils literal">src</tt> branch and push to GitHub.</p>
-<p>In <tt class="docutils literal">conf.py</tt>, double-check that branch names are correct:</p>
-<pre class="code python"><a name="rest_code_9ee2d5261dee409dabc10ea672d9fc59-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'src'</span>
-<a name="rest_code_9ee2d5261dee409dabc10ea672d9fc59-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
-<a name="rest_code_9ee2d5261dee409dabc10ea672d9fc59-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
+.DS_Store</pre>
+<p>You can manually commit to this <code class="docutils literal">src</code> branch and push to GitHub.</p>
+<p>In <code class="docutils literal">conf.py</code>, double-check that branch names are correct:</p>
+<pre class="code python"><a name="rest_code_90ea7dfe77ac4bc0899e77d1459ddc24-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'src'</span>
+<a name="rest_code_90ea7dfe77ac4bc0899e77d1459ddc24-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
+<a name="rest_code_90ea7dfe77ac4bc0899e77d1459ddc24-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
 </pre>
 <p>I also recommend setting:</p>
-<pre class="code python"><a name="rest_code_830baca9b3d54ec2b1a777cbd6398865-1"></a><span class="n">GITHUB_COMMIT_SOURCE</span> <span class="o">=</span> <span class="bp">False</span>
+<pre class="code python"><a name="rest_code_ab896ad00a61417c975a3fbb5d2219c4-1"></a><span class="n">GITHUB_COMMIT_SOURCE</span> <span class="o">=</span> <span class="kc">False</span>
 </pre>
-<p>So that the <tt class="docutils literal">nikola github_deploy</tt> command below won't touch your <tt class="docutils literal">src</tt> branch.</p>
-<p>To deploy the content on <tt class="docutils literal">master</tt>, run:</p>
-<pre class="literal-block">
-nikola github_deploy
-</pre>
-<p>This builds the HTML files, commits to the <tt class="docutils literal">master</tt> branch, and pushes to GitHub. The actual website <tt class="docutils literal"><span class="pre">https://[username].github.io/</span></tt> will be updated in a few seconds.</p>
+<p>So that the <code class="docutils literal">nikola github_deploy</code> command below won't touch your <code class="docutils literal">src</code> branch.</p>
+<p>To deploy the content on <code class="docutils literal">master</code>, run:</p>
+<pre class="literal-block">nikola github_deploy</pre>
+<p>This builds the HTML files, commits to the <code class="docutils literal">master</code> branch, and pushes to GitHub. The actual website <code class="docutils literal"><span class="pre">https://[username].github.io/</span></code> will be updated in a few seconds.</p>
 <p>You end up having:</p>
 <ul class="simple">
-<li>A well version-controlled <tt class="docutils literal">src</tt> branch, with only source files. You can add meaningful commit messages like for other code projects.</li>
-<li>An automatically generated <tt class="docutils literal">master</tt> branch, with messy html files which you never need to directly look at. It doesn't have meaningful commit messages, and the commit history is kind of a mess (diff between HTML files).</li>
+<li><p>A well version-controlled <code class="docutils literal">src</code> branch, with only source files. You can add meaningful commit messages like for other code projects.</p></li>
+<li><p>An automatically generated <code class="docutils literal">master</code> branch, with messy html files which you never need to directly look at. It doesn't have meaningful commit messages, and the commit history is kind of a mess (diff between HTML files).</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Remember that <tt class="docutils literal">nikola github_deploy</tt> will use all the files in the current directory, not the most recent commit in the <tt class="docutils literal">src</tt> branch! <tt class="docutils literal">master</tt> and the <tt class="docutils literal">src</tt> are not necessarily synchronized if you set <tt class="docutils literal">GITHUB_COMMIT_SOURCE = False</tt>.</p>
+<p class="admonition-title">Note</p>
+<p>Remember that <code class="docutils literal">nikola github_deploy</code> will use all the files in the current directory, not the most recent commit in the <code class="docutils literal">src</code> branch! <code class="docutils literal">master</code> and the <code class="docutils literal">src</code> are not necessarily synchronized if you set <code class="docutils literal">GITHUB_COMMIT_SOURCE = False</code>.</p>
 </div>
-<p>For all the tweaks later, you can incrementally update the GitHub repo and the website, by manually pushing to <tt class="docutils literal">src</tt> and using <tt class="docutils literal">nikola github_deploy</tt> to push to <tt class="docutils literal">master</tt>.</p>
+<p>For all the tweaks later, you can incrementally update the GitHub repo and the website, by manually pushing to <code class="docutils literal">src</code> and using <code class="docutils literal">nikola github_deploy</code> to push to <code class="docutils literal">master</code>.</p>
 </div>
 <div class="section" id="change-theme">
-<h2><a class="toc-backref" href="#id4">4   Change theme</a></h2>
-<p>The default theme looks more like a blog than a personal website. Twitter's <a class="reference external" href="https://getbootstrap.com/">Bootstrap</a> is an excellent theme and is <a class="reference external" href="https://themes.getnikola.com/v8/bootstrap4/">built into Nikola</a>.  In <tt class="docutils literal">conf.py</tt>, set:</p>
-<pre class="code python"><a name="rest_code_1571ee1405144beeb0b56238d95c811f-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap4"</span>
+<h2><a class="toc-backref" href="#id4"><span class="sectnum">4</span> Change theme</a></h2>
+<p>The default theme looks more like a blog than a personal website. Twitter's <a class="reference external" href="https://getbootstrap.com/">Bootstrap</a> is an excellent theme and is <a class="reference external" href="https://themes.getnikola.com/v8/bootstrap4/">built into Nikola</a>.  In <code class="docutils literal">conf.py</code>, set:</p>
+<pre class="code python"><a name="rest_code_a6a975abfba04fba83788ae067d186f9-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap4"</span>
 </pre>
 <p>The theme can be further tweaked by <a class="reference external" href="https://bootswatch.com/">Bootswatch</a> but I find the default theme perfect for me :)</p>
 </div>
 <div class="section" id="set-non-blog-layout">
-<h2><a class="toc-backref" href="#id5">5   Set non-blog layout</a></h2>
+<h2><a class="toc-backref" href="#id5"><span class="sectnum">5</span> Set non-blog layout</a></h2>
 <p><a class="reference external" href="https://getnikola.com/creating-a-site-not-a-blog-with-nikola.html">Official non-blog guide</a> explains this well. I just summarize the steps here.</p>
 <p>Nikola defines two types of contents:</p>
 <ul class="simple">
-<li>"Posts" generated by <tt class="docutils literal">nikola new_post</tt>. It is just the blog post and will be automatically added to the main web page whenever a new post is created.</li>
-<li>"Pages" generated by <tt class="docutils literal">nikola new_page</tt>. It is a standalone page that will not be automatically added to the main site. This is the building block for a non-blog site.</li>
+<li><p>"Posts" generated by <code class="docutils literal">nikola new_post</code>. It is just the blog post and will be automatically added to the main web page whenever a new post is created.</p></li>
+<li><p>"Pages" generated by <code class="docutils literal">nikola new_page</code>. It is a standalone page that will not be automatically added to the main site. This is the building block for a non-blog site.</p></li>
 </ul>
-<p>In <tt class="docutils literal">conf.py</tt>, bring Pages to root level:</p>
-<pre class="code python"><a name="rest_code_932cf213e1374b1488733da805fa6a12-1"></a><span class="n">POSTS</span> <span class="o">=</span> <span class="p">(</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-2"></a>    <span class="p">(</span><span class="s2">"posts/*.rst"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-3"></a>    <span class="p">(</span><span class="s2">"posts/*.md"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-4"></a>    <span class="p">(</span><span class="s2">"posts/*.txt"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-5"></a>    <span class="p">(</span><span class="s2">"posts/*.html"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-6"></a><span class="p">)</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-7"></a><span class="n">PAGES</span> <span class="o">=</span> <span class="p">(</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-8"></a>    <span class="p">(</span><span class="s2">"pages/*.rst"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>  <span class="c1"># notice the second argument</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-9"></a>    <span class="p">(</span><span class="s2">"pages/*.md"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-10"></a>    <span class="p">(</span><span class="s2">"pages/*.txt"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-11"></a>    <span class="p">(</span><span class="s2">"pages/*.html"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-12"></a><span class="p">)</span>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-13"></a>
-<a name="rest_code_932cf213e1374b1488733da805fa6a12-14"></a><span class="n">INDEX_PATH</span> <span class="o">=</span> <span class="s2">"blog"</span>
+<p>In <code class="docutils literal">conf.py</code>, bring Pages to root level:</p>
+<pre class="code python"><a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-1"></a><span class="n">POSTS</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-2"></a>    <span class="p">(</span><span class="s2">"posts/*.rst"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-3"></a>    <span class="p">(</span><span class="s2">"posts/*.md"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-4"></a>    <span class="p">(</span><span class="s2">"posts/*.txt"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-5"></a>    <span class="p">(</span><span class="s2">"posts/*.html"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-6"></a><span class="p">)</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-7"></a><span class="n">PAGES</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-8"></a>    <span class="p">(</span><span class="s2">"pages/*.rst"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>  <span class="c1"># notice the second argument</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-9"></a>    <span class="p">(</span><span class="s2">"pages/*.md"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-10"></a>    <span class="p">(</span><span class="s2">"pages/*.txt"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-11"></a>    <span class="p">(</span><span class="s2">"pages/*.html"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-12"></a><span class="p">)</span>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-13"></a>
+<a name="rest_code_14f3650b2d6c4793a465bf16047b7d57-14"></a><span class="n">INDEX_PATH</span> <span class="o">=</span> <span class="s2">"blog"</span>
 </pre>
 <p>Generate your new index page (the entry of you website):</p>
-<pre class="literal-block">
-$ nikola new_page
+<pre class="literal-block">$ nikola new_page
 Creating New Page
 -----------------
 
-Title: index
-</pre>
+Title: index</pre>
 <p>To add more pages to the top navigation bar:</p>
-<pre class="literal-block">
-$ nikola new_page
+<pre class="literal-block">$ nikola new_page
 Creating New Page
 -----------------
 
-Title: Bio
-</pre>
-<p>And then add it to <tt class="docutils literal">conf.py</tt>:</p>
-<pre class="code python"><a name="rest_code_7ea4c7b716024caeb332b438286f7103-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_7ea4c7b716024caeb332b438286f7103-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_7ea4c7b716024caeb332b438286f7103-3"></a>        <span class="p">(</span><span class="s2">"/index.html"</span><span class="p">,</span> <span class="s2">"Home"</span><span class="p">),</span>
-<a name="rest_code_7ea4c7b716024caeb332b438286f7103-4"></a>        <span class="p">(</span><span class="s2">"/bio/index.html"</span><span class="p">,</span> <span class="s2">"Bio"</span><span class="p">),</span>
-<a name="rest_code_7ea4c7b716024caeb332b438286f7103-5"></a>        <span class="o">...</span>
-<a name="rest_code_7ea4c7b716024caeb332b438286f7103-6"></a>    <span class="p">),</span>
+Title: Bio</pre>
+<p>And then add it to <code class="docutils literal">conf.py</code>:</p>
+<pre class="code python"><a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-3"></a>        <span class="p">(</span><span class="s2">"/index.html"</span><span class="p">,</span> <span class="s2">"Home"</span><span class="p">),</span>
+<a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-4"></a>        <span class="p">(</span><span class="s2">"/bio/index.html"</span><span class="p">,</span> <span class="s2">"Bio"</span><span class="p">),</span>
+<a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-5"></a>        <span class="o">...</span>
+<a name="rest_code_8ad74cc794d845e8abfab90ff256a3fa-6"></a>    <span class="p">),</span>
 </pre>
 </div>
 <div class="section" id="enable-jupyter-notebook-format">
-<h2><a class="toc-backref" href="#id6">6   Enable Jupyter notebook format</a></h2>
-<p>Just add <tt class="docutils literal">*.ipynb</tt> as recognizable formats:</p>
-<pre class="code python"><a name="rest_code_448c41a795734bed91d5b314b9584f80-1"></a><span class="n">POSTS</span> <span class="o">=</span> <span class="p">(</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-2"></a>    <span class="p">(</span><span class="s2">"posts/*.rst"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-3"></a>    <span class="p">(</span><span class="s2">"posts/*.md"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-4"></a>    <span class="p">(</span><span class="s2">"posts/*.txt"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-5"></a>    <span class="p">(</span><span class="s2">"posts/*.html"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-6"></a>    <span class="p">(</span><span class="s2">"posts/*.ipynb"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span> <span class="c1"># new line</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-7"></a><span class="p">)</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-8"></a><span class="n">PAGES</span> <span class="o">=</span> <span class="p">(</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-9"></a>    <span class="p">(</span><span class="s2">"pages/*.rst"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-10"></a>    <span class="p">(</span><span class="s2">"pages/*.md"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-11"></a>    <span class="p">(</span><span class="s2">"pages/*.txt"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-12"></a>    <span class="p">(</span><span class="s2">"pages/*.html"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-13"></a>    <span class="p">(</span><span class="s2">"pages/*.ipynb"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span> <span class="c1"># new line</span>
-<a name="rest_code_448c41a795734bed91d5b314b9584f80-14"></a><span class="p">)</span>
+<h2><a class="toc-backref" href="#id6"><span class="sectnum">6</span> Enable Jupyter notebook format</a></h2>
+<p>Just add <code class="docutils literal">*.ipynb</code> as recognizable formats:</p>
+<pre class="code python"><a name="rest_code_02d3cf62c29946ad97b664699354793d-1"></a><span class="n">POSTS</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-2"></a>    <span class="p">(</span><span class="s2">"posts/*.rst"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-3"></a>    <span class="p">(</span><span class="s2">"posts/*.md"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-4"></a>    <span class="p">(</span><span class="s2">"posts/*.txt"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-5"></a>    <span class="p">(</span><span class="s2">"posts/*.html"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-6"></a>    <span class="p">(</span><span class="s2">"posts/*.ipynb"</span><span class="p">,</span> <span class="s2">"blog"</span><span class="p">,</span> <span class="s2">"post.tmpl"</span><span class="p">),</span> <span class="c1"># new line</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-7"></a><span class="p">)</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-8"></a><span class="n">PAGES</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-9"></a>    <span class="p">(</span><span class="s2">"pages/*.rst"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-10"></a>    <span class="p">(</span><span class="s2">"pages/*.md"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-11"></a>    <span class="p">(</span><span class="s2">"pages/*.txt"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-12"></a>    <span class="p">(</span><span class="s2">"pages/*.html"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-13"></a>    <span class="p">(</span><span class="s2">"pages/*.ipynb"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"page.tmpl"</span><span class="p">),</span> <span class="c1"># new line</span>
+<a name="rest_code_02d3cf62c29946ad97b664699354793d-14"></a><span class="p">)</span>
 </pre>
 <p>With the current version (v8), that's all you need to do!</p>
 <p>Create a new blog in notebook format:</p>
-<pre class="literal-block">
-$ nikola new_post -f ipynb
-</pre>
+<pre class="literal-block">$ nikola new_post -f ipynb</pre>
 </div>
 <div class="section" id="add-social-media-button">
-<h2><a class="toc-backref" href="#id7">7   Add social media button</a></h2>
+<h2><a class="toc-backref" href="#id7"><span class="sectnum">7</span> Add social media button</a></h2>
 <p>You might want to add buttons for other sites like GitHub and Twitter, or any icons from <a class="reference external" href="https://fontawesome.com/">Font Awesome</a>.</p>
 <p>Taken from <a class="reference external" href="http://www.jaakkoluttinen.fi/blog/how-to-blog-with-jupyter-ipython-notebook-and-nikola/">this post by Jaakko Luttinen</a>, the minimal example is (only one GitHub button):</p>
-<pre class="code python"><a name="rest_code_a99d377deb894ea3b706de051bfddedd-1"></a><span class="n">EXTRA_HEAD_DATA</span> <span class="o">=</span> <span class="s1">'&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&gt;'</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-2"></a>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-3"></a><span class="n">CONTENT_FOOTER</span> <span class="o">=</span> <span class="s1">'''</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-4"></a><span class="s1">&lt;div class="text-center"&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-5"></a><span class="s1">&lt;p&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-6"></a><span class="s1">&lt;span class="fa-stack fa-2x"&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-7"></a><span class="s1">&lt;a href="https://github.com/[username]"&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-8"></a><span class="s1">    &lt;i class="fa fa-circle fa-stack-2x"&gt;&lt;/i&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-9"></a><span class="s1">    &lt;i class="fa fa-github fa-inverse fa-stack-1x"&gt;&lt;/i&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-10"></a><span class="s1">&lt;/a&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-11"></a><span class="s1">&lt;/span&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-12"></a><span class="s1">&lt;/p&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-13"></a><span class="s1">&lt;/div&gt;</span>
-<a name="rest_code_a99d377deb894ea3b706de051bfddedd-14"></a><span class="s1">'''</span>
+<pre class="code python"><a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-1"></a><span class="n">EXTRA_HEAD_DATA</span> <span class="o">=</span> <span class="s1">'&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"&gt;'</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-2"></a>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-3"></a><span class="n">CONTENT_FOOTER</span> <span class="o">=</span> <span class="s1">'''</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-4"></a><span class="s1">&lt;div class="text-center"&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-5"></a><span class="s1">&lt;p&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-6"></a><span class="s1">&lt;span class="fa-stack fa-2x"&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-7"></a><span class="s1">&lt;a href="https://github.com/[username]"&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-8"></a><span class="s1">    &lt;i class="fa fa-circle fa-stack-2x"&gt;&lt;/i&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-9"></a><span class="s1">    &lt;i class="fa fa-github fa-inverse fa-stack-1x"&gt;&lt;/i&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-10"></a><span class="s1">&lt;/a&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-11"></a><span class="s1">&lt;/span&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-12"></a><span class="s1">&lt;/p&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-13"></a><span class="s1">&lt;/div&gt;</span>
+<a name="rest_code_9f6feea54284423b9f83cd14b7f5ba6c-14"></a><span class="s1">'''</span>
 </pre>
 </div>
 <div class="section" id="various-tweaks">
-<h2><a class="toc-backref" href="#id8">8   Various tweaks</a></h2>
+<h2><a class="toc-backref" href="#id8"><span class="sectnum">8</span> Various tweaks</a></h2>
 <div class="section" id="add-table-of-content">
-<h3><a class="toc-backref" href="#id9">8.1   Add table of content</a></h3>
-<p>For <tt class="docutils literal">*.rst</tt> posts, simple add:</p>
-<pre class="literal-block">
-.. contents::
-</pre>
+<h3><a class="toc-backref" href="#id9"><span class="sectnum">8.1</span> Add table of content</a></h3>
+<p>For <code class="docutils literal">*.rst</code> posts, simple add:</p>
+<pre class="literal-block">.. contents::</pre>
 <p>Or optionally with numbering:</p>
-<pre class="literal-block">
-.. contents::
-.. section-numbering::
-</pre>
+<pre class="literal-block">.. contents::
+.. section-numbering::</pre>
 </div>
 <div class="section" id="tweak-archive-format">
-<h3><a class="toc-backref" href="#id10">8.2   Tweak Archive format</a></h3>
+<h3><a class="toc-backref" href="#id10"><span class="sectnum">8.2</span> Tweak Archive format</a></h3>
 <p>To avoid grouping posts by years:</p>
-<pre class="code python"><a name="rest_code_720471acf1794b7dbf501acf3c61c139-1"></a><span class="n">CREATE_SINGLE_ARCHIVE</span> <span class="o">=</span> <span class="bp">True</span>
+<pre class="code python"><a name="rest_code_a5ec8c02e503441892aa61fb7531da36-1"></a><span class="n">CREATE_SINGLE_ARCHIVE</span> <span class="o">=</span> <span class="kc">True</span>
 </pre>
 <p>The creation time of each blog post is displayed down to minutes by default. Only showing the date seems enough:</p>
-<pre class="code python"><a name="rest_code_221d79fc6e0b41e7bf1179811d7b33ca-1"></a><span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s1">'YYYY-MM-dd'</span>
+<pre class="code python"><a name="rest_code_96977b40f8b5452bbfd98203fe83ef88-1"></a><span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s1">'YYYY-MM-dd'</span>
 </pre>
 </div>
 <div class="section" id="enable-comment-system">
-<h3><a class="toc-backref" href="#id11">8.3   Enable comment system</a></h3>
+<h3><a class="toc-backref" href="#id11"><span class="sectnum">8.3</span> Enable comment system</a></h3>
 <p>Because static sites do not have databases, you need to use a thiry-party comment system as documented on the <a class="reference external" href="https://getnikola.com/handbook.html#comments">official doc</a>. The steps are:</p>
 <ol class="arabic simple">
-<li>Sign up for an account on <a class="reference external" href="https://disqus.com/">https://disqus.com/</a>.</li>
-<li>On Disqus, select "Create a new site" (or visit <a class="reference external" href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a>).</li>
-<li>During configuration, take note on the "Shortname" you use. Other configs are not very important.</li>
-<li>At "Select a plan", choosing the basic free plan is enough.</li>
-<li>At "Select Platform", just skip the instructions. No need to insert the "Universal Code" manually, as it is built into Nikola. Keep all default and finish the configuration.</li>
+<li><p>Sign up for an account on <a class="reference external" href="https://disqus.com/">https://disqus.com/</a>.</p></li>
+<li><p>On Disqus, select "Create a new site" (or visit <a class="reference external" href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a>).</p></li>
+<li><p>During configuration, take note on the "Shortname" you use. Other configs are not very important.</p></li>
+<li><p>At "Select a plan", choosing the basic free plan is enough.</p></li>
+<li><p>At "Select Platform", just skip the instructions. No need to insert the "Universal Code" manually, as it is built into Nikola. Keep all default and finish the configuration.</p></li>
 </ol>
-<p>In <tt class="docutils literal">conf.py</tt>, add your Disqus shortname:</p>
-<pre class="code python"><a name="rest_code_d8e057c10a854f708f2f8579a59a3014-1"></a><span class="n">COMMENT_SYSTEM</span> <span class="o">=</span> <span class="s2">"disqus"</span>
-<a name="rest_code_d8e057c10a854f708f2f8579a59a3014-2"></a><span class="n">COMMENT_SYSTEM_ID</span> <span class="o">=</span> <span class="s2">"[disqus-shortname]"</span>
+<p>In <code class="docutils literal">conf.py</code>, add your Disqus shortname:</p>
+<pre class="code python"><a name="rest_code_483cd10774c843f8b42f2d8c682d5649-1"></a><span class="n">COMMENT_SYSTEM</span> <span class="o">=</span> <span class="s2">"disqus"</span>
+<a name="rest_code_483cd10774c843f8b42f2d8c682d5649-2"></a><span class="n">COMMENT_SYSTEM_ID</span> <span class="o">=</span> <span class="s2">"[disqus-shortname]"</span>
 </pre>
 <p>Deploy to GitHub and the comment system should be enabled.</p>
 </div>
@@ -441,6 +425,7 @@ $ nikola new_post -f ipynb
 </p>
 </div>
 
+            
             
         </footer>
 </div>

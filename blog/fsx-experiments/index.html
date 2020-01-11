@@ -80,10 +80,11 @@ navbar-dark bg-dark
         <!--Body content-->
         
         
+        
 <article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Experiments with AWS FSx for Lustre: I/O Benchmark and Dask Cluster Deployment</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Jiawei Zhuang
             </span></p>
             <p class="dateline">
@@ -104,16 +105,16 @@ navbar-dark bg-dark
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
 <p>(This post was tweeted <a class="reference external" href="https://twitter.com/jeffbarr/status/1103757720748847104">by Jeff Barr</a> and <a class="reference external" href="https://twitter.com/HPC_Guru/status/1103853244822900736">by HPC Guru</a>)</p>
-<p>AWS has recently launched an extremely interesting new service called <a class="reference external" href="https://aws.amazon.com/fsx/lustre/">FSx for Lustre</a>. Since last week, FSx has also been integrated with the <a class="reference external" href="https://aws-parallelcluster.readthedocs.io">AWS ParallelCluster</a> framework <a class="footnote-reference" href="#pclus-fsx" id="id1">[1]</a>, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, <a class="reference external" href="http://lustre.org/">Lustre</a> is a well-known high-performance parallel file system, deployed on many world-class supercomputers <a class="footnote-reference" href="#nas-lustre" id="id2">[2]</a>. Previously, ParallelCluster (and its predecessor <a class="reference external" href="https://cfncluster.readthedocs.io">CfnCluster</a>) only provided a <a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System">Network File System (NFS)</a>, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"<a class="footnote-reference" href="#fsx-s3" id="id3">[3]</a>. Considering the incredible amount of public datasets living in S3 <a class="footnote-reference" href="#s3-opendata" id="id4">[4]</a>, such integration can lead to endless interesting use cases.</p>
+<p>AWS has recently launched an extremely interesting new service called <a class="reference external" href="https://aws.amazon.com/fsx/lustre/">FSx for Lustre</a>. Since last week, FSx has also been integrated with the <a class="reference external" href="https://aws-parallelcluster.readthedocs.io">AWS ParallelCluster</a> framework <a class="footnote-reference brackets" href="#pclus-fsx" id="id1">1</a>, so you can spin-up a Lustre-enabled HPC cluster with one-click. As a reminder for non-HPC people, <a class="reference external" href="http://lustre.org/">Lustre</a> is a well-known high-performance parallel file system, deployed on many world-class supercomputers <a class="footnote-reference brackets" href="#nas-lustre" id="id2">2</a>. Previously, ParallelCluster (and its predecessor <a class="reference external" href="https://cfncluster.readthedocs.io">CfnCluster</a>) only provided a <a class="reference external" href="https://en.wikipedia.org/wiki/Network_File_System">Network File System (NFS)</a>, running on the master node and exported to all compute nodes. This often causes a serious bottleneck for I/O-intensive applications. A fully-managed Lustre service should largely solve such I/O problem. Furthermore, FSx is "deeply integrated with Amazon S3"<a class="footnote-reference brackets" href="#fsx-s3" id="id3">3</a>. Considering the incredible amount of public datasets living in S3 <a class="footnote-reference brackets" href="#s3-opendata" id="id4">4</a>, such integration can lead to endless interesting use cases.</p>
 <p>As a new user of FSx, my natural questions are:</p>
 <ul class="simple">
-<li>Does it deliver the claimed performance?</li>
-<li>How easily can it be used for real-world applications?</li>
+<li><p>Does it deliver the claimed performance?</p></li>
+<li><p>How easily can it be used for real-world applications?</p></li>
 </ul>
 <p>To answer these questions, I did some initial experiments:</p>
 <ul class="simple">
-<li>Performed I/O benchmark with <a class="reference external" href="https://github.com/hpc/ior">IOR</a>, the de-facto HPC I/O benchmark framework.</li>
-<li>Deployed a <a class="reference external" href="https://github.com/dask/dask">Dask</a> cluster on top of AWS HPC environment, and used it to process public Earth science data in S3 buckets.</li>
+<li><p>Performed I/O benchmark with <a class="reference external" href="https://github.com/hpc/ior">IOR</a>, the de-facto HPC I/O benchmark framework.</p></li>
+<li><p>Deployed a <a class="reference external" href="https://github.com/dask/dask">Dask</a> cluster on top of AWS HPC environment, and used it to process public Earth science data in S3 buckets.</p></li>
 </ul>
 <p>The two experiments are independent so feel free to jump to either one.</p>
 <p><strong>Disclaimer</strong>: This is just a preliminary result and is by no means a rigorous evaluation. In particular, I have made no effort on fine-turning the performance. I am not affiliated with AWS (although I do have their generous funding), so please treat this as a third-party report.</p>
@@ -121,178 +122,181 @@ navbar-dark bg-dark
 <p class="topic-title first">Contents</p>
 <ul class="auto-toc simple">
 <li>
-<a class="reference internal" href="#cluster-infrastructure" id="id18">1   Cluster infrastructure</a><ul class="auto-toc">
-<li><a class="reference internal" href="#aws-parallelcluster-configuration" id="id19">1.1   AWS ParallelCluster configuration</a></li>
-<li><a class="reference internal" href="#testing-integration-with-existing-s3-bucket" id="id20">1.2   Testing integration with existing S3 bucket</a></li>
+<p><a class="reference internal" href="#cluster-infrastructure" id="id18"><span class="sectnum">1</span> Cluster infrastructure</a></p>
+<ul class="auto-toc">
+<li><p><a class="reference internal" href="#aws-parallelcluster-configuration" id="id19"><span class="sectnum">1.1</span> AWS ParallelCluster configuration</a></p></li>
+<li><p><a class="reference internal" href="#testing-integration-with-existing-s3-bucket" id="id20"><span class="sectnum">1.2</span> Testing integration with existing S3 bucket</a></p></li>
 </ul>
 </li>
 <li>
-<a class="reference internal" href="#i-o-benchmark-by-ior" id="id21">2   I/O benchmark by IOR</a><ul class="auto-toc">
-<li><a class="reference internal" href="#install-ior-by-spack" id="id22">2.1   Install IOR by Spack</a></li>
-<li><a class="reference internal" href="#i-o-benchmark-result" id="id23">2.2   I/O benchmark result</a></li>
+<p><a class="reference internal" href="#i-o-benchmark-by-ior" id="id21"><span class="sectnum">2</span> I/O benchmark by IOR</a></p>
+<ul class="auto-toc">
+<li><p><a class="reference internal" href="#install-ior-by-spack" id="id22"><span class="sectnum">2.1</span> Install IOR by Spack</a></p></li>
+<li><p><a class="reference internal" href="#i-o-benchmark-result" id="id23"><span class="sectnum">2.2</span> I/O benchmark result</a></p></li>
 </ul>
 </li>
 <li>
-<a class="reference internal" href="#dask-cluster-on-top-of-aws-hpc-stack" id="id24">3   Dask cluster on top of AWS HPC stack</a><ul class="auto-toc">
-<li><a class="reference internal" href="#cluster-deployment-with-dask-jobqueue" id="id25">3.1   Cluster deployment with Dask-jobqueue</a></li>
-<li><a class="reference internal" href="#computation-with-dask-distributed" id="id26">3.2   Computation with Dask-distributed</a></li>
+<p><a class="reference internal" href="#dask-cluster-on-top-of-aws-hpc-stack" id="id24"><span class="sectnum">3</span> Dask cluster on top of AWS HPC stack</a></p>
+<ul class="auto-toc">
+<li><p><a class="reference internal" href="#cluster-deployment-with-dask-jobqueue" id="id25"><span class="sectnum">3.1</span> Cluster deployment with Dask-jobqueue</a></p></li>
+<li><p><a class="reference internal" href="#computation-with-dask-distributed" id="id26"><span class="sectnum">3.2</span> Computation with Dask-distributed</a></p></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#final-thoughts" id="id27">4   Final thoughts</a></li>
-<li><a class="reference internal" href="#references" id="id28">5   References</a></li>
+<li><p><a class="reference internal" href="#final-thoughts" id="id27"><span class="sectnum">4</span> Final thoughts</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id28"><span class="sectnum">5</span> References</a></p></li>
 </ul>
 </div>
 <div class="section" id="cluster-infrastructure">
-<h2><a class="toc-backref" href="#id18">1   Cluster infrastructure</a></h2>
+<h2><a class="toc-backref" href="#id18"><span class="sectnum">1</span> Cluster infrastructure</a></h2>
 <p>The first step is to spin up an AWS ParallelCluster. See my <a class="reference external" href="../aws-hpc-guide/">previous post</a> for a detailed walk-through.</p>
 <div class="section" id="aws-parallelcluster-configuration">
-<h3><a class="toc-backref" href="#id19">1.1   AWS ParallelCluster configuration</a></h3>
-<p>The <code>~/.parallelcluster/config</code> file is almost the same as in previous post. The only thing new is the <code>fsx</code> section. At the time of writing, only CentOS 7 is supported <a class="footnote-reference" href="#pcluster-ubuntu" id="id5">[5]</a>.</p>
-<pre class="code bash"><a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-1"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-2"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-3"></a>...
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-4"></a><span class="nv">fsx_settings</span> <span class="o">=</span> fs
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-5"></a>
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-6"></a><span class="o">[</span>fsx fs<span class="o">]</span>
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-7"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
-<a name="rest_code_e86c47da8901442ead1cdd8a43d9ef06-8"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
+<h3><a class="toc-backref" href="#id19"><span class="sectnum">1.1</span> AWS ParallelCluster configuration</a></h3>
+<p>The <code>~/.parallelcluster/config</code> file is almost the same as in previous post. The only thing new is the <code>fsx</code> section. At the time of writing, only CentOS 7 is supported <a class="footnote-reference brackets" href="#pcluster-ubuntu" id="id5">5</a>.</p>
+<pre class="code bash"><a name="rest_code_29013ee1751e48168c50ac65879dd9c3-1"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-2"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-3"></a>...
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-4"></a><span class="nv">fsx_settings</span> <span class="o">=</span> fs
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-5"></a>
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-6"></a><span class="o">[</span>fsx fs<span class="o">]</span>
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-7"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
+<a name="rest_code_29013ee1751e48168c50ac65879dd9c3-8"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
 </pre>
-<p>According to AWS <a class="footnote-reference" href="#fsx-performance" id="id6">[6]</a>, a 14,400 GB file system would deliver 2,880 MB/s throughput. You may use a much bigger size for production, but this size should be good for initial testing.</p>
+<p>According to AWS <a class="footnote-reference brackets" href="#fsx-performance" id="id6">6</a>, a 14,400 GB file system would deliver 2,880 MB/s throughput. You may use a much bigger size for production, but this size should be good for initial testing.</p>
 <p>The above config will create an empty file system. A more interesting usage is to pre-import S3 buckets:</p>
-<pre class="code bash"><a name="rest_code_3b1b4c2108e64e17aa5f59ab134f8e4e-1"></a><span class="o">[</span>fsx fs<span class="o">]</span>
-<a name="rest_code_3b1b4c2108e64e17aa5f59ab134f8e4e-2"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
-<a name="rest_code_3b1b4c2108e64e17aa5f59ab134f8e4e-3"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
-<a name="rest_code_3b1b4c2108e64e17aa5f59ab134f8e4e-4"></a><span class="nv">imported_file_chunk_size</span> <span class="o">=</span> <span class="m">1024</span>
-<a name="rest_code_3b1b4c2108e64e17aa5f59ab134f8e4e-5"></a><span class="nv">import_path</span> <span class="o">=</span> s3://era5-pds
+<pre class="code bash"><a name="rest_code_1e4f7ba3e0a94844a2557302b4d51c0d-1"></a><span class="o">[</span>fsx fs<span class="o">]</span>
+<a name="rest_code_1e4f7ba3e0a94844a2557302b4d51c0d-2"></a><span class="nv">shared_dir</span> <span class="o">=</span> /fsx
+<a name="rest_code_1e4f7ba3e0a94844a2557302b4d51c0d-3"></a><span class="nv">storage_capacity</span> <span class="o">=</span> <span class="m">14400</span>
+<a name="rest_code_1e4f7ba3e0a94844a2557302b4d51c0d-4"></a><span class="nv">imported_file_chunk_size</span> <span class="o">=</span> <span class="m">1024</span>
+<a name="rest_code_1e4f7ba3e0a94844a2557302b4d51c0d-5"></a><span class="nv">import_path</span> <span class="o">=</span> s3://era5-pds
 </pre>
-<p>Here I am using the ECMWF ERA5 Reanalysis data <a class="footnote-reference" href="#era5" id="id7">[7]</a>. The data format is NetCDF4. Other datasets would work similarly.</p>
+<p>Here I am using the ECMWF ERA5 Reanalysis data <a class="footnote-reference brackets" href="#era5" id="id7">7</a>. The data format is NetCDF4. Other datasets would work similarly.</p>
 <p><code>pcluster create</code> can take several minutes longer than without FSx, because provisioning a Lustre server probably involves heavy-lifting on the AWS side. Go to the "Amazon FSx" console to check the creation status.</p>
 <p>After a successful launch, log in and run <code>df -h</code> to make sure that Lustre is properly mounted to <code>/fsx</code>.</p>
 </div>
 <div class="section" id="testing-integration-with-existing-s3-bucket">
-<h3><a class="toc-backref" href="#id20">1.2   Testing integration with existing S3 bucket</a></h3>
+<h3><a class="toc-backref" href="#id20"><span class="sectnum">1.2</span> Testing integration with existing S3 bucket</a></h3>
 <p>Objects in the bucket will appear as normal on-disk files.</p>
-<pre class="code bash"><a name="rest_code_e320d7af171842139f4203b37fe3e37a-1"></a>$ <span class="nb">cd</span> /fsx
-<a name="rest_code_e320d7af171842139f4203b37fe3e37a-2"></a>$ ls <span class="c1"># displays objects in the S3 bucket</span>
-<a name="rest_code_e320d7af171842139f4203b37fe3e37a-3"></a>...
+<pre class="code bash"><a name="rest_code_1c2a2d800baa4d0994ea67d57b996021-1"></a>$ <span class="nb">cd</span> /fsx
+<a name="rest_code_1c2a2d800baa4d0994ea67d57b996021-2"></a>$ ls <span class="c1"># displays objects in the S3 bucket</span>
+<a name="rest_code_1c2a2d800baa4d0994ea67d57b996021-3"></a>...
 </pre>
 <p>However, FSx only stores metadata:</p>
-<pre class="code bash"><a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-1"></a>$ <span class="nb">cd</span> /fsx/2008/01/data <span class="c1"># specific to ERA5 data</span>
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-2"></a>$ ls -lh *   <span class="c1"># the data appear to be big (~1 GB)</span>
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-3"></a>-rwxr-xr-x <span class="m">1</span> root root  988M Jul  <span class="m">4</span>  <span class="m">2018</span> air_pressure_at_mean_sea_level.nc
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-4"></a>...
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-5"></a>$ du -sh *  <span class="c1"># but the actual content is super small.</span>
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-6"></a><span class="m">512</span> air_pressure_at_mean_sea_level.nc
-<a name="rest_code_4b86deb0f366447e8f8f388098fd2c65-7"></a>...
+<pre class="code bash"><a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-1"></a>$ <span class="nb">cd</span> /fsx/2008/01/data <span class="c1"># specific to ERA5 data</span>
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-2"></a>$ ls -lh *   <span class="c1"># the data appear to be big (~1 GB)</span>
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-3"></a>-rwxr-xr-x <span class="m">1</span> root root  988M Jul  <span class="m">4</span>  <span class="m">2018</span> air_pressure_at_mean_sea_level.nc
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-4"></a>...
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-5"></a>$ du -sh *  <span class="c1"># but the actual content is super small.</span>
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-6"></a><span class="m">512</span> air_pressure_at_mean_sea_level.nc
+<a name="rest_code_3bff3b6cf7c44d26a9e26b1b7a4f3259-7"></a>...
 </pre>
 <p>The actual data will be pulled from S3 when accessed. For a NetCDF4 file, either <code>ncdump -h</code> or <code>h5ls</code> will display its basic contents and cause the entire file to be pulled from S3.</p>
-<pre class="code bash"><a name="rest_code_74b11d98b0fc4e118ac548f6d6c63733-1"></a>$ ncdump -h air_pressure_at_mean_sea_level.nc  <span class="c1"># `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda</span>
-<a name="rest_code_74b11d98b0fc4e118ac548f6d6c63733-2"></a>...
-<a name="rest_code_74b11d98b0fc4e118ac548f6d6c63733-3"></a>$ du -sh *  <span class="c1"># now much bigger</span>
-<a name="rest_code_74b11d98b0fc4e118ac548f6d6c63733-4"></a>962M        air_pressure_at_mean_sea_level.nc
-<a name="rest_code_74b11d98b0fc4e118ac548f6d6c63733-5"></a>...
+<pre class="code bash"><a name="rest_code_3fe61f529c0245d4b6164985e94a03c8-1"></a>$ ncdump -h air_pressure_at_mean_sea_level.nc  <span class="c1"># `ncdump` is installable from `sudo yum install netcdf`, or from Spack, or from Conda</span>
+<a name="rest_code_3fe61f529c0245d4b6164985e94a03c8-2"></a>...
+<a name="rest_code_3fe61f529c0245d4b6164985e94a03c8-3"></a>$ du -sh *  <span class="c1"># now much bigger</span>
+<a name="rest_code_3fe61f529c0245d4b6164985e94a03c8-4"></a>962M        air_pressure_at_mean_sea_level.nc
+<a name="rest_code_3fe61f529c0245d4b6164985e94a03c8-5"></a>...
 </pre>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you get HDF5 error on Lustre, set <code>export HDF5_USE_FILE_LOCKING=FALSE</code> <a class="footnote-reference" href="#hdf5-error" id="id8">[8]</a>.</p>
+<p class="admonition-title">Note</p>
+<p>If you get HDF5 error on Lustre, set <code>export HDF5_USE_FILE_LOCKING=FALSE</code> <a class="footnote-reference brackets" href="#hdf5-error" id="id8">8</a>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="i-o-benchmark-by-ior">
-<h2><a class="toc-backref" href="#id21">2   I/O benchmark by IOR</a></h2>
+<h2><a class="toc-backref" href="#id21"><span class="sectnum">2</span> I/O benchmark by IOR</a></h2>
 <p>For general reference, see IOR's documentation: <a class="reference external" href="https://ior.readthedocs.io">https://ior.readthedocs.io</a></p>
 <div class="section" id="install-ior-by-spack">
-<h3><a class="toc-backref" href="#id22">2.1   Install IOR by Spack</a></h3>
+<h3><a class="toc-backref" href="#id22"><span class="sectnum">2.1</span> Install IOR by Spack</a></h3>
 <p>Configure Spack as in the previous post. Then, getting IOR is simply:</p>
-<pre class="code bash"><a name="rest_code_74df38e8de3945008ecc278829470672-1"></a>$ spack install ior ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
+<pre class="code bash"><a name="rest_code_358b682d29a04e9a8f26004bc87c435d-1"></a>$ spack install ior ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm
 </pre>
 <p>IOR is also quite easy to install from source, outside of Spack.</p>
 <p>Discover the <code>ior</code> executable by:</p>
-<pre class="code bash"><a name="rest_code_963b4c4a68284da2aafd0eb4bad22c31-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i ior<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<pre class="code bash"><a name="rest_code_3a554a31d3a548e587a179fb9d0d018b-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i ior<span class="k">)</span>/bin:<span class="nv">$PATH</span>
 </pre>
 </div>
 <div class="section" id="i-o-benchmark-result">
-<h3><a class="toc-backref" href="#id23">2.2   I/O benchmark result</a></h3>
-<p>With two <tt class="docutils literal">c5n.18xlarge</tt> compute nodes running, a multi-node, parallel write-read test can be done by:</p>
-<pre class="code bash"><a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-1"></a>$ mkdir /fsx/ior_tempdir
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-2"></a>$ <span class="nb">cd</span> /fsx/ior_tempdir
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-3"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-4"></a>...
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-5"></a>Max Write: <span class="m">1632</span>.01 MiB/sec <span class="o">(</span><span class="m">1711</span>.28 MB/sec<span class="o">)</span>
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-6"></a>Max Read:  <span class="m">1654</span>.59 MiB/sec <span class="o">(</span><span class="m">1734</span>.96 MB/sec<span class="o">)</span>
-<a name="rest_code_2c8e5961018b4e62bf60db7d1c545177-7"></a>...
+<h3><a class="toc-backref" href="#id23"><span class="sectnum">2.2</span> I/O benchmark result</a></h3>
+<p>With two <code class="docutils literal">c5n.18xlarge</code> compute nodes running, a multi-node, parallel write-read test can be done by:</p>
+<pre class="code bash"><a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-1"></a>$ mkdir /fsx/ior_tempdir
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-2"></a>$ <span class="nb">cd</span> /fsx/ior_tempdir
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-3"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-4"></a>...
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-5"></a>Max Write: <span class="m">1632</span>.01 MiB/sec <span class="o">(</span><span class="m">1711</span>.28 MB/sec<span class="o">)</span>
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-6"></a>Max Read:  <span class="m">1654</span>.59 MiB/sec <span class="o">(</span><span class="m">1734</span>.96 MB/sec<span class="o">)</span>
+<a name="rest_code_b4d1e8bcc8e04904becc46645974bb16-7"></a>...
 </pre>
-<p>Conducting a proper I/O benchmark is not straightforward, due to various caching effects. IOR implements several tricks (reflected in command line parameters) to get around those effects <a class="footnote-reference" href="#ior-tutorial" id="id9">[9]</a>.</p>
+<p>Conducting a proper I/O benchmark is not straightforward, due to various caching effects. IOR implements several tricks (reflected in command line parameters) to get around those effects <a class="footnote-reference brackets" href="#ior-tutorial" id="id9">9</a>.</p>
 <p>I can get maximum throughput with 8 client nodes:</p>
-<pre class="code bash"><a name="rest_code_8c461ae788db4040b2fa1e65b9f20b5b-1"></a>$ srun -N <span class="m">8</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
-<a name="rest_code_8c461ae788db4040b2fa1e65b9f20b5b-2"></a>...
-<a name="rest_code_8c461ae788db4040b2fa1e65b9f20b5b-3"></a>Max Write: <span class="m">2905</span>.59 MiB/sec <span class="o">(</span><span class="m">3046</span>.73 MB/sec<span class="o">)</span>
-<a name="rest_code_8c461ae788db4040b2fa1e65b9f20b5b-4"></a>Max Read:  <span class="m">2879</span>.96 MiB/sec <span class="o">(</span><span class="m">3019</span>.85 MB/sec<span class="o">)</span>
-<a name="rest_code_8c461ae788db4040b2fa1e65b9f20b5b-5"></a>...
+<pre class="code bash"><a name="rest_code_778e3012e0a64fd89b7ef82dc8d14ba3-1"></a>$ srun -N <span class="m">8</span> --ntasks-per-node <span class="m">36</span> ior -t 1m -b 16m -s <span class="m">4</span> -F -C -e
+<a name="rest_code_778e3012e0a64fd89b7ef82dc8d14ba3-2"></a>...
+<a name="rest_code_778e3012e0a64fd89b7ef82dc8d14ba3-3"></a>Max Write: <span class="m">2905</span>.59 MiB/sec <span class="o">(</span><span class="m">3046</span>.73 MB/sec<span class="o">)</span>
+<a name="rest_code_778e3012e0a64fd89b7ef82dc8d14ba3-4"></a>Max Read:  <span class="m">2879</span>.96 MiB/sec <span class="o">(</span><span class="m">3019</span>.85 MB/sec<span class="o">)</span>
+<a name="rest_code_778e3012e0a64fd89b7ef82dc8d14ba3-5"></a>...
 </pre>
 <p>This matches the 2,880 MB/s claimed by AWS! Using more nodes shows marginal improvement, since the bandwidth should already be saturated.</p>
 <p>The logical next step is to test IO-heavy HPC applications and conduct a detailed I/O-profiling. In this post, however, I decide to try a more interesting use case -- big data analytics.</p>
 </div>
 </div>
 <div class="section" id="dask-cluster-on-top-of-aws-hpc-stack">
-<h2><a class="toc-backref" href="#id24">3   Dask cluster on top of AWS HPC stack</a></h2>
+<h2><a class="toc-backref" href="#id24"><span class="sectnum">3</span> Dask cluster on top of AWS HPC stack</a></h2>
 <p>The entire idea comes from the Pangeo project (<a class="reference external" href="http://pangeo.io">http://pangeo.io</a>) that aims to develop a big-data geoscience platform on HPC and cloud. At its core, Pangeo relies on two excellent Python libraries:</p>
 <ul class="simple">
-<li>Xarray (<a class="reference external" href="http://xarray.pydata.org">http://xarray.pydata.org</a>), which is probably the best way to handle NetCDF files and many other data formats in geoscience. It is also used as a general-purpose "multi-dimensional Pandas" outside of geoscience.</li>
-<li>Dask (<a class="reference external" href="https://dask.org">https://dask.org</a>), a parallel computing library that can scale NumPy, Pandas, Xarray, and Scikit-Learn to parallel and distributed environments. In particular, <a class="reference external" href="https://distributed.dask.org">Dask-distributed</a> handles distributed computing.</li>
+<li><p>Xarray (<a class="reference external" href="http://xarray.pydata.org">http://xarray.pydata.org</a>), which is probably the best way to handle NetCDF files and many other data formats in geoscience. It is also used as a general-purpose "multi-dimensional Pandas" outside of geoscience.</p></li>
+<li><p>Dask (<a class="reference external" href="https://dask.org">https://dask.org</a>), a parallel computing library that can scale NumPy, Pandas, Xarray, and Scikit-Learn to parallel and distributed environments. In particular, <a class="reference external" href="https://distributed.dask.org">Dask-distributed</a> handles distributed computing.</p></li>
 </ul>
 <p>The normal way to deploy Pangeo on cloud is via <a class="reference external" href="http://kubernetes.dask.org">Dask-Kubernetes</a>, leveraging fully-managed Kubernetes services like:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://cloud.google.com/kubernetes-engine/">Google Kubernetes Engine</a></li>
-<li><a class="reference external" href="https://aws.amazon.com/eks/">Amazon Elastic Container Service for Kubernetes (EKS)</a></li>
-<li><a class="reference external" href="https://azure.microsoft.com/en-us/services/kubernetes-service/">Azure Kubernetes Service</a></li>
+<li><p><a class="reference external" href="https://cloud.google.com/kubernetes-engine/">Google Kubernetes Engine</a></p></li>
+<li><p><a class="reference external" href="https://aws.amazon.com/eks/">Amazon Elastic Container Service for Kubernetes (EKS)</a></p></li>
+<li><p><a class="reference external" href="https://azure.microsoft.com/en-us/services/kubernetes-service/">Azure Kubernetes Service</a></p></li>
 </ul>
-<p>On the other hand, the deployment of Pangeo on local HPC clusters is through <a class="reference external" href="https://jobqueue.dask.org">Dask-Jobqueue</a> <a class="footnote-reference" href="#pangeo-hpc" id="id10">[10]</a>.</p>
+<p>On the other hand, the deployment of Pangeo on local HPC clusters is through <a class="reference external" href="https://jobqueue.dask.org">Dask-Jobqueue</a> <a class="footnote-reference brackets" href="#pangeo-hpc" id="id10">10</a>.</p>
 <p>Since we already have a fully-fledged HPC cluster (contains Slurm + MPI + Lustre), there is no reason not to test the second approach. Is AWS now a cloud platform or an HPC cluster? The boundary seems to be blurred.</p>
 <div class="section" id="cluster-deployment-with-dask-jobqueue">
-<h3><a class="toc-backref" href="#id25">3.1   Cluster deployment with Dask-jobqueue</a></h3>
+<h3><a class="toc-backref" href="#id25"><span class="sectnum">3.1</span> Cluster deployment with Dask-jobqueue</a></h3>
 <p>The deployment turns out to be extremely easy. I am still in the learning curve of Kubernetes, and this alternative HPC approach feels much more straightforward for an HPC person like me.</p>
 <p>First, get Miniconda:</p>
-<pre class="code bash"><a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-1"></a>$ <span class="nb">cd</span> /shared
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-2"></a>$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-3"></a>$ bash miniconda.sh -b -p miniconda
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-4"></a>$ <span class="nb">echo</span> <span class="s2">". /shared/miniconda/etc/profile.d/conda.sh"</span> &gt;&gt; ~/.bashrc
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-5"></a>$ <span class="nb">source</span> ~/.bashrc
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-6"></a>$ conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-7"></a>$ conda activate py37  <span class="c1"># replaces `source activate` for conda&gt;=4.4</span>
-<a name="rest_code_370ebe4a2ae64519ac03eeb3071406ae-8"></a>$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
+<pre class="code bash"><a name="rest_code_279a93a096734aefbc17093986215efa-1"></a>$ <span class="nb">cd</span> /shared
+<a name="rest_code_279a93a096734aefbc17093986215efa-2"></a>$ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+<a name="rest_code_279a93a096734aefbc17093986215efa-3"></a>$ bash miniconda.sh -b -p miniconda
+<a name="rest_code_279a93a096734aefbc17093986215efa-4"></a>$ <span class="nb">echo</span> <span class="s2">". /shared/miniconda/etc/profile.d/conda.sh"</span> &gt;&gt; ~/.bashrc
+<a name="rest_code_279a93a096734aefbc17093986215efa-5"></a>$ <span class="nb">source</span> ~/.bashrc
+<a name="rest_code_279a93a096734aefbc17093986215efa-6"></a>$ conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+<a name="rest_code_279a93a096734aefbc17093986215efa-7"></a>$ conda activate py37  <span class="c1"># replaces `source activate` for conda&gt;=4.4</span>
+<a name="rest_code_279a93a096734aefbc17093986215efa-8"></a>$ conda install -c conda-forge xarray netCDF4 cartopy dask-jobqueue jupyter
 </pre>
 <p>Optionally, install additional visualization libraries that I will use later:</p>
-<pre class="code bash"><a name="rest_code_0a20ca51870d437c9a300b11dc7ae5b5-1"></a>$ pip install geoviews hvplot datashader
+<pre class="code bash"><a name="rest_code_ca76087f6fda4476bb06fd2ecdf87638-1"></a>$ pip install geoviews hvplot datashader
 </pre>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It turns out that we don't need to install MPI4Py! Dask-jobqueue only needs a scheduler (here we have Slurm) to launch processes, and uses its own communication mechanism (defaults to TCP) <a class="footnote-reference" href="#dask-hpc" id="id11">[11]</a>.</p>
+<p class="admonition-title">Note</p>
+<p>It turns out that we don't need to install MPI4Py! Dask-jobqueue only needs a scheduler (here we have Slurm) to launch processes, and uses its own communication mechanism (defaults to TCP) <a class="footnote-reference brackets" href="#dask-hpc" id="id11">11</a>.</p>
 </div>
 <p>With two idle <code>c5n.18xlarge</code> nodes, use the following code in <code>ipython</code> to initialize a distributed cluster:</p>
-<pre class="code python"><a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-1"></a><span class="kn">from</span> <span class="nn">dask_jobqueue</span> <span class="kn">import</span> <span class="n">SLURMCluster</span>
-<a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-2"></a><span class="n">cluster</span> <span class="o">=</span> <span class="n">SLURMCluster</span><span class="p">(</span><span class="n">cores</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="s1">'150GB'</span><span class="p">)</span>  <span class="c1"># Slurm thinks there are 72 cores per node due to EC2 hyperthreading</span>
-<a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-3"></a><span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">36</span><span class="p">)</span>
-<a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-4"></a>
-<a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-5"></a><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
-<a name="rest_code_a5fbfb392e404e4fb7ae8c7c78c57ca8-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-1"></a><span class="kn">from</span> <span class="nn">dask_jobqueue</span> <span class="kn">import</span> <span class="n">SLURMCluster</span>
+<a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-2"></a><span class="n">cluster</span> <span class="o">=</span> <span class="n">SLURMCluster</span><span class="p">(</span><span class="n">cores</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="s1">'150GB'</span><span class="p">)</span>  <span class="c1"># Slurm thinks there are 72 cores per node due to EC2 hyperthreading</span>
+<a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-3"></a><span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">36</span><span class="p">)</span>
+<a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-4"></a>
+<a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-5"></a><span class="kn">from</span> <span class="nn">distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+<a name="rest_code_ede0dbfbc9a6443dbebbcb87eab3a2fa-6"></a><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
 </pre>
 <p>In a separate shell, use <code>sinfo</code> to check the node status -- they should be fully allocated.</p>
-<p>To enable Dask's dashboard <a class="footnote-reference" href="#dask-dashboard" id="id12">[12]</a>, add an additional SSH connection in a new shell:</p>
-<pre class="code text"><a name="rest_code_b8a9be379ac34af2911c930c52ff8768-1"></a>$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
+<p>To enable Dask's dashboard <a class="footnote-reference brackets" href="#dask-dashboard" id="id12">12</a>, add an additional SSH connection in a new shell:</p>
+<pre class="code text"><a name="rest_code_05b8b7b92b5f4036b7a0267333254798-1"></a>$ pcluster ssh your-cluster-name -N -L 8787:localhost:8787
 </pre>
 <p>Visit <code>localhost:8787</code> in the web browser (NOT something like <code>http://172.31.5.224:8787</code> shown in Python) .</p>
 <p>Alternatively, everything can be put together, including Jupyter notebook's port-forwarding:</p>
-<pre class="code bash"><a name="rest_code_80d059ac20c44116bfc65f00f351b657-1"></a>$ pcluster ssh your-cluster-name -L <span class="m">8889</span>:localhost:8889 -L <span class="m">8787</span>:localhost:8787
-<a name="rest_code_80d059ac20c44116bfc65f00f351b657-2"></a>$ conda activate py37
-<a name="rest_code_80d059ac20c44116bfc65f00f351b657-3"></a>$ jupyter notebook --NotebookApp.token<span class="o">=</span><span class="s1">''</span> --no-browser --port<span class="o">=</span><span class="m">8889</span>
+<pre class="code bash"><a name="rest_code_0835b10fec774c8589591075c833dbe0-1"></a>$ pcluster ssh your-cluster-name -L <span class="m">8889</span>:localhost:8889 -L <span class="m">8787</span>:localhost:8787
+<a name="rest_code_0835b10fec774c8589591075c833dbe0-2"></a>$ conda activate py37
+<a name="rest_code_0835b10fec774c8589591075c833dbe0-3"></a>$ jupyter notebook --NotebookApp.token<span class="o">=</span><span class="s1">''</span> --no-browser --port<span class="o">=</span><span class="m">8889</span>
 </pre>
 <p>Visit <code>localhost:8889</code> to use the notebook.</p>
 <p>That's all about the deployment! This Dask cluster is able to perform parallel read/write with the Lustre file system.</p>
 </div>
 <div class="section" id="computation-with-dask-distributed">
-<h3><a class="toc-backref" href="#id26">3.2   Computation with Dask-distributed</a></h3>
-<p>As an example, I compute the average Sea Surface Temperature (SST) <a class="footnote-reference" href="#sst" id="id13">[13]</a> over near 300 GBs of ERA5 data. It gets done in 15 seconds with 8 compute nodes, which would have taken &gt; 20 minutes with a single small node. Here's the screen recording of Dask dashboard during computation.</p>
+<h3><a class="toc-backref" href="#id26"><span class="sectnum">3.2</span> Computation with Dask-distributed</a></h3>
+<p>As an example, I compute the average Sea Surface Temperature (SST) <a class="footnote-reference brackets" href="#sst" id="id13">13</a> over near 300 GBs of ERA5 data. It gets done in 15 seconds with 8 compute nodes, which would have taken &gt; 20 minutes with a single small node. Here's the screen recording of Dask dashboard during computation.</p>
 <div class="vimeo-video">
 <iframe src="https://player.vimeo.com/video/321645143" width="800" height="400" frameborder="0" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowFullScreen">
 </iframe>
@@ -301,212 +305,97 @@ navbar-dark bg-dark
 </div>
 </div>
 <div class="section" id="final-thoughts">
-<h2><a class="toc-backref" href="#id27">4   Final thoughts</a></h2>
+<h2><a class="toc-backref" href="#id27"><span class="sectnum">4</span> Final thoughts</a></h2>
 <p>Back to my initial questions:</p>
 <ul class="simple">
-<li>Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is TBD though.</li>
-<li>How easily can it be used for real-world applications? It turns out to be quite easy. All building blocks are already there, and I just need to put them together. It took me one day to get such initial tests done.</li>
+<li><p>Does it deliver the claimed performance? Yes, and very accurately, at least for the moderate size I tried. A larger-scale benchmark is TBD though.</p></li>
+<li><p>How easily can it be used for real-world applications? It turns out to be quite easy. All building blocks are already there, and I just need to put them together. It took me one day to get such initial tests done.</p></li>
 </ul>
 <p>This HPC approach might be an alternative way of deploying the Pangeo big data stack on AWS. Some differences from the Kubernetes + pure S3 way are:</p>
 <ul class="simple">
-<li>No need to worry about the HDF + Cloud problem <a class="footnote-reference" href="#hdf-cloud" id="id14">[14]</a>. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF &amp; NetCDF formats, and converting them to a more cloud-friendly format like Zarr might take some effort.</li>
-<li>It is probably easier for existing cloud-HPC users to adopt. Numerical simulations and post-processing can be done in exactly the same environment.</li>
-<li>It is likely to cost more (haven't rigorously calculated), due to heavier resource provisioning. Lustre essentially acts as a huge cache for S3. In the long-term, this kind of data analytics workflow should probably be handled in a more cloud-native way, using Lambda-like serverless computing, to maximize resource utilization and minimize computational cost. But it is nice to have something that "just works" right now.</li>
+<li><p>No need to worry about the HDF + Cloud problem <a class="footnote-reference brackets" href="#hdf-cloud" id="id14">14</a>. People can now access data in S3 through a POSIX-compliant, high-performance file system interface. This seems a big deal because huge amounts of data are already in HDF &amp; NetCDF formats, and converting them to a more cloud-friendly format like Zarr might take some effort.</p></li>
+<li><p>It is probably easier for existing cloud-HPC users to adopt. Numerical simulations and post-processing can be done in exactly the same environment.</p></li>
+<li><p>It is likely to cost more (haven't rigorously calculated), due to heavier resource provisioning. Lustre essentially acts as a huge cache for S3. In the long-term, this kind of data analytics workflow should probably be handled in a more cloud-native way, using Lambda-like serverless computing, to maximize resource utilization and minimize computational cost. But it is nice to have something that "just works" right now.</p></li>
 </ul>
 <p>Some possible further steps:</p>
 <ul class="simple">
-<li>The performance can be fine-tuned indefinitely. There is an extremely-large parameter space: Lustre stripe size, HDF5 chunk size, Dask chunk size, Dask processes vs threads, client instance counts and types... But unless there are important scientific/business needs, fine-tuning it doesn't seem super interesting.</li>
-<li>For me personally, this provides a very convenient test environment for scaling-out xESMF <a class="footnote-reference" href="#xesmf-pangeo" id="id15">[15]</a>, the regridding package I wrote. Because the entire pipeline is clearly I/O-limited, what I really need is just a fast file system.</li>
-<li>The most promising use case is probably some deep-learning-like climate analytics <a class="footnote-reference" href="#climate-net" id="id16">[16]</a>. DL algorithms are generally data hungry, and the best place to put massive datasets is, with no doubt, the cloud. How Dask + Xarray + Pangeo fit into DL workflow seems to be in active discussion <a class="footnote-reference" href="#xarray-dl" id="id17">[17]</a> .</li>
+<li><p>The performance can be fine-tuned indefinitely. There is an extremely-large parameter space: Lustre stripe size, HDF5 chunk size, Dask chunk size, Dask processes vs threads, client instance counts and types... But unless there are important scientific/business needs, fine-tuning it doesn't seem super interesting.</p></li>
+<li><p>For me personally, this provides a very convenient test environment for scaling-out xESMF <a class="footnote-reference brackets" href="#xesmf-pangeo" id="id15">15</a>, the regridding package I wrote. Because the entire pipeline is clearly I/O-limited, what I really need is just a fast file system.</p></li>
+<li><p>The most promising use case is probably some deep-learning-like climate analytics <a class="footnote-reference brackets" href="#climate-net" id="id16">16</a>. DL algorithms are generally data hungry, and the best place to put massive datasets is, with no doubt, the cloud. How Dask + Xarray + Pangeo fit into DL workflow seems to be in active discussion <a class="footnote-reference brackets" href="#xarray-dl" id="id17">17</a> .</p></li>
 </ul>
 </div>
 <div class="section" id="references">
-<h2><a class="toc-backref" href="#id28">5   References</a></h2>
-<table class="docutils footnote" frame="void" id="pclus-fsx" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id1">[1]</a></td>
-<td>Added in ParallelCluster v2.2.1 <a class="reference external" href="https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1">https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1</a>. See FSx section in the docs: <a class="reference external" href="https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx">https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="nas-lustre" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id2">[2]</a></td>
-<td>For example, NASA's supercomputing facility provides a nice user guide on Lustre: <a class="reference external" href="https://www.nas.nasa.gov/hecc/support/kb/102/">https://www.nas.nasa.gov/hecc/support/kb/102/</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="fsx-s3" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id3">[3]</a></td>
-<td>See "Using S3 Data Repositories" in FSx guide: <a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html">https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="s3-opendata" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id4">[4]</a></td>
-<td>See the Registry of Open Data on AWS <a class="reference external" href="https://registry.opendata.aws/">https://registry.opendata.aws/</a>. A large fraction of them are Earth data: <a class="reference external" href="https://aws.amazon.com/earth/">https://aws.amazon.com/earth/</a>.</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="pcluster-ubuntu" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id5">[5]</a></td>
-<td>See this issue: <a class="reference external" href="https://github.com/aws/aws-parallelcluster/issues/896">https://github.com/aws/aws-parallelcluster/issues/896</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="fsx-performance" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id6">[6]</a></td>
-<td>See Amazon FSx for Lustre Performance at <a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html">https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="era5" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id7">[7]</a></td>
-<td>Search for "ECMWF ERA5 Reanalysis" in the Registry of Open Data on AWS: <a class="reference external" href="https://registry.opendata.aws/ecmwf-era5">https://registry.opendata.aws/ecmwf-era5</a>. As a reminder for non-atmospheric people, a reanalysis is like the best guess of past atmospheric states, obtained from observations and simulations. For a more detailed but non-technical introduction, Read <em>Reanalyses and Observations: What’s the Difference?</em> at <a class="reference external" href="https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1">https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="hdf5-error" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id8">[8]</a></td>
-<td><a class="reference external" href="https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file">https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file</a></td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="ior-tutorial" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id9">[9]</a></td>
-<td>See "First Steps with IOR" at: <a class="reference external" href="https://ior.readthedocs.io/en/latest/userDoc/tutorial.html">https://ior.readthedocs.io/en/latest/userDoc/tutorial.html</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="pangeo-hpc" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id10">[10]</a></td>
-<td>See "Getting Started with Pangeo on HPC": <a class="reference external" href="https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html">https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="dask-hpc" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id11">[11]</a></td>
-<td>See the "High Performance Computers" section in Dask docs: <a class="reference external" href="http://docs.dask.org/en/latest/setup/hpc.html">http://docs.dask.org/en/latest/setup/hpc.html</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="dask-dashboard" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id12">[12]</a></td>
-<td>See "Viewing the Dask Dashboard" in Dask-Jobqueue docs: <a class="reference external" href="https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard">https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="sst" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id13">[13]</a></td>
-<td>SST is an important climate change indicator: <a class="reference external" href="https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature">https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="hdf-cloud" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id14">[14]</a></td>
-<td>HDF in the Cloud: challenges and solutions for scientific data: <a class="reference external" href="http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud">http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="xesmf-pangeo" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id15">[15]</a></td>
-<td>Initial tests regarding distributed regridding with xESMF on Pangeo: <a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/334">https://github.com/pangeo-data/pangeo/issues/334</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="climate-net" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id16">[16]</a></td>
-<td>For example, see Berkeley Lab's ClimateNet: <a class="reference external" href="https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/">https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/</a>
-</td>
-</tr></tbody>
-</table>
-<table class="docutils footnote" frame="void" id="xarray-dl" rules="none">
-<colgroup>
-<col class="label">
-<col>
-</colgroup>
-<tbody valign="top"><tr>
-<td class="label"><a class="fn-backref" href="#id17">[17]</a></td>
-<td>See the discusson in this issue: <a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/567">https://github.com/pangeo-data/pangeo/issues/567</a>
-</td>
-</tr></tbody>
-</table>
+<h2><a class="toc-backref" href="#id28"><span class="sectnum">5</span> References</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="pclus-fsx"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd>
+<p>Added in ParallelCluster v2.2.1 <a class="reference external" href="https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1">https://github.com/aws/aws-parallelcluster/releases/tag/v2.2.1</a>. See FSx section in the docs: <a class="reference external" href="https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx">https://aws-parallelcluster.readthedocs.io/en/latest/configuration.html#fsx</a></p>
+</dd>
+<dt class="label" id="nas-lustre"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd>
+<p>For example, NASA's supercomputing facility provides a nice user guide on Lustre: <a class="reference external" href="https://www.nas.nasa.gov/hecc/support/kb/102/">https://www.nas.nasa.gov/hecc/support/kb/102/</a></p>
+</dd>
+<dt class="label" id="fsx-s3"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd>
+<p>See "Using S3 Data Repositories" in FSx guide: <a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html">https://docs.aws.amazon.com/fsx/latest/LustreGuide/fsx-data-repositories.html</a></p>
+</dd>
+<dt class="label" id="s3-opendata"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd>
+<p>See the Registry of Open Data on AWS <a class="reference external" href="https://registry.opendata.aws/">https://registry.opendata.aws/</a>. A large fraction of them are Earth data: <a class="reference external" href="https://aws.amazon.com/earth/">https://aws.amazon.com/earth/</a>.</p>
+</dd>
+<dt class="label" id="pcluster-ubuntu"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd>
+<p>See this issue: <a class="reference external" href="https://github.com/aws/aws-parallelcluster/issues/896">https://github.com/aws/aws-parallelcluster/issues/896</a></p>
+</dd>
+<dt class="label" id="fsx-performance"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd>
+<p>See Amazon FSx for Lustre Performance at <a class="reference external" href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html">https://docs.aws.amazon.com/fsx/latest/LustreGuide/performance.html</a></p>
+</dd>
+<dt class="label" id="era5"><span class="brackets"><a class="fn-backref" href="#id7">7</a></span></dt>
+<dd>
+<p>Search for "ECMWF ERA5 Reanalysis" in the Registry of Open Data on AWS: <a class="reference external" href="https://registry.opendata.aws/ecmwf-era5">https://registry.opendata.aws/ecmwf-era5</a>. As a reminder for non-atmospheric people, a reanalysis is like the best guess of past atmospheric states, obtained from observations and simulations. For a more detailed but non-technical introduction, Read <em>Reanalyses and Observations: What’s the Difference?</em> at <a class="reference external" href="https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1">https://journals.ametsoc.org/doi/full/10.1175/BAMS-D-14-00226.1</a></p>
+</dd>
+<dt class="label" id="hdf5-error"><span class="brackets"><a class="fn-backref" href="#id8">8</a></span></dt>
+<dd>
+<p><a class="reference external" href="https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file">https://stackoverflow.com/questions/49317927/errno-101-netcdf-hdf-error-when-opening-netcdf-file</a></p>
+</dd>
+<dt class="label" id="ior-tutorial"><span class="brackets"><a class="fn-backref" href="#id9">9</a></span></dt>
+<dd>
+<p>See "First Steps with IOR" at: <a class="reference external" href="https://ior.readthedocs.io/en/latest/userDoc/tutorial.html">https://ior.readthedocs.io/en/latest/userDoc/tutorial.html</a></p>
+</dd>
+<dt class="label" id="pangeo-hpc"><span class="brackets"><a class="fn-backref" href="#id10">10</a></span></dt>
+<dd>
+<p>See "Getting Started with Pangeo on HPC": <a class="reference external" href="https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html">https://pangeo.readthedocs.io/en/latest/setup_guides/hpc.html</a></p>
+</dd>
+<dt class="label" id="dask-hpc"><span class="brackets"><a class="fn-backref" href="#id11">11</a></span></dt>
+<dd>
+<p>See the "High Performance Computers" section in Dask docs: <a class="reference external" href="http://docs.dask.org/en/latest/setup/hpc.html">http://docs.dask.org/en/latest/setup/hpc.html</a></p>
+</dd>
+<dt class="label" id="dask-dashboard"><span class="brackets"><a class="fn-backref" href="#id12">12</a></span></dt>
+<dd>
+<p>See "Viewing the Dask Dashboard" in Dask-Jobqueue docs: <a class="reference external" href="https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard">https://jobqueue.dask.org/en/latest/interactive.html#viewing-the-dask-dashboard</a></p>
+</dd>
+<dt class="label" id="sst"><span class="brackets"><a class="fn-backref" href="#id13">13</a></span></dt>
+<dd>
+<p>SST is an important climate change indicator: <a class="reference external" href="https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature">https://www.epa.gov/climate-indicators/climate-change-indicators-sea-surface-temperature</a></p>
+</dd>
+<dt class="label" id="hdf-cloud"><span class="brackets"><a class="fn-backref" href="#id14">14</a></span></dt>
+<dd>
+<p>HDF in the Cloud: challenges and solutions for scientific data: <a class="reference external" href="http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud">http://matthewrocklin.com/blog/work/2018/02/06/hdf-in-the-cloud</a></p>
+</dd>
+<dt class="label" id="xesmf-pangeo"><span class="brackets"><a class="fn-backref" href="#id15">15</a></span></dt>
+<dd>
+<p>Initial tests regarding distributed regridding with xESMF on Pangeo: <a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/334">https://github.com/pangeo-data/pangeo/issues/334</a></p>
+</dd>
+<dt class="label" id="climate-net"><span class="brackets"><a class="fn-backref" href="#id16">16</a></span></dt>
+<dd>
+<p>For example, see Berkeley Lab's ClimateNet: <a class="reference external" href="https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/">https://cs.lbl.gov/news-media/news/2019/climatenet-aims-to-improve-machine-learning-applications-in-climate-science-on-a-global-scale/</a></p>
+</dd>
+<dt class="label" id="xarray-dl"><span class="brackets"><a class="fn-backref" href="#id17">17</a></span></dt>
+<dd>
+<p>See the discusson in this issue: <a class="reference external" href="https://github.com/pangeo-data/pangeo/issues/567">https://github.com/pangeo-data/pangeo/issues/567</a></p>
+</dd>
+</dl>
 </div>
 </div>
     </div>
@@ -594,6 +483,7 @@ navbar-dark bg-dark
 </p>
 </div>
 
+            
             
         </footer>
 </div>
