@@ -439,6 +439,8 @@ A serious HPC user should also check the available Byte Transfer Layer (BTL) in 
 - :code:`tcp` is the default inter-node communication mechanism on EC2 [#ompi-tcp]_. It is not ideal for HPC, but this should be changed with the coming EFA_.
 - :code:`vader` is a high-performance intra-node communication mechanism [#ompi-vader]_.
 
+(**Update in Dec 2019** There was a problem with OpenMPI + EFA, but is now solved. `See this issue <https://github.com/aws/aws-parallelcluster/issues/1143>`_)
+
 Using OpenMPI with Slurm
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
