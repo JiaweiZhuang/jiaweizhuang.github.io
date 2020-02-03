@@ -712,7 +712,7 @@ References
 ==========
 .. [#cloud-hpc-growth] Cloud Computing in HPC Surges: https://www.top500.org/news/cloud-computing-in-hpc-surges/
 .. [#manual-cluster] See Quick MPI Cluster Setup on Amazon EC2: https://glennklockwood.blogspot.com/2013/04/quick-mpi-cluster-setup-on-amazon-ec2.html. It was written in 2013 but all steps still apply. AWS console looks quite different now, but the concepts are not changed.
-.. [#dl-course] For example, fast.ai's tutorial on AWS EC2 https://course.fast.ai/start_aws.html, or Amazon's DL book https://d2l.ai/chapter_appendix_tools/aws.html.
+.. [#dl-course] For example, fast.ai's tutorial on AWS EC2 https://course.fast.ai/start_aws.html, or Amazon's DL book https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html.
 .. [#hpc-carpentry] See Introduction to High-Performance Computing at: https://hpc-carpentry.github.io/hpc-intro/. It only covers very simple cluster usage, not parallel programming.
 .. [#placement-group] See Placement Groups in AWS docs: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-cluster
 .. [#avail-zone] You might want to review "Regions and Availability Zones" in AWS docs: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
