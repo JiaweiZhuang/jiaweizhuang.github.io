@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/aws.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/bokeh.xml</loc>
@@ -15,7 +15,11 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/cloud.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/container.xml</loc>
+  <lastmod>2020-02-04T02:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
@@ -31,19 +35,27 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/hpc.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-03T15:34:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/io.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/jupyter.xml</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/kubernetes.xml</loc>
+  <lastmod>2020-02-04T00:49:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jiaweizhuang.github.io/categories/machine-learning.xml</loc>
+  <lastmod>2020-02-04T02:43:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-03T15:34:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/nikola.xml</loc>
@@ -51,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/spack.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-03T03:03:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/visualization.xml</loc>
@@ -59,18 +71,18 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/wrf.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-03T03:03:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/xarray.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/rss.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2020-01-11T15:58:00Z</lastmod>
+  <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
 </sitemapindex>

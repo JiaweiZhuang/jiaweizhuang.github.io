@@ -203,34 +203,34 @@ navbar-dark bg-dark
 <div class="section" id="a-minimum-config-file-for-production-hpc">
 <h3><a class="toc-backref" href="#id37"><span class="sectnum">3.1</span> A minimum config file for production HPC</a></h3>
 <p>The cluster infrastructure is fully specified by <code>~/.parallelcluster/config</code>. A minimum, recommended config file would look like:</p>
-<pre class="code bash"><a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-1"></a><span class="o">[</span>aws<span class="o">]</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-2"></a><span class="nv">aws_region_name</span> <span class="o">=</span> xxx
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-3"></a>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-4"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-5"></a><span class="nv">key_name</span> <span class="o">=</span> xxx
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-6"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-7"></a><span class="nv">master_instance_type</span> <span class="o">=</span> c5n.large
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-8"></a><span class="nv">compute_instance_type</span> <span class="o">=</span> c5n.18xlarge
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-9"></a><span class="nv">cluster_type</span> <span class="o">=</span> spot
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-10"></a><span class="nv">initial_queue_size</span> <span class="o">=</span> <span class="m">2</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-11"></a><span class="nv">scheduler</span> <span class="o">=</span> slurm
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-12"></a><span class="nv">placement_group</span> <span class="o">=</span> DYNAMIC
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-13"></a><span class="nv">vpc_settings</span> <span class="o">=</span> your-vpc-section-name
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-14"></a><span class="nv">ebs_settings</span> <span class="o">=</span> your-ebs-section-name
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-15"></a>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-16"></a><span class="o">[</span>vpc your-vpc-section-name<span class="o">]</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-17"></a><span class="nv">vpc_id</span> <span class="o">=</span> vpc-xxxxxxxx
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-18"></a><span class="nv">master_subnet_id</span> <span class="o">=</span> subnet-xxxxxxxx
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-19"></a>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-20"></a><span class="o">[</span>ebs your-ebs-section-name<span class="o">]</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-21"></a><span class="nv">shared_dir</span> <span class="o">=</span> shared
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-22"></a><span class="nv">volume_type</span> <span class="o">=</span> st1
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-23"></a><span class="nv">volume_size</span> <span class="o">=</span> <span class="m">500</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-24"></a>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-25"></a><span class="o">[</span>global<span class="o">]</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-26"></a><span class="nv">cluster_template</span> <span class="o">=</span> your-cluster-section-name
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-27"></a><span class="nv">update_check</span> <span class="o">=</span> <span class="nb">true</span>
-<a name="rest_code_3b95cde322e24cc9b9801e3a135f026c-28"></a><span class="nv">sanity_check</span> <span class="o">=</span> <span class="nb">true</span>
+<pre class="code bash"><a name="rest_code_8e8df750a6c442e6ae2e93533184632b-1"></a><span class="o">[</span>aws<span class="o">]</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-2"></a><span class="nv">aws_region_name</span> <span class="o">=</span> xxx
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-3"></a>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-4"></a><span class="o">[</span>cluster your-cluster-section-name<span class="o">]</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-5"></a><span class="nv">key_name</span> <span class="o">=</span> xxx
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-6"></a><span class="nv">base_os</span> <span class="o">=</span> centos7
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-7"></a><span class="nv">master_instance_type</span> <span class="o">=</span> c5n.large
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-8"></a><span class="nv">compute_instance_type</span> <span class="o">=</span> c5n.18xlarge
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-9"></a><span class="nv">cluster_type</span> <span class="o">=</span> spot
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-10"></a><span class="nv">initial_queue_size</span> <span class="o">=</span> <span class="m">2</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-11"></a><span class="nv">scheduler</span> <span class="o">=</span> slurm
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-12"></a><span class="nv">placement_group</span> <span class="o">=</span> DYNAMIC
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-13"></a><span class="nv">vpc_settings</span> <span class="o">=</span> your-vpc-section-name
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-14"></a><span class="nv">ebs_settings</span> <span class="o">=</span> your-ebs-section-name
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-15"></a>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-16"></a><span class="o">[</span>vpc your-vpc-section-name<span class="o">]</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-17"></a><span class="nv">vpc_id</span> <span class="o">=</span> vpc-xxxxxxxx
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-18"></a><span class="nv">master_subnet_id</span> <span class="o">=</span> subnet-xxxxxxxx
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-19"></a>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-20"></a><span class="o">[</span>ebs your-ebs-section-name<span class="o">]</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-21"></a><span class="nv">shared_dir</span> <span class="o">=</span> shared
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-22"></a><span class="nv">volume_type</span> <span class="o">=</span> st1
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-23"></a><span class="nv">volume_size</span> <span class="o">=</span> <span class="m">500</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-24"></a>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-25"></a><span class="o">[</span>global<span class="o">]</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-26"></a><span class="nv">cluster_template</span> <span class="o">=</span> your-cluster-section-name
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-27"></a><span class="nv">update_check</span> <span class="o">=</span> <span class="nb">true</span>
+<a name="rest_code_8e8df750a6c442e6ae2e93533184632b-28"></a><span class="nv">sanity_check</span> <span class="o">=</span> <span class="nb">true</span>
 </pre>
 <p>A brief comment on what are set:</p>
 <ul class="simple">
@@ -299,36 +299,36 @@ navbar-dark bg-dark
 <h3><a class="toc-backref" href="#id40"><span class="sectnum">4.1</span> Using Slurm</a></h3>
 <p>After login to the master node with <code>pcluster ssh</code>, you will use Slurm to interact with compute nodes. Here I summarize commonly-used commands. For general reference, see Slurm's documentation: <a class="reference external" href="https://www.schedmd.com/">https://www.schedmd.com/</a>.</p>
 <p>Slurm is pre-installed at <code>/opt/slurm/</code> :</p>
-<pre class="code bash"><a name="rest_code_3a96fa73dc844e84a0c83cc0c4b55053-1"></a>$ which sinfo
-<a name="rest_code_3a96fa73dc844e84a0c83cc0c4b55053-2"></a>/opt/slurm/bin/sinfo
+<pre class="code bash"><a name="rest_code_61a1398bb9ce451494fc759bfdec8779-1"></a>$ which sinfo
+<a name="rest_code_61a1398bb9ce451494fc759bfdec8779-2"></a>/opt/slurm/bin/sinfo
 </pre>
 <p>Check compute node status:</p>
-<pre class="code bash"><a name="rest_code_5764f55ad4f845fc90e26f986270d3b8-1"></a>$ sinfo
-<a name="rest_code_5764f55ad4f845fc90e26f986270d3b8-2"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-<a name="rest_code_5764f55ad4f845fc90e26f986270d3b8-3"></a>compute*     up   infinite      <span class="m">2</span>   idle ip-172-31-3-187,ip-172-31-7-245
+<pre class="code bash"><a name="rest_code_231b2ddb343c45d39499d642b4abcaa1-1"></a>$ sinfo
+<a name="rest_code_231b2ddb343c45d39499d642b4abcaa1-2"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+<a name="rest_code_231b2ddb343c45d39499d642b4abcaa1-3"></a>compute*     up   infinite      <span class="m">2</span>   idle ip-172-31-3-187,ip-172-31-7-245
 </pre>
 <p>The <code>172-31-xxx-xxx</code> is the Private IP <a class="footnote-reference brackets" href="#private-ip" id="id12">12</a> of the compute instances. The address range falls in your AWS VPC subnet. On EC2, <code>hostname</code> prints the private IP:</p>
-<pre class="code bash"><a name="rest_code_9ff18edeb39348e6bf373ea3cb6eff10-1"></a>$ hostname  <span class="c1"># private ip of master node</span>
-<a name="rest_code_9ff18edeb39348e6bf373ea3cb6eff10-2"></a>ip-172-31-7-214
+<pre class="code bash"><a name="rest_code_5370365d9d3c43fca556a435a924a495-1"></a>$ hostname  <span class="c1"># private ip of master node</span>
+<a name="rest_code_5370365d9d3c43fca556a435a924a495-2"></a>ip-172-31-7-214
 </pre>
 <p>To execute commands on compute nodes, use <code>srun</code>:</p>
-<pre class="code bash"><a name="rest_code_ae044c3927fc4a818f44e9b12316a3c8-1"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> hostname  <span class="c1"># private ip of compute nodes</span>
-<a name="rest_code_ae044c3927fc4a818f44e9b12316a3c8-2"></a>ip-172-31-3-187
-<a name="rest_code_ae044c3927fc4a818f44e9b12316a3c8-3"></a>ip-172-31-7-245
+<pre class="code bash"><a name="rest_code_94618fdf354141678ba9069fa4499139-1"></a>$ srun -N <span class="m">2</span> -n <span class="m">2</span> hostname  <span class="c1"># private ip of compute nodes</span>
+<a name="rest_code_94618fdf354141678ba9069fa4499139-2"></a>ip-172-31-3-187
+<a name="rest_code_94618fdf354141678ba9069fa4499139-3"></a>ip-172-31-7-245
 </pre>
 <p>The printed IP should match the output of <code>sinfo</code>.</p>
 <p>You can go to a compute node with the standard Slurm command:</p>
-<pre class="code bash"><a name="rest_code_11f535fa71f74f86ac2b49d450294cb6-1"></a>$ srun -N <span class="m">1</span> -n <span class="m">72</span> --pty bash  <span class="c1"># Slurm thinks a c5n.18xlarge node has 72 cores due to hyperthreading</span>
-<a name="rest_code_11f535fa71f74f86ac2b49d450294cb6-2"></a>$ sinfo  <span class="c1"># one node is fully allocated</span>
-<a name="rest_code_11f535fa71f74f86ac2b49d450294cb6-3"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-<a name="rest_code_11f535fa71f74f86ac2b49d450294cb6-4"></a>compute*     up   infinite      <span class="m">1</span>  alloc ip-172-31-3-187
-<a name="rest_code_11f535fa71f74f86ac2b49d450294cb6-5"></a>compute*     up   infinite      <span class="m">1</span>   idle ip-172-31-7-245
+<pre class="code bash"><a name="rest_code_341b468bf0094fb5a0d1fd01c5ef8d7c-1"></a>$ srun -N <span class="m">1</span> -n <span class="m">72</span> --pty bash  <span class="c1"># Slurm thinks a c5n.18xlarge node has 72 cores due to hyperthreading</span>
+<a name="rest_code_341b468bf0094fb5a0d1fd01c5ef8d7c-2"></a>$ sinfo  <span class="c1"># one node is fully allocated</span>
+<a name="rest_code_341b468bf0094fb5a0d1fd01c5ef8d7c-3"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+<a name="rest_code_341b468bf0094fb5a0d1fd01c5ef8d7c-4"></a>compute*     up   infinite      <span class="m">1</span>  alloc ip-172-31-3-187
+<a name="rest_code_341b468bf0094fb5a0d1fd01c5ef8d7c-5"></a>compute*     up   infinite      <span class="m">1</span>   idle ip-172-31-7-245
 </pre>
 <p>Or simply via <code>ssh</code>:</p>
-<pre class="code bash"><a name="rest_code_9f7f99535ac6404e9cd87fcaba01e460-1"></a>$ ssh ip-172-31-3-187
-<a name="rest_code_9f7f99535ac6404e9cd87fcaba01e460-2"></a>$ sinfo  <span class="c1"># still idle</span>
-<a name="rest_code_9f7f99535ac6404e9cd87fcaba01e460-3"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-<a name="rest_code_9f7f99535ac6404e9cd87fcaba01e460-4"></a>compute*     up   infinite      <span class="m">2</span>   idle ip-172-31-3-187,ip-172-31-7-245
+<pre class="code bash"><a name="rest_code_8ac121272694445e8c048af0cc0c4ab6-1"></a>$ ssh ip-172-31-3-187
+<a name="rest_code_8ac121272694445e8c048af0cc0c4ab6-2"></a>$ sinfo  <span class="c1"># still idle</span>
+<a name="rest_code_8ac121272694445e8c048af0cc0c4ab6-3"></a>PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+<a name="rest_code_8ac121272694445e8c048af0cc0c4ab6-4"></a>compute*     up   infinite      <span class="m">2</span>   idle ip-172-31-3-187,ip-172-31-7-245
 </pre>
 <p>In this case, the scheduler is not aware of such activity.</p>
 <p>The <code>$HOME</code> directory is exported to all nodes via NFS by default, so you can still see the same files from compute nodes. However, system directories like <code>/usr</code> are specific to each node. Software libraries should generally be installed to a shared disk, otherwise they will not be accessible from compute nodes.</p>
@@ -337,15 +337,15 @@ navbar-dark bg-dark
 <h3><a class="toc-backref" href="#id41"><span class="sectnum">4.2</span> Check system &amp; hardware</a></h3>
 <p>A natural thing is to check CPU info with <code>lscpu</code> and file system structure with <code>df -h</code>. Do this on both master and compute nodes to see the differences.</p>
 <p>A serious HPC user should also check the network interface:</p>
-<pre class="code bash"><a name="rest_code_69ef9881ba4a42fcb8161521aef11b17-1"></a>$ ifconfig  <span class="c1"># display network interface names and details</span>
-<a name="rest_code_69ef9881ba4a42fcb8161521aef11b17-2"></a>ens5: ...
-<a name="rest_code_69ef9881ba4a42fcb8161521aef11b17-3"></a>
-<a name="rest_code_69ef9881ba4a42fcb8161521aef11b17-4"></a>lo: ...
+<pre class="code bash"><a name="rest_code_9d020b70bf374a228634710310aef29e-1"></a>$ ifconfig  <span class="c1"># display network interface names and details</span>
+<a name="rest_code_9d020b70bf374a228634710310aef29e-2"></a>ens5: ...
+<a name="rest_code_9d020b70bf374a228634710310aef29e-3"></a>
+<a name="rest_code_9d020b70bf374a228634710310aef29e-4"></a>lo: ...
 </pre>
 <p>Here, the <code>ens5</code> section is the network interface for inter-node commnunication. Its driver should be <code>ena</code>:</p>
-<pre class="code bash"><a name="rest_code_70ba4fb739944044be22fdbc399360e0-1"></a>$ ethtool -i ens5
-<a name="rest_code_70ba4fb739944044be22fdbc399360e0-2"></a>driver: ena
-<a name="rest_code_70ba4fb739944044be22fdbc399360e0-3"></a>version: <span class="m">1</span>.5.0K
+<pre class="code bash"><a name="rest_code_7fdcd15ed0e04e4e8f3c9cc1fe5b3148-1"></a>$ ethtool -i ens5
+<a name="rest_code_7fdcd15ed0e04e4e8f3c9cc1fe5b3148-2"></a>driver: ena
+<a name="rest_code_7fdcd15ed0e04e4e8f3c9cc1fe5b3148-3"></a>version: <span class="m">1</span>.5.0K
 </pre>
 <p>This means that "Enhanced Networking" is enabled <a class="footnote-reference brackets" href="#ena" id="id13">13</a>. This should be the default on most modern AMIs, so you shouldn't need to change anything.</p>
 </div>
@@ -367,33 +367,33 @@ navbar-dark bg-dark
 <p>While you can get pre-built MPI binaries with <code>sudo yum install -y openmpi-devel</code> on CentOS or <code>sudo apt install -y libopenmpi-dev</code> on Ubuntu, they are generally not the specific version you want. On the other hand, building custom versions of libraries from source is too laborious and error-prone <a class="footnote-reference brackets" href="#build-netcdf" id="id16">16</a>. Spack achieves a great balance between the ease-of-use and customizability. It has an excellent documentation which I strongly recommend reading: <a class="reference external" href="https://spack.readthedocs.io/">https://spack.readthedocs.io/</a>.</p>
 <p>Here I provide the minimum required steps to build a production-ready HPC environment.</p>
 <p>Getting Spack is super easy:</p>
-<pre class="code bash"><a name="rest_code_9c6e26e437a844b99573fb6a517a28ed-1"></a><span class="nb">cd</span> /shared  <span class="c1"># install to shared disk</span>
-<a name="rest_code_9c6e26e437a844b99573fb6a517a28ed-2"></a>git clone https://github.com/spack/spack.git
-<a name="rest_code_9c6e26e437a844b99573fb6a517a28ed-3"></a>git checkout 3f1c78128ed8ae96d2b76d0e144c38cbc1c625df  <span class="c1"># Spack v0.13.0 release in Oct 26 2019 broke some previous commands. Freeze it to ~Sep 2019.</span>
-<a name="rest_code_9c6e26e437a844b99573fb6a517a28ed-4"></a><span class="nb">echo</span> <span class="s1">'export PATH=/shared/spack/bin:$PATH'</span> &gt;&gt; ~/.bashrc  <span class="c1"># to discover spack executable</span>
-<a name="rest_code_9c6e26e437a844b99573fb6a517a28ed-5"></a><span class="nb">source</span> ~/.bashrc
+<pre class="code bash"><a name="rest_code_5f244dc1c0e94f49b9360a4d2cd39268-1"></a><span class="nb">cd</span> /shared  <span class="c1"># install to shared disk</span>
+<a name="rest_code_5f244dc1c0e94f49b9360a4d2cd39268-2"></a>git clone https://github.com/spack/spack.git
+<a name="rest_code_5f244dc1c0e94f49b9360a4d2cd39268-3"></a>git checkout 3f1c78128ed8ae96d2b76d0e144c38cbc1c625df  <span class="c1"># Spack v0.13.0 release in Oct 26 2019 broke some previous commands. Freeze it to ~Sep 2019.</span>
+<a name="rest_code_5f244dc1c0e94f49b9360a4d2cd39268-4"></a><span class="nb">echo</span> <span class="s1">'export PATH=/shared/spack/bin:$PATH'</span> &gt;&gt; ~/.bashrc  <span class="c1"># to discover spack executable</span>
+<a name="rest_code_5f244dc1c0e94f49b9360a4d2cd39268-5"></a><span class="nb">source</span> ~/.bashrc
 </pre>
 <p>At the time of writing, I am using:</p>
-<pre class="code bash"><a name="rest_code_0c010df3e7d2450c94de65d682d52f55-1"></a>$ spack --version
-<a name="rest_code_0c010df3e7d2450c94de65d682d52f55-2"></a><span class="m">0</span>.12.1
+<pre class="code bash"><a name="rest_code_680ce6b845c14ffdae71ea1157c70afb-1"></a>$ spack --version
+<a name="rest_code_680ce6b845c14ffdae71ea1157c70afb-2"></a><span class="m">0</span>.12.1
 </pre>
 <p>The first thing is to check what compilers are available. Most OS should already have a GNU compiler installed, and Spack can discover it:</p>
-<pre class="code bash"><a name="rest_code_b9a3d11835a14df3aad777d23dbca96a-1"></a>$ spack <span class="nv">compilers</span>
-<a name="rest_code_b9a3d11835a14df3aad777d23dbca96a-2"></a><span class="o">==</span>&gt; Available compilers
-<a name="rest_code_b9a3d11835a14df3aad777d23dbca96a-3"></a>-- gcc centos7-x86_64 -------------------------------------------
-<a name="rest_code_b9a3d11835a14df3aad777d23dbca96a-4"></a>gcc@4.8.5
+<pre class="code bash"><a name="rest_code_b689042395f947b2b33c56e9675c1d55-1"></a>$ spack <span class="nv">compilers</span>
+<a name="rest_code_b689042395f947b2b33c56e9675c1d55-2"></a><span class="o">==</span>&gt; Available compilers
+<a name="rest_code_b689042395f947b2b33c56e9675c1d55-3"></a>-- gcc centos7-x86_64 -------------------------------------------
+<a name="rest_code_b689042395f947b2b33c56e9675c1d55-4"></a>gcc@4.8.5
 </pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If not installed, just <code>sudo yum install gcc gcc-gfortran gcc-c++</code> on CentOS or <code>sudo apt install gcc gfortran g++</code> on Ubuntu.</p>
 </div>
 <p>You might want to get a newer version of the compiler:</p>
-<pre class="code bash"><a name="rest_code_ff4253e2181444fe828b2d70fed07e48-1"></a>$ spack install gcc@8.2.0  <span class="c1"># can take 30 min!</span>
-<a name="rest_code_ff4253e2181444fe828b2d70fed07e48-2"></a>$ spack compiler add <span class="k">$(</span>spack location -i gcc@8.2.0<span class="k">)</span>
-<a name="rest_code_ff4253e2181444fe828b2d70fed07e48-3"></a>$ spack <span class="nv">compilers</span>
-<a name="rest_code_ff4253e2181444fe828b2d70fed07e48-4"></a><span class="o">==</span>&gt; Available compilers
-<a name="rest_code_ff4253e2181444fe828b2d70fed07e48-5"></a>-- gcc centos7-x86_64 -------------------------------------------
-<a name="rest_code_ff4253e2181444fe828b2d70fed07e48-6"></a>gcc@8.2.0  gcc@4.8.5
+<pre class="code bash"><a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-1"></a>$ spack install gcc@8.2.0  <span class="c1"># can take 30 min!</span>
+<a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-2"></a>$ spack compiler add <span class="k">$(</span>spack location -i gcc@8.2.0<span class="k">)</span>
+<a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-3"></a>$ spack <span class="nv">compilers</span>
+<a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-4"></a><span class="o">==</span>&gt; Available compilers
+<a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-5"></a>-- gcc centos7-x86_64 -------------------------------------------
+<a name="rest_code_bb5637b12bf4411dad2ed6a04620dcb7-6"></a>gcc@8.2.0  gcc@4.8.5
 </pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -406,53 +406,53 @@ navbar-dark bg-dark
 <div class="section" id="mpi-libraries-openmpi-with-slurm-support">
 <h3><a class="toc-backref" href="#id44"><span class="sectnum">5.1</span> MPI libraries (OpenMPI with Slurm support)</a></h3>
 <p>Spack can install many MPI implementations, for example:</p>
-<pre class="code bash"><a name="rest_code_9dbe17b4467c4ed1b78acf99bf93165d-1"></a>$ spack info mpich
-<a name="rest_code_9dbe17b4467c4ed1b78acf99bf93165d-2"></a>$ spack info mvapich2
-<a name="rest_code_9dbe17b4467c4ed1b78acf99bf93165d-3"></a>$ spack info openmpi
+<pre class="code bash"><a name="rest_code_7bff0638970f4b5c937f08c9b1a12e1b-1"></a>$ spack info mpich
+<a name="rest_code_7bff0638970f4b5c937f08c9b1a12e1b-2"></a>$ spack info mvapich2
+<a name="rest_code_7bff0638970f4b5c937f08c9b1a12e1b-3"></a>$ spack info openmpi
 </pre>
 <p>In this example I will use OpenMPI. It has a super-informative documentation at <a class="reference external" href="https://www.open-mpi.org/faq/">https://www.open-mpi.org/faq/</a></p>
 <div class="section" id="installing-openmpi">
 <h4><a class="toc-backref" href="#id45"><span class="sectnum">5.1.1</span> Installing OpenMPI</a></h4>
 <p>In principle, the installation is as simple as:</p>
-<pre class="code bash"><a name="rest_code_a23b6e93345b408dbb1485e903d1595f-1"></a>$ spack install openmpi  <span class="c1"># not what we will use here</span>
+<pre class="code bash"><a name="rest_code_9c5c66aa75fb4463b44919c1fa1c4b4d-1"></a>$ spack install openmpi  <span class="c1"># not what we will use here</span>
 </pre>
 <p>Or a specific version:</p>
-<pre class="code bash"><a name="rest_code_bf17726aac61439189ff61b49774fe71-1"></a>$ spack install openmpi@3.1.3  <span class="c1"># not what we will use here</span>
+<pre class="code bash"><a name="rest_code_bd5553a9fb7b4c71a34f8c9e6197739e-1"></a>$ spack install openmpi@3.1.3  <span class="c1"># not what we will use here</span>
 </pre>
 <p>However, we want OpenMPI to be built with Slurm <a class="footnote-reference brackets" href="#ompi-slurm" id="id17">17</a>, so the launch of MPI processes can be handled by Slurm's scheduler.</p>
 <p>Because Slurm is pre-installed, you will add it as an external package to Spack <a class="footnote-reference brackets" href="#slurm-spack" id="id18">18</a>.</p>
-<pre class="code bash"><a name="rest_code_dfb65cb72edd494c87a4eb0aedd18fc7-1"></a>$ which sinfo  <span class="c1"># comes with AWS ParallelCluster</span>
-<a name="rest_code_dfb65cb72edd494c87a4eb0aedd18fc7-2"></a>/opt/slurm/bin/sinfo
-<a name="rest_code_dfb65cb72edd494c87a4eb0aedd18fc7-3"></a>$ sinfo -V
-<a name="rest_code_dfb65cb72edd494c87a4eb0aedd18fc7-4"></a>slurm <span class="m">16</span>.05.3
+<pre class="code bash"><a name="rest_code_3bd3f502e609411f88714c9792236af4-1"></a>$ which sinfo  <span class="c1"># comes with AWS ParallelCluster</span>
+<a name="rest_code_3bd3f502e609411f88714c9792236af4-2"></a>/opt/slurm/bin/sinfo
+<a name="rest_code_3bd3f502e609411f88714c9792236af4-3"></a>$ sinfo -V
+<a name="rest_code_3bd3f502e609411f88714c9792236af4-4"></a>slurm <span class="m">16</span>.05.3
 </pre>
 <p>Add the following section to <code>~/.spack/packages.yaml</code>:</p>
-<pre class="code bash"><a name="rest_code_1dac37360797427ca5a37ad1bbc756f3-1"></a>packages:
-<a name="rest_code_1dac37360797427ca5a37ad1bbc756f3-2"></a>  slurm:
-<a name="rest_code_1dac37360797427ca5a37ad1bbc756f3-3"></a>    paths:
-<a name="rest_code_1dac37360797427ca5a37ad1bbc756f3-4"></a>      slurm@16.05.3: /opt/slurm/
-<a name="rest_code_1dac37360797427ca5a37ad1bbc756f3-5"></a>    buildable: False
+<pre class="code bash"><a name="rest_code_9224d44c31cb4ecaa6899bdfa683d1a3-1"></a>packages:
+<a name="rest_code_9224d44c31cb4ecaa6899bdfa683d1a3-2"></a>  slurm:
+<a name="rest_code_9224d44c31cb4ecaa6899bdfa683d1a3-3"></a>    paths:
+<a name="rest_code_9224d44c31cb4ecaa6899bdfa683d1a3-4"></a>      slurm@16.05.3: /opt/slurm/
+<a name="rest_code_9224d44c31cb4ecaa6899bdfa683d1a3-5"></a>    buildable: False
 </pre>
 <p><strong>This step is extremely important. Without modifying packages.yaml, Spack will install Slurm for you, but the newly-installed Slurm is not configured with the AWS cluster.</strong></p>
 <p>Then install OpenMPI wih:</p>
-<pre class="code bash"><a name="rest_code_9aa7315384ed403a8a856cbbe6d70512-1"></a>$ spack install openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
+<pre class="code bash"><a name="rest_code_f5dce118670f4322aff897922eed1c9d-1"></a>$ spack install openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
 </pre>
 <p>After installation, locate its directory:</p>
-<pre class="code bash"><a name="rest_code_69db281e55a74bd8860f34b89a9182eb-1"></a>$ spack find -p openmpi
+<pre class="code bash"><a name="rest_code_3db638a2fda54ebabb21750b90d2d100-1"></a>$ spack find -p openmpi
 </pre>
 <p>Modify <code>$PATH</code> to discover executables like <code>mpicc</code>:</p>
-<pre class="code bash"><a name="rest_code_757e69fa3ea54743aa58609816e0aa2f-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<pre class="code bash"><a name="rest_code_9ec0718a1d744e0eb6a8fd5abcef09f5-1"></a>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin:<span class="nv">$PATH</span>
 </pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Spack removes the <code>mpirun</code> executable by default if built with Slurm, to encourage the use of <code>srun</code> for better process management <a class="footnote-reference brackets" href="#remove-mpirun" id="id19">19</a>. I need <code>mpirun</code> for illustration purpose in this guide, so recover it by <code>ln -s orterun mpirun</code> in the directory <code>$(spack location -i openmpi)/bin/</code>.</p>
 </div>
 <p>A serious HPC user should also check the available Byte Transfer Layer (BTL) in OpenMPI:</p>
-<pre class="code bash"><a name="rest_code_34349c702a28491d9fd41c8e0584f4b9-1"></a>$ ompi_info --param btl all
-<a name="rest_code_34349c702a28491d9fd41c8e0584f4b9-2"></a>  MCA btl: self <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
-<a name="rest_code_34349c702a28491d9fd41c8e0584f4b9-3"></a>  MCA btl: tcp <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
-<a name="rest_code_34349c702a28491d9fd41c8e0584f4b9-4"></a>  MCA btl: vader <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
-<a name="rest_code_34349c702a28491d9fd41c8e0584f4b9-5"></a>  ...
+<pre class="code bash"><a name="rest_code_1d682b1d17e04211adac9f060b1ddca5-1"></a>$ ompi_info --param btl all
+<a name="rest_code_1d682b1d17e04211adac9f060b1ddca5-2"></a>  MCA btl: self <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
+<a name="rest_code_1d682b1d17e04211adac9f060b1ddca5-3"></a>  MCA btl: tcp <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
+<a name="rest_code_1d682b1d17e04211adac9f060b1ddca5-4"></a>  MCA btl: vader <span class="o">(</span>MCA v2.1.0, API v3.0.0, Component v3.1.3<span class="o">)</span>
+<a name="rest_code_1d682b1d17e04211adac9f060b1ddca5-5"></a>  ...
 </pre>
 <ul class="simple">
 <li><p><code>self</code>, as its name suggests, is for a process to talk to itself <a class="footnote-reference brackets" href="#ompi-self" id="id20">20</a>.</p></li>
@@ -464,43 +464,43 @@ navbar-dark bg-dark
 <div class="section" id="using-openmpi-with-slurm">
 <h4><a class="toc-backref" href="#id46"><span class="sectnum">5.1.2</span> Using OpenMPI with Slurm</a></h4>
 <p>Let's use this boring but useful "MPI hello world" example:</p>
-<pre class="code C"><a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-1"></a><span class="cp">#include</span> <span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-3"></a><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-4"></a>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-5"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-6"></a><span class="p">{</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-7"></a>    <span class="kt">int</span> <span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">;</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-8"></a>    <span class="kt">char</span> <span class="n">hostname</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-9"></a>    <span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-10"></a>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-11"></a>    <span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-12"></a>    <span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-13"></a>    <span class="n">gethostname</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="mi">31</span><span class="p">);</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-14"></a>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-15"></a>    <span class="n">printf</span><span class="p">(</span><span class="s">"I am %d of %d, on host %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">hostname</span><span class="p">);</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-16"></a>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-17"></a>    <span class="n">MPI_Finalize</span><span class="p">();</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-18"></a>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="rest_code_abc8e4024ec34c61bc2fe362bb32e060-19"></a><span class="p">}</span>
+<pre class="code C"><a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-1"></a><span class="cp">#include</span> <span class="cpf">&lt;mpi.h&gt;</span><span class="cp"></span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-2"></a><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-3"></a><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-4"></a>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-5"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-6"></a><span class="p">{</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-7"></a>    <span class="kt">int</span> <span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">;</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-8"></a>    <span class="kt">char</span> <span class="n">hostname</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-9"></a>    <span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-10"></a>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-11"></a>    <span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-12"></a>    <span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-13"></a>    <span class="n">gethostname</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="mi">31</span><span class="p">);</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-14"></a>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-15"></a>    <span class="n">printf</span><span class="p">(</span><span class="s">"I am %d of %d, on host %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">hostname</span><span class="p">);</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-16"></a>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-17"></a>    <span class="n">MPI_Finalize</span><span class="p">();</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-18"></a>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="rest_code_ca39b70890704cb8a11191bd4f6c4763-19"></a><span class="p">}</span>
 </pre>
 <p>Put it into a <code>hello_mpi.c</code> file and compile:</p>
-<pre class="code bash"><a name="rest_code_884053735af8475b9b8944866e3b869b-1"></a>$ mpicc -o hello_mpi.x hello_mpi.c
-<a name="rest_code_884053735af8475b9b8944866e3b869b-2"></a>$ mpirun -np <span class="m">1</span> ./hello_mpi.x  <span class="c1"># runs on master node</span>
-<a name="rest_code_884053735af8475b9b8944866e3b869b-3"></a>I am <span class="m">0</span> of <span class="m">1</span>, on host ip-172-31-7-214
+<pre class="code bash"><a name="rest_code_d7b8143196ec428eb8727a098bfb31b1-1"></a>$ mpicc -o hello_mpi.x hello_mpi.c
+<a name="rest_code_d7b8143196ec428eb8727a098bfb31b1-2"></a>$ mpirun -np <span class="m">1</span> ./hello_mpi.x  <span class="c1"># runs on master node</span>
+<a name="rest_code_d7b8143196ec428eb8727a098bfb31b1-3"></a>I am <span class="m">0</span> of <span class="m">1</span>, on host ip-172-31-7-214
 </pre>
 <p>To run it on compute nodes, the classic MPI way is to specify the node list via <code>--host</code> or <code>--hostfile</code> (for OpenMPI; other MPI implementations have similar options):</p>
-<pre class="code bash"><a name="rest_code_4908636a45f0407cb6a5f605dd36b520-1"></a>$ mpirun -np <span class="m">2</span> --host ip-172-31-5-150,ip-172-31-14-243 ./hello_mpi.x
-<a name="rest_code_4908636a45f0407cb6a5f605dd36b520-2"></a>I am <span class="m">0</span> of <span class="m">2</span>, on host ip-172-31-5-150
-<a name="rest_code_4908636a45f0407cb6a5f605dd36b520-3"></a>I am <span class="m">1</span> of <span class="m">2</span>, on host ip-172-31-14-243
+<pre class="code bash"><a name="rest_code_e199ff89131d44008537bb6045d13b1e-1"></a>$ mpirun -np <span class="m">2</span> --host ip-172-31-5-150,ip-172-31-14-243 ./hello_mpi.x
+<a name="rest_code_e199ff89131d44008537bb6045d13b1e-2"></a>I am <span class="m">0</span> of <span class="m">2</span>, on host ip-172-31-5-150
+<a name="rest_code_e199ff89131d44008537bb6045d13b1e-3"></a>I am <span class="m">1</span> of <span class="m">2</span>, on host ip-172-31-14-243
 </pre>
 <p>Following <code>--host</code> are compute node IPs shown by <code>sinfo</code>.</p>
 <p>A more sane approach is to launch it via <code>srun</code>, which takes care of the placement of MPI processes:</p>
-<pre class="code bash"><a name="rest_code_3633df1261154d93ab33c01df3be6659-1"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">2</span> ./hello_mpi.x
-<a name="rest_code_3633df1261154d93ab33c01df3be6659-2"></a>I am <span class="m">1</span> of <span class="m">4</span>, on host ip-172-31-5-150
-<a name="rest_code_3633df1261154d93ab33c01df3be6659-3"></a>I am <span class="m">0</span> of <span class="m">4</span>, on host ip-172-31-5-150
-<a name="rest_code_3633df1261154d93ab33c01df3be6659-4"></a>I am <span class="m">3</span> of <span class="m">4</span>, on host ip-172-31-14-243
-<a name="rest_code_3633df1261154d93ab33c01df3be6659-5"></a>I am <span class="m">2</span> of <span class="m">4</span>, on host ip-172-31-14-243
+<pre class="code bash"><a name="rest_code_58e1bdd953454ce39ffd0908fbe21f49-1"></a>$ srun -N <span class="m">2</span> --ntasks-per-node <span class="m">2</span> ./hello_mpi.x
+<a name="rest_code_58e1bdd953454ce39ffd0908fbe21f49-2"></a>I am <span class="m">1</span> of <span class="m">4</span>, on host ip-172-31-5-150
+<a name="rest_code_58e1bdd953454ce39ffd0908fbe21f49-3"></a>I am <span class="m">0</span> of <span class="m">4</span>, on host ip-172-31-5-150
+<a name="rest_code_58e1bdd953454ce39ffd0908fbe21f49-4"></a>I am <span class="m">3</span> of <span class="m">4</span>, on host ip-172-31-14-243
+<a name="rest_code_58e1bdd953454ce39ffd0908fbe21f49-5"></a>I am <span class="m">2</span> of <span class="m">4</span>, on host ip-172-31-14-243
 </pre>
 </div>
 </div>
@@ -508,19 +508,19 @@ navbar-dark bg-dark
 <h3><a class="toc-backref" href="#id47"><span class="sectnum">5.2</span> HDF5 and NetCDF libraries</a></h3>
 <p><a class="reference external" href="https://www.hdfgroup.org/">HDF5</a> and <a class="reference external" href="https://www.unidata.ucar.edu/software/netcdf/">NetCDF</a> are very common I/O libraries for HPC, widely used in Earth science and many other fields.</p>
 <p>In principle, installing HDF5 is simply:</p>
-<pre class="code bash"><a name="rest_code_2f657c0b1cbf48baa88aeb90fdf1d922-1"></a>$ spack install hdf5  <span class="c1"># not what we will use here</span>
+<pre class="code bash"><a name="rest_code_d28c42d27c724b8ab3bed4027e64dba5-1"></a>$ spack install hdf5  <span class="c1"># not what we will use here</span>
 </pre>
 <p>Many HPC code (like WRF) needs the full HDF5 suite (use <code>spack info</code> to check all the variants):</p>
-<pre class="code bash"><a name="rest_code_2e47a576923a461fa4274d7bc7fded4b-1"></a>$ spack install hdf5+fortran+hl  <span class="c1"># not what we will use here</span>
+<pre class="code bash"><a name="rest_code_6fc0637d717f47ec9ceea2836ff6106c-1"></a>$ spack install hdf5+fortran+hl  <span class="c1"># not what we will use here</span>
 </pre>
 <p>Further specify MPI dependencies:</p>
-<pre class="code bash"><a name="rest_code_b737da39af7f4d24a836615c9b9e9052-1"></a>$ spack install hdf5+fortran+hl ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
+<pre class="code bash"><a name="rest_code_32bceb4762414e8d8b76070b3123ce90-1"></a>$ spack install hdf5+fortran+hl ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
 </pre>
 <p>Similarly, for NetCDF C &amp; Fortran, in principle it is simply:</p>
-<pre class="code bash"><a name="rest_code_a5f20e2bf43449a19e1fbf815d9db70d-1"></a>$ spack install netcdf-fortran  <span class="c1"># not what we will use here</span>
+<pre class="code bash"><a name="rest_code_3cc0e85fdfe04494ae62d6264c90cd37-1"></a>$ spack install netcdf-fortran  <span class="c1"># not what we will use here</span>
 </pre>
 <p>To specify the full dependency, we end up having:</p>
-<pre class="code bash"><a name="rest_code_2d67234206e14d3f9c5c74119dba0078-1"></a>$ spack install netcdf-fortran ^hdf5+fortran+hl ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
+<pre class="code bash"><a name="rest_code_a2f4e668ff3a4b229a14b891f2f43d77-1"></a>$ spack install netcdf-fortran ^hdf5+fortran+hl ^openmpi+pmi <span class="nv">schedulers</span><span class="o">=</span>slurm  <span class="c1"># use this</span>
 </pre>
 </div>
 <div class="section" id="further-reading-on-advanced-package-management">
@@ -535,19 +535,19 @@ navbar-dark bg-dark
 <h3><a class="toc-backref" href="#id49"><span class="sectnum">5.4</span> Note on reusing software installation</a></h3>
 <p>For a single EC2 instance, it is easy to save the environment - create an AMI, or just build a Docker image. Things get quite cumbersome with a multi-node cluster environment. From official docs, "Building a custom AMI is not the recommended approach for customizing AWS ParallelCluster." <a class="footnote-reference brackets" href="#pcluster-ami" id="id23">23</a>.</p>
 <p>Fortunately, Spack installs everything to a single, non-root directory (similar to Anaconda), so you can simply tar-ball the entire directory and then upload to S3 or other persistent storage:</p>
-<pre class="code bash"><a name="rest_code_fc8291e85c544bc89500c2c88f218e5d-1"></a>$ spack clean --all  <span class="c1"># clean all kinds of caches</span>
-<a name="rest_code_fc8291e85c544bc89500c2c88f218e5d-2"></a>$ tar zcvf spack.tar.gz spack  <span class="c1"># compression</span>
-<a name="rest_code_fc8291e85c544bc89500c2c88f218e5d-3"></a>$ aws s3 mb <span class="o">[</span>your-bucket-name<span class="o">]</span>  <span class="c1"># create a new bucket. might need to configure AWS credentials for permission</span>
-<a name="rest_code_fc8291e85c544bc89500c2c88f218e5d-4"></a>$ aws s3 cp spack.tar.gz s3://<span class="o">[</span>your-bucket-name<span class="o">]</span>/   <span class="c1"># upload to S3 bucket</span>
+<pre class="code bash"><a name="rest_code_51e3a032a939480f8de5b8e8099b0b03-1"></a>$ spack clean --all  <span class="c1"># clean all kinds of caches</span>
+<a name="rest_code_51e3a032a939480f8de5b8e8099b0b03-2"></a>$ tar zcvf spack.tar.gz spack  <span class="c1"># compression</span>
+<a name="rest_code_51e3a032a939480f8de5b8e8099b0b03-3"></a>$ aws s3 mb <span class="o">[</span>your-bucket-name<span class="o">]</span>  <span class="c1"># create a new bucket. might need to configure AWS credentials for permission</span>
+<a name="rest_code_51e3a032a939480f8de5b8e8099b0b03-4"></a>$ aws s3 cp spack.tar.gz s3://<span class="o">[</span>your-bucket-name<span class="o">]</span>/   <span class="c1"># upload to S3 bucket</span>
 </pre>
 <p>Also remember to save (and later recover) your custom settings in <code>~/.spack/packages.yaml</code>, <code>~/.spack/linux/compilers.yaml</code> and <code>.bashrc</code>.</p>
 <p>Then you can safely delete the cluster. For the next time, simply pull the tar-ball from S3 and decompress it. The environment would look exactly the same as the last time. You should use the same <code>base_os</code> to minimize binary-compatibility errors.</p>
 <p>A minor issue is regarding dynamic linking. When re-creating the cluster environment, make sure that the <code>spack/</code> directory is located at the same location where the package was installed last time. For example, if it was at <code>/shared/spack/</code>, then the new location should also be exactly <code>/shared/spack/</code>.</p>
 <p>The underlying reason is that Spack uses <a class="reference external" href="https://en.wikipedia.org/wiki/Rpath">RPATH</a> for library dependencies, to avoid messing around <code>$LD_LIBRARY_PATH</code> <a class="footnote-reference brackets" href="#spack-rapth" id="id24">24</a>. Simply put, it hard-codes the dependencies into the binary. You can check the hard-coded paths by, for example:</p>
-<pre class="code bash"><a name="rest_code_fd9f3793f36b4e00b71c48edade0254a-1"></a>$ readelf -d <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/mpicc <span class="p">|</span> grep RPATH
+<pre class="code bash"><a name="rest_code_8590de4e74694323b88245f152c96c87-1"></a>$ readelf -d <span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin/mpicc <span class="p">|</span> grep RPATH
 </pre>
 <p>If the new shared EBS volume is mounted to a new location like <code>/shared_new</code>, a quick-and-dirty fix would be:</p>
-<pre class="code bash"><a name="rest_code_dc84d8acf4c0439bb1850c2fc0789fea-1"></a>$ sudo ln -s /shared_new /shared/
+<pre class="code bash"><a name="rest_code_b130f0a0e872421c9fb12ccb0c03fbf2-1"></a>$ sudo ln -s /shared_new /shared/
 </pre>
 </div>
 <div class="section" id="special-note-on-intel-compilers">
@@ -556,7 +556,7 @@ navbar-dark bg-dark
 <p>Although Spack can install Intel compilers by itself, a more robust approach is to install it externally and add as an external package <a class="footnote-reference brackets" href="#spack-intel" id="id26">25</a>. Intel has a dedicated guide for installation on EC2 <a class="footnote-reference brackets" href="#intel-aws" id="id27">26</a> so I won't repeat the steps here.</p>
 <p>Once you have a working <code>icc</code>/<code>ifort</code> in <code>$PATH</code>, just running <code>spack compiler add</code> should discover the new compilers <a class="footnote-reference brackets" href="#spack-external" id="id28">27</a>.</p>
 <p>Then, you should also add something like</p>
-<pre class="code bash"><a name="rest_code_5f7875c3c8b64034a28fffcfc3310f49-1"></a>extra_rpaths: <span class="o">[</span><span class="s1">'/shared/intel/lib/intel64'</span><span class="o">]</span>
+<pre class="code bash"><a name="rest_code_d02b8228db0a47a0a97059ba1f8b4720-1"></a>extra_rpaths: <span class="o">[</span><span class="s1">'/shared/intel/lib/intel64'</span><span class="o">]</span>
 </pre>
 <p>to <code>~/.spack/linux/compilers.yaml</code> under the Intel compiler section. Otherwise you will see interesting linking errors when later building libraries with the Intel compiler <a class="footnote-reference brackets" href="#intel-rpath" id="id29">28</a>.</p>
 <p>After those are all set, simple add <code>%intel</code> to all <code>spack install</code> commands to build new libraries with Intel.</p>
@@ -576,36 +576,36 @@ $ tar zxvf v4.0.3.tar.gz</pre>
 <div class="section" id="environment-setup">
 <h3><a class="toc-backref" href="#id52"><span class="sectnum">6.1</span> Environment setup</a></h3>
 <p>Add those to your <code>~/.bashrc</code> (adapted from the <a class="reference external" href="http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compilation_tutorial.php">WRF compile tutorial</a>):</p>
-<pre class="code bash"><a name="rest_code_1190db53faea4dd4816a7e0e164989e5-1"></a><span class="c1"># Let WRF discover necessary executables</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-2"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i gcc<span class="k">)</span>/bin:<span class="nv">$PATH</span>  <span class="c1"># only needed if you installed a new gcc</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-3"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin:<span class="nv">$PATH</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-4"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf<span class="k">)</span>/bin:<span class="nv">$PATH</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-5"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf-fortran<span class="k">)</span>/bin:<span class="nv">$PATH</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-6"></a>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-7"></a><span class="c1"># Environment variables required by WRF</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-8"></a><span class="nb">export</span> <span class="nv">HDF5</span><span class="o">=</span><span class="k">$(</span>spack location -i hdf5<span class="k">)</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-9"></a><span class="nb">export</span> <span class="nv">NETCDF</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf-fortran<span class="k">)</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-10"></a>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-11"></a><span class="c1"># run-time linking</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-12"></a><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$HDF5</span>/lib:<span class="nv">$NETCDF</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-13"></a>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-14"></a><span class="c1"># this prevents segmentation fault when running the model</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-15"></a><span class="nb">ulimit</span> -s unlimited
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-16"></a>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-17"></a><span class="c1"># WRF-specific settings</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-18"></a><span class="nb">export</span> <span class="nv">WRF_EM_CORE</span><span class="o">=</span><span class="m">1</span>
-<a name="rest_code_1190db53faea4dd4816a7e0e164989e5-19"></a><span class="nb">export</span> <span class="nv">WRFIO_NCD_NO_LARGE_FILE_SUPPORT</span><span class="o">=</span><span class="m">0</span>
+<pre class="code bash"><a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-1"></a><span class="c1"># Let WRF discover necessary executables</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-2"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i gcc<span class="k">)</span>/bin:<span class="nv">$PATH</span>  <span class="c1"># only needed if you installed a new gcc</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-3"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i openmpi<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-4"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-5"></a><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf-fortran<span class="k">)</span>/bin:<span class="nv">$PATH</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-6"></a>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-7"></a><span class="c1"># Environment variables required by WRF</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-8"></a><span class="nb">export</span> <span class="nv">HDF5</span><span class="o">=</span><span class="k">$(</span>spack location -i hdf5<span class="k">)</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-9"></a><span class="nb">export</span> <span class="nv">NETCDF</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf-fortran<span class="k">)</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-10"></a>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-11"></a><span class="c1"># run-time linking</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-12"></a><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$HDF5</span>/lib:<span class="nv">$NETCDF</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-13"></a>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-14"></a><span class="c1"># this prevents segmentation fault when running the model</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-15"></a><span class="nb">ulimit</span> -s unlimited
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-16"></a>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-17"></a><span class="c1"># WRF-specific settings</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-18"></a><span class="nb">export</span> <span class="nv">WRF_EM_CORE</span><span class="o">=</span><span class="m">1</span>
+<a name="rest_code_71e7bd1117a34c719f4e9972ea3f4d1a-19"></a><span class="nb">export</span> <span class="nv">WRFIO_NCD_NO_LARGE_FILE_SUPPORT</span><span class="o">=</span><span class="m">0</span>
 </pre>
 <p>WRF also requires NetCDF-C and NetCDF-Fortran to be located in the same directory <a class="footnote-reference brackets" href="#wrf-netcdf" id="id30">29</a>. A quick-and-dirty fix is to copy NetCDF-C libraries and headers to NetCDF-Fortran's directory:</p>
-<pre class="code bash"><a name="rest_code_814ab76ba50d4e38a1ea43c459b14c84-1"></a>$ <span class="nv">NETCDF_C</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf<span class="k">)</span>
-<a name="rest_code_814ab76ba50d4e38a1ea43c459b14c84-2"></a>$ ln -sf <span class="nv">$NETCDF_C</span>/include/*  <span class="nv">$NETCDF</span>/include/
-<a name="rest_code_814ab76ba50d4e38a1ea43c459b14c84-3"></a>$ ln -sf <span class="nv">$NETCDF_C</span>/lib/*  <span class="nv">$NETCDF</span>/lib/
+<pre class="code bash"><a name="rest_code_2d501bf910fc4b6eb4e11e377aa7c46d-1"></a>$ <span class="nv">NETCDF_C</span><span class="o">=</span><span class="k">$(</span>spack location -i netcdf<span class="k">)</span>
+<a name="rest_code_2d501bf910fc4b6eb4e11e377aa7c46d-2"></a>$ ln -sf <span class="nv">$NETCDF_C</span>/include/*  <span class="nv">$NETCDF</span>/include/
+<a name="rest_code_2d501bf910fc4b6eb4e11e377aa7c46d-3"></a>$ ln -sf <span class="nv">$NETCDF_C</span>/lib/*  <span class="nv">$NETCDF</span>/lib/
 </pre>
 </div>
 <div class="section" id="compile-wrf">
 <h3><a class="toc-backref" href="#id53"><span class="sectnum">6.2</span> Compile WRF</a></h3>
-<pre class="code bash"><a name="rest_code_ab68a43c7a9b4dc4bc3ece3de153a1f0-1"></a>$ <span class="nb">cd</span> WRF-4.0.3
-<a name="rest_code_ab68a43c7a9b4dc4bc3ece3de153a1f0-2"></a>$ ./configure
+<pre class="code bash"><a name="rest_code_f2f4a70c5d214729a06cab3735178d4a-1"></a>$ <span class="nb">cd</span> WRF-4.0.3
+<a name="rest_code_f2f4a70c5d214729a06cab3735178d4a-2"></a>$ ./configure
 </pre>
 <ul class="simple">
 <li><p>For the first question, select <code class="docutils literal">34</code>, which uses GNU compilers and pure MPI ("dmpar" -- Distributed Memory PARallelization).</p></li>
@@ -631,10 +631,10 @@ This installation of NetCDF is 64-bit
 This build of WRF will use NETCDF4 with HDF5 compression
 *****************************************************************************</pre>
 <p>To fix a minor issue regarding WRF + GNU + OpenMPI <a class="footnote-reference brackets" href="#wrf-openmpi" id="id31">30</a>, modify the generated <code>configure.wrf</code> so that:</p>
-<pre class="code bash"><a name="rest_code_a1d9bf4ac2dd41c4b3e7193738f5dd89-1"></a><span class="nv">DM_CC</span> <span class="o">=</span> mpicc -DMPI2_SUPPORT
+<pre class="code bash"><a name="rest_code_00e5468ddc4e41f29422d4cd9e2f1bc8-1"></a><span class="nv">DM_CC</span> <span class="o">=</span> mpicc -DMPI2_SUPPORT
 </pre>
 <p>Then build the WRF executable for the commonly used <code>em_real</code> case:</p>
-<pre class="code bash"><a name="rest_code_7dcf4dbea9b940c6b1cd9080d9de58d6-1"></a>$ ./compile em_real <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee wrf_compile.log
+<pre class="code bash"><a name="rest_code_16404d3adecb4940a8d3d38058e45782-1"></a>$ ./compile em_real <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee wrf_compile.log
 </pre>
 <p>You might also use a bigger master node (or go to a compute node) and add something like <code>-j 8</code> for parallel build.</p>
 <p>It should finally succeed:</p>
@@ -669,7 +669,7 @@ build completed: Mon Mar 4 01:41:36 UTC 2019
 </dd>
 <dt class="label" id="dl-course"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
 <dd>
-<p>For example, fast.ai's tutorial on AWS EC2 <a class="reference external" href="https://course.fast.ai/start_aws.html">https://course.fast.ai/start_aws.html</a>, or Amazon's DL book <a class="reference external" href="https://d2l.ai/chapter_appendix_tools/aws.html">https://d2l.ai/chapter_appendix_tools/aws.html</a>.</p>
+<p>For example, fast.ai's tutorial on AWS EC2 <a class="reference external" href="https://course.fast.ai/start_aws.html">https://course.fast.ai/start_aws.html</a>, or Amazon's DL book <a class="reference external" href="https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html">https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html</a>.</p>
 </dd>
 <dt class="label" id="hpc-carpentry"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
 <dd>
