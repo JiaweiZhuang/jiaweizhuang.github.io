@@ -15,15 +15,11 @@
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/</loc>
-  <lastmod>2020-02-03T02:19:00Z</lastmod>
+  <lastmod>2020-02-04T02:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/aws-hpc-guide/</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/blog/awsbatch-fsx/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/blog/bokeh-in-nikola/</loc>
@@ -38,10 +34,6 @@
   <lastmod>2020-01-11T15:58:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jiaweizhuang.github.io/blog/index-1.html</loc>
-  <lastmod>2020-02-03T04:31:00Z</lastmod>
- </url>
- <url>
   <loc>https://jiaweizhuang.github.io/blog/mpi-tcp-ec2/</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
  </url>
@@ -54,28 +46,8 @@
   <lastmod>2020-01-11T15:58:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jiaweizhuang.github.io/blog/parallel-job-analysis/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/blog/parallel-job-awsbatch/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/blog/parallel-job-k8s/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/blog/parallel-job-overview/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/blog/parallel-job-setup/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
   <loc>https://jiaweizhuang.github.io/categories/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
+  <lastmod>2020-02-04T02:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/categories/aws/</loc>
@@ -88,10 +60,6 @@
  <url>
   <loc>https://jiaweizhuang.github.io/categories/cloud/</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/categories/container/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/categories/dask/</loc>
@@ -116,14 +84,6 @@
  <url>
   <loc>https://jiaweizhuang.github.io/categories/jupyter/</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/categories/kubernetes/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
- </url>
- <url>
-  <loc>https://jiaweizhuang.github.io/categories/machine-learning/</loc>
-  <lastmod>2020-02-02T20:11:00Z</lastmod>
  </url>
  <url>
   <loc>https://jiaweizhuang.github.io/categories/mpi/</loc>

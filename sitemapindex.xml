@@ -18,10 +18,6 @@
   <lastmod>2020-02-04T02:48:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/container.xml</loc>
-  <lastmod>2020-02-04T02:43:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/dask.xml</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
  </sitemap>
@@ -44,14 +40,6 @@
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/jupyter.xml</loc>
   <lastmod>2020-01-11T15:58:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/kubernetes.xml</loc>
-  <lastmod>2020-02-04T00:49:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://jiaweizhuang.github.io/categories/machine-learning.xml</loc>
-  <lastmod>2020-02-04T02:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/categories/mpi.xml</loc>
@@ -83,6 +71,6 @@
  </sitemap>
  <sitemap>
   <loc>https://jiaweizhuang.github.io/sitemap.xml</loc>
-  <lastmod>2020-02-04T02:48:00Z</lastmod>
+  <lastmod>2020-03-26T18:15:00Z</lastmod>
  </sitemap>
 </sitemapindex>
