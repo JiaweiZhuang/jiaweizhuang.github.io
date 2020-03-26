@@ -22,7 +22,7 @@ Education
 Publications
 ============
 
-**Zhuang, J.**, D.J. Jacob, H. Lin, E.W. Lundgren, R.M. Yantosca, J. Flo Gaya, M.P. Sulprizio, S.D. Eastham, and K. Jorissen, *Enabling high-performance cloud computing for Earth science modeling on over a thousand cores: application to the GEOS-Chem atmospheric chemistry model*, submitted to Journal of Advances in Modeling Earth Systems, 2020. [`PDF <http://acmg.seas.harvard.edu/publications/2020/zhuang2020.pdf>`__]
+**Zhuang, J.**, D.J. Jacob, H. Lin, E.W. Lundgren, R.M. Yantosca, J. Flo Gaya, M.P. Sulprizio, and S.D. Eastham, *Enabling high-performance cloud computing for Earth science modeling on over a thousand cores: application to the GEOS-Chem atmospheric chemistry model*, Journal of Advances in Modeling Earth Systems, 2020. [`PDF <https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2020MS002064>`__]
 
 **Zhuang, J.**, D.J. Jacob, J. Flo-Gaya, R.M. Yantosca, E.W. Lundgren, M.P. Sulprizio, and S.D. Eastham, *Enabling immediate access to Earth science models through cloud computing: application to the GEOS-Chem model*, Bulletin of the American Meteorological Society, 2019. [`PDF <https://journals.ametsoc.org/doi/pdf/10.1175/BAMS-D-18-0243.1>`__]
 
